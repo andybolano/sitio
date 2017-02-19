@@ -25,6 +25,7 @@
                 defered.resolve(p);
             }
             function error(error) {
+                console.log(error)
                 defered.reject(error)
             }
         };

@@ -56,7 +56,7 @@
                 
                
       }).run(function($location,sessionService,$rootScope){
-          var rutasPrivadas = ['/','/canchas','/canchas','/canchas/registro','/reserve'];
+          var rutasPrivadas = ['/','/canchas','/canchas/registro','/reserve'];
           $rootScope.$on('$stateChangeStart', function(){
              if(($.inArray($location.path(), rutasPrivadas)!== -1 ) && !sessionService.isLoggedIn()){
                  $location.path('/auth');
