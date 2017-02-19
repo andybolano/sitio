@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html ng-app="BirriasSitios">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birrias | Negocios </title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300" rel="stylesheet">
+ <style>
+    body{
+        background-image: none;
+    }
+  
+        .subtitule label {
+            color: #212121;
+            margin-left: 14px;
+            font-size: 11px;
+        }
+        
+        .mini-navbar .subtitule {
+            display: none;
+        }
+ 
+</style>
+</head>
+
+<body class="degrade-birrias ">
+<div ui-view="">        
+</div>
+      <!-- Mainly scripts -->
+  
+    
+    <script src="js/angular/angular.js"></script>
+    <script src="js/angular/angular-ui-router.min.js" type="text/javascript"></script>
+    <script src="js/angular/satellizer.js" type="text/javascript"></script>
+    <script src="js/angular/ui-utils.min.js" type="text/javascript"></script> 
+
+   <script src="js/jquery-2.1.1.js"></script>
+
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+   <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+   <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+   <script src="js/plugins/pace/pace.min.js" type="text/javascript"></script>
+   <script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+   <script src="js/plugins/toastr/toastr.min.js" type="text/javascript"></script>
+   <script src="js/plugins/sweetalert/sweetalert.min.js" type="text/javascript"></script>
+   <script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+   <script src="js/inspinia.js" type="text/javascript"></script>
+   <script src="js/lib/validacion.js" type="text/javascript"></script>
+
+
+    <script src="script/app.js" type="text/javascript"></script>
+    
+    <script src="view/menu/menuController.js" type="text/javascript"></script>
+    
+    <script src="view/auth/controllers/authController.js" type="text/javascript"></script>
+    <script src="view/auth/controllers/registreController.js" type="text/javascript"></script>
+    
+    <script src="script/service/registreService.js" type="text/javascript"></script>
+    <script src="script/service/sitioService.js" type="text/javascript"></script>
+    <script src="script/service/sessionService.js" type="text/javascript"></script>
+
+   <script>
+       toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          }
+          
+    function menu(){
+       $("body").toggleClass("mini-navbar");
+        SmoothlyMenu();
+    }
+
+   </script> 
+
+</body>
+</html>

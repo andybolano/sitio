@@ -1,0 +1,63 @@
+ <br>
+    <div class="loginColumns animated fadeInDown">
+          <div class="ibox-content z-depth">
+        <div class="animated bounceIn" style="text-align: center;margin-top: -130px;">
+                <img src="images/logo.png" alt="" style="width: 40%"/>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="text-align: center;">
+                    <h3>Registra tu negocio</h3>
+                    <p>Toma el control y bríndale una mejor experiencia a tus clientes.</p>
+                </div>
+            </div>
+            <div class="m-t" role="form">
+                <div class="col-lg-6">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="r.sitio.nombre" placeholder="Nombre de tu sitio" required="">
+                </div>
+                <div class="form-group">
+                    <select class="form-control" ng-model="r.sitio.ciudad">
+                        <option value="Valledudupar">Valledupar</option> 
+                    </select>
+                    
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="r.sitio.direccion" placeholder="Direccion" required="">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="r.sitio.telefono" placeholder="telefono" onkeypress="return validarNumero(event)" required="">
+                </div>
+                    
+                </div>
+                 <div class="col-lg-6">
+             <div class="form-group">
+                    <input type="email"  id="email" class="form-control"  ng-model="r.sitio.email" placeholder="Correo Electronico" required="" onblur="validarEmail(this.value,2)">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" ng-model="r.sitio.pass" placeholder="contraseña" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" ng-model="r.sitio.passConfirmada" placeholder="confirmar contraseña" required="">
+                </div>
+                    
+                <div class="form-group">
+                        <div class="checkbox i-checks">
+                            <label> 
+                                <input type="checkbox" id="terminos"><i>
+                                </i>&nbsp;&nbsp;<small style="font-size: 12px;">Estoy de acuerdo con los terminos del sistema</small>
+                                </label>
+                        </div>
+                </div>
+                     <a  ui-sref="terms"><p class="text-muted text-center"><small>Leer terminos y condiciones de uso</small></p></a>
+                <button type="submit" class="btn btn-warning block full-width m-b" ng-click="r.registre();">Registrarme</button>
+                 
+                <p class="text-muted text-center"><small>Ya estas registrado?</small></p>
+                <a class="btn btn-sm btn-success btn-block" ui-sref="auth">iniciar sesion</a>
+            </div>
+                <p class="m-t" style="margin-top: -30px;"><img src="images/logo_min.png" style="width:25px" alt=""/>&nbsp;<small>Birrrias Soccer para negocios &copy; 2017</small> </p>
+            </div>
+            
+            
+        </div>
+    </div>
+

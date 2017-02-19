@@ -1,0 +1,120 @@
+<div class="row  border-bottom white-bg dashboard-header">
+    <div class="col-x6-3">
+        <h2>Canchas</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="app.home">Dashboard</a>
+            </li>
+            <li>
+                <a ui-sref="app.canchas">Canchas</a>
+            </li>
+            <li class="active">
+                <strong>Registrar</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-xs-9">
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Registro de Cancha</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+
+                                <label>Nombre:</label>
+                                <input type="text" placeholder="Nombre de Cancha" class="form-control input-sm" ng-model="Cancha.nombre">
+
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Que medidas tiene?</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <small>Largo (M)</small>
+                                        <input type="number" class="form-control input-sm" ng-model="Cancha.largo">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <small>Ancho (M)</small>
+                                        <input type="number" class="form-control input-sm" ng-model="Cancha.ancho">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <label>Tiene techo?</label>
+
+                                <select class="form-control input-sm" name="account" ng-model="Cancha.techo">
+                                <option value="SI"  selected="selected">NO</option>
+                                     <option value="NO">SI</option>
+                            </select>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Numero de jugadores sugeridos por equipo:</label>
+                                <input type="number" class="form-control input-sm" ng-model="Cancha.numeroJugadores">
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Subir foto de la cancha:</label>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <span class="btn btn-default btn-file"><span class="fileinput-new">Seleccionar Foto</span>
+                                <span class="fileinput-exists">Cambiar</span><input type="file" uploader-model="Cancha.imagen" name="images" id="files" /></span>
+                                <span class="fileinput-filename"></span>
+                                <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                            </div>
+                            <div id="image">
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: center;padding-top:50px;">
+                                        <i class="fa fa-image ico-bg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-lg-6" style="text-align: right">
+                            <button class="btn btn-primary"><i class="fa fa-cloud-upload"></i> Registrar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function archivo(evt) {
+        var files = evt.target.files;
+        for (var i = 0, f; f = files[i]; i++) {
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+            var reader = new FileReader();
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    document.getElementById("image").innerHTML = ['<img  style="width:100%;" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+                };
+            })(f);
+            reader.readAsDataURL(f);
+        }
+    }
+    document.getElementById('files').addEventListener('change', archivo, false);
+    $(':file').change(function() {
+        var file = $("#files")[0].files[0];
+        var fileName = file.name;
+        fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+        var fileSize = file.size;
+        var fileType = file.type;
+    });
+</script>
