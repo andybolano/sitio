@@ -1,4 +1,4 @@
-<div class="row  border-bottom white-bg dashboard-header">
+<div class="row  border-bottom white-bg dashboard-header" ng-controller="CanchaController as vm">
     <div class="col-x6-3">
         <h2>Canchas</h2>
         <ol class="breadcrumb">
@@ -29,7 +29,7 @@
                             <div class="form-group">
 
                                 <label>Nombre:</label>
-                                <input type="text" placeholder="Nombre de Cancha" class="form-control input-sm" ng-model="Cancha.nombre">
+                                <input type="text" placeholder="Nombre de Cancha" class="form-control input-sm" ng-model="vm.Cancha.nombre">
 
                             </div>
                             <div class="form-group">
@@ -39,11 +39,11 @@
                                     </div>
                                     <div class="col-xs-6">
                                         <small>Largo (M)</small>
-                                        <input type="number" class="form-control input-sm" ng-model="Cancha.largo">
+                                        <input type="number" class="form-control input-sm" ng-model="vm.Cancha.largo">
                                     </div>
                                     <div class="col-xs-6">
                                         <small>Ancho (M)</small>
-                                        <input type="number" class="form-control input-sm" ng-model="Cancha.ancho">
+                                        <input type="number" class="form-control input-sm" ng-model="vm.Cancha.ancho">
                                     </div>
                                 </div>
                             </div>
@@ -51,15 +51,15 @@
 
                                 <label>Tiene techo?</label>
 
-                                <select class="form-control input-sm" name="account" ng-model="Cancha.techo">
-                                <option value="SI"  selected="selected">NO</option>
-                                     <option value="NO">SI</option>
+                                <select class="form-control input-sm" name="account" ng-model="vm.Cancha.techo">
+                                <option value="0"  selected="selected">NO</option>
+                                     <option value="1">SI</option>
                             </select>
 
                             </div>
                             <div class="form-group">
                                 <label>Numero de jugadores sugeridos por equipo:</label>
-                                <input type="number" class="form-control input-sm" ng-model="Cancha.numeroJugadores">
+                                <input type="number" class="form-control input-sm" ng-model="vm.Cancha.numeroJugadores">
                             </div>
 
                         </div>
@@ -67,7 +67,7 @@
                             <label>Subir foto de la cancha:</label>
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <span class="btn btn-default btn-file"><span class="fileinput-new">Seleccionar Foto</span>
-                                <span class="fileinput-exists">Cambiar</span><input type="file" uploader-model="Cancha.imagen" name="images" id="files" /></span>
+                                <span class="fileinput-exists">Cambiar</span><input type="file" uploader-model="vm.Cancha.imagen" name="images" id="files" /></span>
                                 <span class="fileinput-filename"></span>
                                 <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
                             </div>
@@ -82,7 +82,7 @@
                         </div>
                     <div class="row">
                         <div class="col-lg-6" style="text-align: right">
-                            <button class="btn btn-primary"><i class="fa fa-cloud-upload"></i> Registrar</button>
+                            <button class="btn btn-primary" ng-click="vm.guardar();"><i class="fa fa-cloud-upload"></i> Registrar</button>
                         </div>
                     </div>
                 </div>
@@ -92,29 +92,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    function archivo(evt) {
-        var files = evt.target.files;
-        for (var i = 0, f; f = files[i]; i++) {
-            if (!f.type.match('image.*')) {
-                continue;
-            }
-            var reader = new FileReader();
-            reader.onload = (function(theFile) {
-                return function(e) {
-                    document.getElementById("image").innerHTML = ['<img  style="width:100%;" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
-                };
-            })(f);
-            reader.readAsDataURL(f);
-        }
-    }
-    document.getElementById('files').addEventListener('change', archivo, false);
-    $(':file').change(function() {
-        var file = $("#files")[0].files[0];
-        var fileName = file.name;
-        fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
-        var fileSize = file.size;
-        var fileType = file.type;
-    });
-</script>

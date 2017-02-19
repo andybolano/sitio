@@ -27,15 +27,18 @@
                 })
                 .state('app.reserve', {
                     url: '/reserve',
-                    templateUrl: 'view/reservas/reservas.html'
+                    templateUrl: 'view/reservas/reservas.html',
+                      controller: 'ReservasController as vm'
                 })
                 .state('app.canchas', {
                     url: '/canchas',
-                    templateUrl: 'view/canchas/canchas.html'
+                    templateUrl: 'view/canchas/canchas.html',
+                     controller: 'CanchaController as vm'
                 })
                 .state('app.canchasregistro', {
                     url: '/canchas/registro',
-                     templateUrl: 'view/canchas/registro.html'
+                     templateUrl: 'view/canchas/registro.html',
+                     controller: 'CanchaController as vm'
                 })
                 
               //rutas publicas  

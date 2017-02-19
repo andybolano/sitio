@@ -9212,6 +9212,7 @@ body.rtls .spin-icon {
 body.rtls .skin-settings {
     margin-right: 40px;
     margin-left: 0;
+    
 }
 
 body.rtls .skin-settings {
@@ -9361,6 +9362,7 @@ body.rtls.top-navigation .footer.fixed {
     position: relative;
     z-index: 2000;
     transition-duration: 0.8s;
+
 }
 
 .theme-config-box.show {
@@ -10613,3 +10615,4 @@ background: -ms-linear-gradient(-45deg, rgba(255,119,1,1) 0%, rgba(255,119,1,1) 
 background: linear-gradient(135deg, rgba(255,119,1,1) 0%, rgba(255,119,1,1) 25%, rgba(226,65,70,1) 100%)!important;
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7701', endColorstr='#e24146', GradientType=1 )!important;
 }
+

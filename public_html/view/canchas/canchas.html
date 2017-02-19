@@ -1,4 +1,4 @@
-<div class="row  border-bottom white-bg page-heading"> <!--ng-controller="canchasController" ng-init="getCanchas();"-->
+<div class="row  border-bottom white-bg page-heading" ng-init="vm.getCanchas();">
     <div class="col-xs-6">
         <h2>Canchas</h2>
         <ol class="breadcrumb">
@@ -33,36 +33,42 @@
                                 <th>Techo</th>
                                 <th title="Por equipo"># jugadores</th>
                                 <th>Estado</th>
-                                <th style="text-align:center;">Opciones</th>
+                                <th style="text-align:center;">ver</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="i in Canchas">
+                            <tr ng-repeat="i in vm.Canchas">
                                 <td>{{i.id}}</td>
                                 <td>{{i.nombre}}</td>
                                 <td>{{i.largo}} x {{i.ancho}} m</td>
-                                <td>{{i.techo}}</td>
+                                <td>
+                                    <p ng-if="i.techo === 0">NO</p>
+                                    <p ng-if="i.techo === 1">SI</p>
+                                </td>
                                 <td>{{i.jugadores}}</td>
                                 <td>
-                                    <a href="javascript:;" ng-if="{{i.estado == 'DISPONIBLE'}}">
+                                    <a href="javascript:;" ng-if="i.estado === 'DISPONIBLE'" ng-click="vm.updateState(i.id, 'INACTIVA')">
                                         <span class="badge badge-danger">Desactivar</span>
                                     </a>
-                                    <a href="javascript:;" ng-if="{{i.estado == 'INACTIVA'}}">
+                                    <a href="javascript:;" ng-if="i.estado === 'INACTIVA'" ng-click="vm.updateState(i.id, 'DISPONIBLE')">
                                         <span class="badge badge-success">Activar</span>
                                     </a>
                                 </td>
                                 <td style="text-align:center;">
-                                    <a href="javascript:;" title="Editar"><i class="fa fa-edit ico text-orange"></i></a>
-                                    <a href="javascript:;" title="Eliminar"><i class="fa fa-trash ico text-red"></i></a>
+                                    <a href="javascript:;" title="Ver"><i class="fa fa-eye ico text-blue" ng-click="vm.view(i)"></i></a>
+                                </td>
+                                <td>
+                                    <a href="javascript:;" title="Eliminar" ng-click="vm.eliminar(i.id)"><i class="fa fa-trash ico text-red"></i></a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="row">
+                    <div class="row" ng-if="vm.Canchas.length === 0">
                         <div class="col-lg-12" style="text-align: center;">
                             <div class="bg-vacio"></div>
                             <h2 class="vacio-text">No hay canchas Registradas</h2>
-                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -70,3 +76,93 @@
         </div>
     </div>
 </div>
+
+<div class="modal inmodal" id="cancha" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Cancha {{vm.Cancha.nombre}}</h4>
+                                        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div ng-if="vm.Cancha.image == 0" style="margin-top:10px;text-align: center;" >
+                            
+                              <label>Subir foto de la cancha:</label>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <span class="btn btn-default btn-file"><span class="fileinput-new">Seleccionar Foto</span>
+                                <span class="fileinput-exists">Cambiar</span><input type="file" uploader-model="vm.Cancha.imagen" name="images" id="files" /></span>
+                                <span class="fileinput-filename"></span>
+                                <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                            </div>
+                            <div id="image">
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: center;padding-top:50px;padding-bottom:50px;">
+                                        <i class="fa fa-image ico-bg"></i>
+                                       
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div ng-if="vm.Cancha.image == 1" style="margin-top:10px;text-align: center;">
+                            
+                            
+                              <label>Cambiar de la cancha:</label>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <span class="btn btn-default btn-file"><span class="fileinput-new">Seleccionar Foto</span>
+                                <span class="fileinput-exists">Cambiar</span><input type="file" uploader-model="vm.Cancha.imagen" name="images" id="files" /></span>
+                                <span class="fileinput-filename"></span>
+                                <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                            </div>
+                            <div id="image">
+                                <img src="{{vm.Cancha.ruta}}" style="width: 100%;">
+                            </div> 
+                         
+                        </div>
+                        <button ng-click="vm.updateImage()" class="btn btn-success" style="width: 100%;"><i class="fa fa-camera"></i> Guardar Foto</button>
+                    </div>
+                    <div class="col-md-7" >
+                        <label>Nombre:</label>
+                        <input type="text" placeholder="Nombre de Cancha" class="form-control input-sm" ng-model="vm.Cancha.nombre">
+                    <div class="form-group">
+                        <div class="row">
+                            <br>
+                            <div class="col-xs-12">
+                                <label>Que medidas tiene?</label>
+                            </div>
+                            <div class="col-xs-6">
+                                <small>Largo (M)</small>
+                                <input type="number" class="form-control input-sm" ng-model="vm.Cancha.largo">
+                            </div>
+                            <div class="col-xs-6">
+                                <small>Ancho (M)</small>
+                                <input type="number" class="form-control input-sm" ng-model="vm.Cancha.ancho">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label>Tiene techo?</label>
+                        <select class="form-control input-sm" name="account" ng-model="vm.Cancha.techo">
+                            <option value="0"  selected="selected">NO</option>
+                            <option value="1">SI</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label>Numero de jugadores sugeridos por equipo:</label>
+                        <input type="number" class="form-control input-sm" ng-model="vm.Cancha.jugadores">
+                    </div>
+                </div>
+                </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" ng-click="vm.update();"><i class="fa fa-cloud-upload"></i> Guardar Cambios</button>
+        </div>
+    </div>
+</div>
+</div>
+
+

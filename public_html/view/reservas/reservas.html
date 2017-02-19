@@ -1,0 +1,122 @@
+
+<div class="row  border-bottom white-bg page-heading" ng-init="vm.getCanchas();">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Rerservar</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a ui-sref="app.home">Dashboard</a>
+                </li>
+                <li class="active">
+                    <strong>Reservar</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-md-4">
+            <div class="spacer" style="height:10px;"></div>
+            <small>Seleccionar Fecha:</small>
+            <div class="input-group">
+                <input type="date" id="fechaReserva" class="form-control" ng-model="vm.fecha" ng-change="vm.showAgendaDiaByCancha()">
+                <span class="input-group-btn"> 
+                    <button type="button" class="btn btn-primary">  {{vm.diaSemana}}</button> 
+                </span>
+            </div>
+            
+        </div>
+    </div>
+    <hr class="hr-line-dashed" style="padding: 0;margin: 0;margin-top:10px;">
+    <div class="wrapper-content">
+        <div class="row" id="canchas">
+            
+        </div>
+    </div>
+    
+        <div class="theme-config" style="position: absolute;right: -20px;">
+        <div class="theme-config-box show">
+            <div class="spin-icon">
+                
+                <i class="fa fa-cogs fa-spin"></i> 
+            </div>
+            <div class="skin-settings">
+                <div class="title">Reservación  <span class="badge badge-danger">{{vm.RESERVA.length}}</span></div>
+                <div class="setings-item" ng-if="vm.RESERVA.length == 0" style="text-align: center;">
+                    <i class="fa fa-eye-slash ico-bg"></i>
+                    <h4 class="vacio-text">No se han cargado reservas</h4>
+                </div>
+                <div ng-if="vm.RESERVA.length > 0">
+                    <div style="max-height:300px;overflow-y: auto;">
+                        <li ng-repeat="item in vm.RESERVA" class="list-group-item">
+                             <span class="pull-right badge">{{item.hora}}:00</span>
+                            {{item.nombreCancha}}<br>
+                            <strong>{{item.diaSemana}}- {{item.fecha}}</strong>
+                           
+                        </li>
+                    </div>
+                        <button class="btn btn-primary" style="width: 100%;" ng-click="vm.showReserva();">
+                            EFECTUAR RESERVA
+                        </button>
+                </div>
+
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal" id="reserva" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:90%;">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Registro de Reserva</h4>
+                                            <small>Termina de digilenciar la informacion para registrarla.</small>
+                                        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Cancha</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Precio</th>
+                                <th>Abono requerido</th>
+                                <th>Abono Liquidado</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in vm.RESERVA">
+                                    <td>
+                                        {{item.nombreCancha}}
+                                    </td>
+                                    <td>
+                                        {{item.fecha}} - {{item.diaSemana}}
+                                    </td>
+                                    <td>
+                                        {{item.hora}}:00
+                                    </td>
+                                     <td width="20%"><input type="number"  class="form-control" id="precio{{$index}}"  onchange="format(this)" ></td>
+                                     <td width="20%"><input type="number"  value="0" class="form-control" id="abonoRequerido{{$index}}"  onchange="format(this)" ></td>
+                                     <td width="20%"><input type="number"  value="0" class="form-control" id="abonoLiquidado{{$index}}"   onchange="format(this)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-4">
+                              <p style="font-weight: 900">Datos del Cliente</p>
+                                <small>Telefono:</small>
+                                                    <input type="number"  class="form-control" ng-model="vm.Cliente.telefono">
+                                                    <br><small>Nombre:</small>
+                                                    <input type="text"  class="form-control" ng-model="vm.Cliente.nombre">
+                                                  
+                    </div>
+                      
+                </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" ng-click="vm.reservar();"><i class="fa fa-cloud-upload"></i> Registrar Reserva</button>
+        </div>
+    </div>
+</div>
+</div>
