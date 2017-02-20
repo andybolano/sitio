@@ -10616,3 +10616,16 @@ background: linear-gradient(135deg, rgba(255,119,1,1) 0%, rgba(255,119,1,1) 25%,
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7701', endColorstr='#e24146', GradientType=1 )!important;
 }
 
+.m-t {
+    margin-top:0px; 
+}
+
+.todo-list.small-list>li {
+    background: #f3f3f4;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    color: inherit;
+    margin-bottom: 1px;
+    padding: 0px 6px 0px 12px;
+}

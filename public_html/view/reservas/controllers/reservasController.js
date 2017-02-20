@@ -85,14 +85,14 @@
         var item = "";
         var over ="hidden";
         for (var i = 0; i < vm.Canchas.length; i++) {
-            if(i == 0){ over="auto";
+            if(i === 0){ over="auto";
             }else{ over ="hidden";}
            item = '<div class="col-md-2" style="margin:0;padding:1px">' +
                     '<div class="panel panel-default" style="border:0px solid #FF532D">' +
                     '<div class="panel-heading" style="background-color:#FF532D;color:#FFFFFF;font-weight:900;border-radius:0"> ' +
                     vm.Canchas[i].nombre +
                     '</div>' +
-                    '<div class="panel-body"  style="overflow-y:'+over+';height:420px;padding:0;">' +
+                    '<div class="panel-body"  style="overflow-y:'+over+';height:450px;padding:0;">' +
                     '<ul class="todo-list m-t small-list" id="lista_horas_' +vm.Canchas[i].id + '">' +
                     '</ul>' +
                     '</div>' +
