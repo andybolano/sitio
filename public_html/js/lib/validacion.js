@@ -46,3 +46,19 @@ else{ alert('Solo se permiten numeros');
 input.value = input.value.replace(/[^\d\.]*/g,'');
 }
 }
+
+
+/*
+devuelve valores:
+0: son iguales.
+<0: la primera fecha es menor.
+>0: la primera fecha es mayor.
+*/
+function dateComapreTo(fecha1, fecha2) {
+var temp = new Array();
+temp  = fecha1.split("-");  
+var f1 =  new Date(temp[0], temp[1], temp[2]);
+temp  = fecha2.split("-");  
+var f2 =  new Date(temp[0], temp[1], temp[2]);
+return f1.getTime() - f2.getTime();
+}

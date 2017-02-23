@@ -1,37 +1,19 @@
 <div id="wrapper" class="bg-menu">
         <nav class="navbar-default navbar-static-side" role="navigation" >
+                <div style="position: absolute;top:0px;right: 0px;z-index:3000">
+                    <a class="btn orange" href="javascript:;" onClick="menu()"><i class="fa fa-bars"></i> </a>
+                </div>
             <div class="sidebar-collapse" ng-include="'view/menu/menu.html'">
              
             </div>
         </nav>
         <div id="page-wrapper" class="gray-bg">
-            <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                    <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn orange" href="javascript:;" onClick="menu()"><i class="fa fa-bars"></i> </a>
-                    </div>
-
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <span class="m-r-sm text-muted welcome-message">Dashboard sitio Name</span>
-                        </li>
-
-                        <li>
-                            <a href="javascript:;" ng-click="logout();">
-                                <i class="fa fa-sign-out"></i> Cerrar Sesión
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </nav>
-            </div>
             <div class="animated fadeInRight" ui-view="" id="container">
 
             </div>
-            <div class="footer">
+            <div class="footer" ng-controller="HomeController as vm">
                 <div class="pull-right">
-                    Sitio Name by <img alt="Birrias" id="profile" src="images/logo_min.png" style="width:20px;" /> <strong>Birrias para Negocios</strong> V.1.0
+                    Sitio {{vm.sitio.nombre}} by <img alt="Birrias" id="profile" src="images/logo_min.png" style="width:20px;" /> <strong>Birrias para Negocios</strong> V.1.0
                 </div>
                 <div>
                     <strong>Copyright</strong> Birrias soccer &copy; 2017

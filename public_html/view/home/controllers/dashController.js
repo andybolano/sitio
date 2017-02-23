@@ -1,14 +1,16 @@
-/* 
- * Controlador de canchas
- */
-app.controller('homeController', function($scope) {
-   $scope.sitio = {};
-   
-   
-   $scope.getSitio = function(){
-       var sitio = JSON.parse(sessionStorage.getItem('sitio'));
-       $scope.sitio = sitio[0];
-   }
-});
+(function(){
+    'use strict';
+    angular
+            .module('BirriasSitios')
+            .controller('HomeController', function(){
+          
+              var vm = this;
+              vm.sitio = {};
+              vm.sitio = JSON.parse(sessionStorage.getItem('data'));
+            });
+
+})();
+
+
 
 

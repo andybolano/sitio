@@ -18,13 +18,16 @@
                       sitioService.get().then(success, error);
                       function success(d) {
                            vm.sitio = d.data[0];
+                           vm.sitio.email = sessionStorage.getItem('email');
                            sessionStorage.setItem('data',JSON.stringify(d.data[0]));
+                          
                         }
                         function error(error) {
                            toastr['error'](error.data.error);
                         }
                     }else{
                         vm.sitio = JSON.parse(sessionStorage.getItem('data'));
+                        vm.sitio.email = sessionStorage.getItem('email');
                     }
                 }
                 

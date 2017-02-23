@@ -1,20 +1,22 @@
 <ul class="nav metismenu" id="side-menu" ng-controller="MenuController as menu" ng-init="menu.getSitio()">
-                    <li class="nav-header">
+    <li class="nav-header">
                         <div class="dropdown profile-element " style='text-align:center;'>
-                            <span>
+                          <span>
                         <div class='img-wrap'>
                          <img alt="image Sitio" id="profile" class="img-circle" src="images/profile-sitio.png" style="width:90px;"/>
                         </div>
                         </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
                                 <span class="clear"> 
-                                    <span class="block m-t-xs"> <strong class="font-bold">{{menu.sitio.nombre}}</strong>     
+                                    <span class="block m-t-xs"> 
+                                        <strong class="font-bold">{{menu.sitio.nombre}}</strong>   
+                                        <small>{{menu.sitio.email}}</small>
                                     </span>
                                 </span>
                             </a>
                         </div>
                         <div class="logo-element">
-                            B
+                            
                         </div>
                     </li>
                     <li ng-class="{active : menu.isActive ('/')}">

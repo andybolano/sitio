@@ -1,7 +1,7 @@
 
 <div class="row  border-bottom white-bg page-heading" ng-init="vm.getCanchas();">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-4">
             <h2>Rerservar</h2>
             <ol class="breadcrumb">
                 <li>
@@ -12,16 +12,28 @@
                 </li>
             </ol>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2" style="text-align: right">
             <div class="spacer" style="height:10px;"></div>
-            <small>Seleccionar Fecha:</small>
+  
+           <button type="button" class="btn btn-primary" ng-click="vm.moveToFecha('-')"><i class="fa fa-chevron-left"></i></button> 
+        </div>
+        <div class="col-md-4">
+              <div class="spacer" style="height:10px;"></div>
+          
             <div class="input-group">
+                <span class="input-group-btn"> 
+                    <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button> 
+                </span>
                 <input type="date" id="fechaReserva" class="form-control" ng-model="vm.fecha" ng-change="vm.showAgendaDiaByCancha()">
                 <span class="input-group-btn"> 
                     <button type="button" class="btn btn-primary">  {{vm.diaSemana}}</button> 
                 </span>
             </div>
-            
+        </div>
+        <div class="col-md-2">
+           <div class="spacer" style="height:10px;"></div>
+         
+            <button type="button" class="btn btn-primary" ng-click="vm.moveToFecha('+')"><i class="fa fa-chevron-right"></i></button> 
         </div>
     </div>
     <hr class="hr-line-dashed" style="padding: 0;margin: 0;margin-top:10px;">
@@ -44,7 +56,7 @@
                     <h4 class="vacio-text">No se han cargado reservas</h4>
                 </div>
                 <div ng-if="vm.RESERVA.length > 0">
-                    <div style="max-height:300px;overflow-y: auto;">
+                    <div style="max-height:450px;overflow-y: auto;">
                         <li ng-repeat="item in vm.RESERVA" class="list-group-item">
                              <span class="pull-right badge">{{item.hora}}:00</span>
                             {{item.nombreCancha}}<br>
@@ -52,7 +64,7 @@
                            
                         </li>
                     </div>
-                        <button class="btn btn-primary" style="width: 100%;" ng-click="vm.showReserva();">
+                    <button class="btn btn-primary" style="width: 100%;" onclick="$('#reserva').modal('show')">
                             EFECTUAR RESERVA
                         </button>
                 </div>
@@ -64,9 +76,9 @@
     </div>
 </div>
 
-<div class="modal inmodal" id="reserva" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal inmodal animated bounceInRight" id="reserva" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width:90%;">
-        <div class="modal-content animated bounceInRight">
+        <div class="modal-content animated bounceIn">
             <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                                             <h4 class="modal-title">Registro de Reserva</h4>
@@ -120,3 +132,41 @@
     </div>
 </div>
 </div>
+
+<div class="modal inmodal animated bounceInUp" id="consult_reserva" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated bounceIn">
+            <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Detalle de Reserva</h4>
+                                            <small>Toda la informacion relacionada con la reserva</small>
+                                        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Información del cliente</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Información de reserva</h3>
+                        <strong>Cancha:</strong>{{vm.v_reserva.idCancha}}<br>
+                        <i class="fa fa-calendar"> {{vm.v_reserva.fecha}}</i><br>
+                        <i class="fa fa-clock-o"> {{vm.v_reserva.hora}} : 00</i>
+                        {{vm.v_reserva.estado}}
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Información de financiera</h3>
+                        <strong>Cancha:</strong>{{vm.v_reserva.idCancha}}<br>
+                        <i class="fa fa-calendar"> {{vm.v_reserva.fecha}}</i><br>
+                        <i class="fa fa-clock-o"> {{vm.v_reserva.hora}} : 00</i>
+                        {{vm.v_reserva.estado}}
+                    </div>
+                </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+</div>
+</div>
+
+

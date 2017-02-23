@@ -9352,7 +9352,7 @@ body.rtls.top-navigation .footer.fixed {
 
 .theme-config {
     position: absolute;
-    top: 90px;
+    top: 72px;
     right: 0;
     overflow: hidden;
 }
@@ -9370,7 +9370,7 @@ body.rtls.top-navigation .footer.fixed {
 }
 
 .spin-icon {
-    background: #1ab394;
+    background: #FF3F45;
     position: absolute;
     padding: 7px 10px 7px 13px;
     border-radius: 20px 0 0 20px;
@@ -10627,5 +10627,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7701', end
     border-radius: 0px;
     color: inherit;
     margin-bottom: 1px;
-    padding: 0px 6px 0px 12px;
+    padding: 2px 6px 2px 12px;
 }

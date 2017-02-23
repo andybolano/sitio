@@ -15,6 +15,7 @@
             remove:remove,
             update:update,
             updateImage:updateImage
+            
         };
         return service;
 
