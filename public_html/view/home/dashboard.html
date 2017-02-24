@@ -1,6 +1,35 @@
-<div class="row  border-bottom white-bg dashboard-header">
-    <div class="col-mg-3">
+<div class="row  border-bottom white-bg dashboard-header" ng-init="vm.getReservasHoy();">
+    <div class="col-md-6">
         <h2>Dashboard</h2>
-        <small>Para hoy tenemos <a href="javascritp:;">4 reservas confirmadas</a> y <a href="javascritp:;">6 por confirmar.</a></small>
-    </div>
+        <small>Para hoy tenemos <a href="javascritp:;">{{vm.reservas.length}} reservas confirmadas</a></small>
+   
+        
+        <table class='table table-striped'>
+            <thead>
+            <th>
+            </th>
+            <th>
+                Cancha
+            </th>
+            <th>
+                Precio
+            </th>
+            <th>
+                Abono requerido
+            </th>
+            <th>
+                Abono liquidado
+            </th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in vm.reservas">
+                    <td>{{$index + 1 }}</td>
+                    <td>{{item.nombrecancha }}</td>
+                    <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
+                    <td>{{item.abonoRequerido | currency:undefined:0}}</td>
+                    <td class="text-success"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
+                </tr>
+            </tbody>
+        </table>
+    
 </div>

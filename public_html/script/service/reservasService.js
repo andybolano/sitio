@@ -10,10 +10,26 @@
 
         var service = {
             post: post,
-            getByFecha:getByFecha
+            getByFecha:getByFecha,
+            getBySitio:getBySitio,
+            updateReservas:updateReservas,
+            getByFechaAll:getByFechaAll
         };
         return service;
 
+        function updateReservas(object){
+           var defered = $q.defer();
+            var promise = defered.promise;
+            $http.put(API_URL+'/reservas/'+object.idReserva, object).then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+        }
+        
         function post(object){
             
            var defered = $q.defer();
@@ -40,6 +56,32 @@
                 defered.reject(error)
             }
         };
+        
+        function getByFechaAll(id,fecha){
+           var defered = $q.defer();
+            var promise = defered.promise;
+            $http.get(API_URL+'/reservas/sitio/'+id+'/fecha/'+fecha+'/all').then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            } 
+        }
+        
+        function getBySitio(id){
+            var defered = $q.defer();
+            var promise = defered.promise;
+            $http.get(API_URL+'/reservas/sitio/'+id).then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+        }
     }
 })();
 

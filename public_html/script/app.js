@@ -24,6 +24,7 @@
                 .state('app.home', {
                     url: '/',
                     templateUrl: 'view/home/dashboard.html',
+                    controller: 'HomeController as vm'
                 })
                 .state('app.reserve', {
                     url: '/reserve',
@@ -34,6 +35,11 @@
                     url: '/canchas',
                     templateUrl: 'view/canchas/canchas.html',
                      controller: 'CanchaController as vm'
+                })
+                .state('app.gestion', {
+                    url: '/gestion',
+                    templateUrl: 'view/gestion/gestion.html',
+                     controller: 'GestionController as vm'
                 })
                 .state('app.canchasregistro', {
                     url: '/canchas/registro',

@@ -1,0 +1,231 @@
+<div class="row  border-bottom white-bg page-heading" ng-init="vm.getReservas();">
+    <div class="col-xs-6">
+        <h2>Gestion de Reservas</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="app.home">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Gestion de reservas</strong>
+            </li>
+        </ol>
+    </div> 
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+ <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h3>Nuevas Solicitudes  
+                        <span class="label label-primary" ng-if="vm.nuevasSolicitudes.length > 0" id="alert">{{vm.nuevasSolicitudes.length}}</span>
+                        <span class="label label-primary" ng-if="vm.nuevasSolicitudes.length == 0">{{vm.nuevasSolicitudes.length}}</span>
+                    </h3>
+                    <p class="small">Reservas realizadas de forma remota por tus clientes.</p>
+
+                         <div class="input-group"><input type="text" placeholder="Buscador" class="input-sm form-control"  ng-model="filtro_nuevas"> <span class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
+                        <ul class="sortable-list agile-list" ng-repeat="item in vm.nuevasSolicitudes |  filter: filtro_nuevas | orderBy  | orderBy : 'fecha'  | orderBy : 'hora'  ">
+                        
+                            <li class="success-element" ng-click="vm.modalDetalle(item)">
+                            <i class="fa fa-user"></i> {{item.nombres}}
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%"><i class="fa fa-phone"></i> {{item.telefono}}</td>
+                                    <td><strong>{{item.cancha.nombre}}</strong></td>
+                                </tr>    
+                            </table>
+                            
+                            <div class="agile-detail ng-binding">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="50%"><i class="fa fa-calendar-o"></i> <span class="label label-danger"  style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span> </td>
+                                        <td><i class="fa fa-clock-o"></i> <label class='label label-success'>{{item.hora}}:00</label></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+                        
+                           
+                    </ul>         
+                   
+                </div>
+            </div>
+        </div>
+    
+     <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h3>Esperando Confirmacion <span class="label label-success">{{vm.esperandoConfirmacion.length}}</span></h3>
+                    <p class="small">Esperando que tu cliente confirme</p>
+
+                         <div class="input-group"><input type="text" placeholder="Buscador" class="input-sm form-control"  ng-model="filtro_esperando"> <span class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
+                          <ul class="sortable-list agile-list" ng-repeat="item in vm.esperandoConfirmacion |  filter: filtro_esperando  | orderBy : 'fecha' | orderBy : 'hora' ">
+                        <li class="info-element" ng-click="vm.modalDetalle(item)">
+                            <i class="fa fa-user"></i> {{item.nombres}}
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%"><i class="fa fa-phone"></i> {{item.telefono}}</td>
+                                    <td><strong>{{item.cancha.nombre}}</strong></td>
+                                </tr>    
+                            </table>
+                            
+                            <div class="agile-detail ng-binding">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="50%"><i class="fa fa-calendar-o"></i> <span class="label label-danger"  style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span> </td>
+                                        <td><i class="fa fa-clock-o"></i> <label class='label label-success'>{{item.hora}}:00</label></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+                           
+                    </ul>       
+                  
+                </div>
+            </div>
+        </div>
+    
+     <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h3>Confirmadas <span class="label label-warning">{{vm.confirmadas.length}}</span></h3>
+                    <p class="small">Reservas confirmadas, y esperando para cumplirse</p>
+
+                         <div class="input-group"><input type="text" placeholder="Buscador" class="input-sm form-control"  ng-model="filtro_confirmadas"> <span class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
+                          
+                    <ul class="sortable-list agile-list" ng-repeat="item in vm.confirmadas |  filter: filtro_confirmadas | orderBy : 'fecha' | orderBy : 'hora' ">
+                        <li class="warning-element" ng-click="vm.modalDetalle(item)" ng-if="item.via== 'LOCAL'">
+                            
+                            <div ng-if="item.estado =='confirmadaconabono'" title="Con Abono" class="pull-right triangulo_top_right" style="margin-top:-9px;margin-right:-9px">
+                                
+                            </div>
+                            <i class="fa fa-user"></i> {{item.nombres}}
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%"><i class="fa fa-phone"></i> {{item.telefono}}</td>
+                                    <td><strong>{{item.nombrecancha}}</strong></td>
+                                </tr>    
+                            </table>
+                            
+                            <div class="agile-detail ng-binding">
+                                <table width="100%">
+                                    <tr>
+                                        <td width="50%"><i class="fa fa-calendar-o"></i> <span class="label label-danger"  style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span> </td>
+                                        <td><i class="fa fa-clock-o"></i> <label class='label label-success'>{{item.hora}}:00</label></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal inmodal" id="consult_reserva" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated bounceInUp">
+            <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Detalle de Reserva</h4>
+                                            <small>Toda la informacion relacionada con la reserva</small>
+                                        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Información del cliente</h3>
+                        <div class="feed-element">
+                        <a class="pull-left">
+                           <img src="images/profile-user.png" alt="" class="img-circle animated bounceIn ng-scope" width="100%" height="100%">
+                        </a>
+                        <div class="media-body ">
+                            <strong style="text-transform: uppercase" class="ng-binding">{{vm.v_reserva.nombres}}</strong>
+                            <p><strong class="ng-binding"><i class="fa fa-phone"></i> {{vm.v_reserva.telefono}}</strong></p>
+                        </div>
+                      <table class="table">
+                        <thead>
+                            <tr><th style="text-align: center;"><small class="text-muted">Cumplidas</small></th>
+                            <th style="text-align: center;"><small class="text-muted">Incumplidas</small></th>
+                            <th style="text-align: center;"><small class="text-muted">Canceladas</small></th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.cumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.incumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.canceladas}}</span></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h3>Información de reserva</h3>
+                        <p> <strong>Cancha:</strong> {{vm.v_reserva.nombrecancha}}</p>
+                        <p><i class="fa fa-calendar"></i> <span class="label label-danger">{{vm.v_reserva.fecha}}</span></p>
+                        <p><i class="fa fa-clock-o"></i> <strong><label class='label label-success'>{{vm.v_reserva.hora}} : 00</label></strong></p>
+                        <p ng-if="vm.v_reserva.estado === 'confirmadasinabono'"><span class="label label-danger">CONFIRMADA SIN ABONO</span></p>
+                        <p ng-if="vm.v_reserva.estado === 'confirmadaconabono'"><span class="label label-primary">CONFIRMADA CON ABONO</span></p>
+                        <p ng-if="vm.v_reserva.estado === 'cumplida'"><span class="label label-success">CUMPLIDA</span></p>
+                        <p ng-if="vm.v_reserva.estado === 'incumplida'"><span class="label label-default">INCUMPLIDA</span></p>
+                        <p ng-if="vm.v_reserva.estado === 'cancelada'"><span class="label label-default">CANCELADA</span></p>
+                    </div>
+                     <div class="col-md-5" ng-if="vm.v_reserva.estado == 'esperandoRevision'">
+                            <h3>Opciones de Reserva</h3>
+                            <small>Valor de reserva:</small>
+                            <input type="number" class="input-sm form-control" ng-model="vm.dinero.precio">
+                     
+                            <small>Abono Requerido:</small>
+                            <input type="number" class="input-sm form-control" ng-model="vm.dinero.abono">
+                            <br>
+                          
+                            <button class="btn"style="background-color:#FF7701;color:#FFF" ng-click="actualizarEstado(1,vm.v_reserva.id);">Pedir Confirmacion</button>
+                            <button class="btn btn-danger" ng-click="vm.actualizarEstado(4,vm.v_reserva.id);" title="Cancelar Reserva">Cancelar</button>
+                        </div>
+                        
+                        <div class="col-md-5" ng-if="vm.v_reserva.estado == 'esperandoconfirmacion'">
+                            <h3>Opciones de Reserva</h3>
+                            <p><strong>Valor de Reserva:</strong> {{vm.v_reserva.precio | currency:undefined:0}}</p>
+                            <p><strong>Abono requerido:</strong> {{vm.v_reserva.abonoRequerido | currency:undefined:0}}</p>
+                            <button class="btn" style="background-color:#FF7701;color:#FFF" >Reenviar Alerta</button>
+                            <button class="btn btn-danger" ng-click="vm.actualizarEstado(4,vm.v_reserva.id);" title="Cancelar Reserva">Cancelar</button>
+                        </div>
+                        
+                        <div class="col-md-5" ng-if="vm.v_reserva.estado == 'confirmadasinabono'">
+                            <h3>Opciones de Reserva</h3>
+                            <p><strong>Valor de Reserva:</strong> {{vm.v_reserva.precio | currency:undefined:0}}</p>
+                            <p><strong>Abono requerido:</strong> {{vm.v_reserva.abonoRequerido | currency:undefined:0}}</p>
+                            <small>Abono Liquidado:</small>
+                            <input type="number" class="input-sm form-control" ng-model="vm.dinero.abonoCancelado">
+                           <br>
+                            <button class="btn btn-success" ng-click="vm.actualizarEstado(2,vm.v_reserva.id);" >Registrar Abono</button>
+                            <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva">Recordar</button>
+                            <button class="btn btn-danger" ng-click="vm.actualizarEstado(4,vm.v_reserva.id);" title="Cancelar Reserva">Cancelar Reserva</button>
+                        </div>
+                        
+                        <div class="col-md-5" ng-if="vm.v_reserva.estado == 'confirmadaconabono'">
+                            <h3>Opciones de Reserva</h3>
+                            <p><strong>Valor de Reserva:</strong> {{vm.v_reserva.precio | currency:undefined:0}}</p>
+                            <p><strong>Abono requerido:</strong> {{vm.v_reserva.abonoRequerido | currency:undefined:0}}</p>
+                            <p><strong>Abono Liquidado:</strong> {{vm.v_reserva.abonoLiquidado | currency:undefined:0}}</p>
+                            <small>Mas abono:</small>
+                            <input type="number" class="input-sm form-control" ng-model="vm.dinero.abonoCancelado">
+                           <br>
+                            <button class="btn btn-success" ng-click="vm.actualizarEstado(21,vm.v_reserva.id,vm.v_reserva.abonoLiquidado);" >Registrar Abono</button>
+                         
+   
+                            <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva">Recordar</button>
+                       
+                        </div>
+                </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+</div>
+</div>
+
+

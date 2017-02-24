@@ -10629,3 +10629,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7701', end
     margin-bottom: 1px;
     padding: 2px 6px 2px 12px;
 }
+
+.agile-list li {
+    margin: 0 0 0 0; 
+    border-radius: 0px; 
+}
+
+.triangulo_top_right{
+    width: 30px;
+    height: 30px;
+    background-image: url('patterns/triangle-money.png')
+			
+}
+
+#alert{
+  animation-duration: 0.6s;
+  animation-name: slidein;
+  animation-iteration-count:infinite;
+}
+
+@keyframes slidein {
+  from {
+   background-color:#f57c00; 
+  }
+
+  to {
+       background-color:#d62a2a;
+  }
+}

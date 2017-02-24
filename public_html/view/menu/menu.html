@@ -2,6 +2,7 @@
     <li class="nav-header">
                         <div class="dropdown profile-element " style='text-align:center;'>
                           <span>
+                             
                         <div class='img-wrap'>
                          <img alt="image Sitio" id="profile" class="img-circle" src="images/profile-sitio.png" style="width:90px;"/>
                         </div>
@@ -10,7 +11,8 @@
                                 <span class="clear"> 
                                     <span class="block m-t-xs"> 
                                         <strong class="font-bold">{{menu.sitio.nombre}}</strong>   
-                                        <small>{{menu.sitio.email}}</small>
+                                        <small>{{menu.sitio.email}}</small><br>
+                                         <small style='color:#FFF'>{{menu.hoy()}}</small>
                                     </span>
                                 </span>
                             </a>
@@ -28,8 +30,8 @@
                     <li ng-class="{active : menu.isActive ('/reserve')}">
                         <a  ui-sref="app.reserve"><i class="fa fa-soccer-ball-o"></i> <span class="nav-label">Reservar</span></a>
                     </li>
-                    <li>
-                        <a ui-sref="reservas.gestion"><i class="fa fa-calendar"></i> <span class="nav-label">Gestion de Reservas</span></a>
+                    <li ng-class="{active : menu.isActive ('/gestion')}">
+                        <a ui-sref="app.gestion"><i class="fa fa-calendar"></i> <span class="nav-label">Gestion de Reservas</span></a>
                     </li>
                     <li>
                         <a ui-sref="app.historial"><i class="fa fa-history"></i> <span class="nav-label">Historial de Reservas</span></a>
