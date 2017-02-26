@@ -40,50 +40,71 @@
   
      $scope.$apply(function () {
       $scope.time = hor + ":" + min + ":" + sec;
-      $scope.hora = hor + ":00";
+      $scope.hora = hor;
     });
     
 
   }
 
-function grafica(){
-    var ctx = document.getElementById("myChart").getContext("2d");
-   var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
+
+
+function drawChart(){
+   // Create the data table.
+   var incumplidas = 0;
+   var canceladas = 0;
+   var cumplidas = 0;
+   var espera = 0;
+   var fecha = new Date().toDateInputValue();
+                  var promisePost = reservasService.getEstadisticasByFecha(sessionService.getIdSitio(), fecha, fecha);
+                        promisePost.then(function (d) {
+                            var i=0;
+                            for(i=0; i<d.data.reservas.length; i++){
+                                if(d.data.reservas[i].estado ==='confirmadasinabono' || d.data.reservas[i].estado ==='confirmadaconabono'){
+                                    espera += d.data.reservas[i].cantidad;
+                                }
+                                if(d.data.reservas[i].estado ==='cumplida' ){
+                                    cumplidas = d.data.reservas[i].cantidad;
+                                }
+                                if(d.data.reservas[i].estado ==='incumplida' ){
+                                    incumplidas = d.data.reservas[i].cantidad;
+                                }
+                                if(d.data.reservas[i].estado ==='cancelada' ){
+                                    canceladas = d.data.reservas[i].cantidad;
+                                }
+                            }
+                           var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Topping');
+                        data.addColumn('number', 'Slices');
+                        data.addRows([
+                          ['Incumplidas', incumplidas],
+                          ['Canceladas', canceladas],
+                          ['Cumplidas', cumplidas],
+                          ['En Espera',espera]
+                        ]);
+
+                        // Set chart options
+                        var options = {'title':'Reservas hoy',
+                                       'width':280,
+                                       'height':280,
+                                        colors: ['#F8AC59','#ed5565','#1C84C6','#1AB394'],
+
+                                      pieHole: 0.5,
+                                        pieSliceTextStyle: {
+                                          color: 'white',
+                                        },
+                                     legend: 'none'
+                                   };
+
+                            var chart = new google.visualization.PieChart(document.getElementById('chart_reservas_hoy'));
+                            chart.draw(data, options);
+                            
+                        }, function (err) {
+                            if (err.status == 401) {
+                                toastr["error"](err.data.respuesta);
+                            } else {
+                                toastr["error"]("Ha ocurrido un problema!");
+                            }
+                    });
 }
 
 
@@ -98,14 +119,10 @@ function grafica(){
                                  vm.reservas = d.data;
                             } else {
                               vm.reservas = d.data;
-                               grafica();
+                              google.charts.setOnLoadCallback(drawChart);
                               setTimeout(function () {
                                     $('.reloj').cuentaAtras();
                                 }, 1000);
-                               
-                                    
-                            
-                            
                             }
                         }, function (err) {
                             if (err.status == 401) {

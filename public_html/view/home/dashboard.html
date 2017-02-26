@@ -30,19 +30,23 @@
             <th>tiempo</th>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.reservas" style="cursor: pointer" ng-click="vm.modalDetalle(item)">
+                <tr ng-repeat="item in vm.reservas | orderBy : 'hora' " style="cursor: pointer" ng-click="vm.modalDetalle(item)">
                     <td>{{$index + 1 }}</td>
                     <td>{{item.nombrecancha }}</td>
                     <td>{{item.hora}}:00</td>
                     <th>{{item.nombres}}</th>
                     <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
                     <td>{{item.abonoRequerido | currency:undefined:0}}</td>
-                    <td class="text-success"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
+                    <td class="text-success" ng-if="item.abonoLiquidado > 0"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
+                    <td class="text-danger" ng-if="item.abonoLiquidado == 0"><i class="fa fa-level-down"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
                     <td>
+                        
                            <div ng-if="hora >= item.hora">
+                               
                                 <span class="reloj">{{item.fecha}} {{item.hora}}:59</span>
                            </div>
-                        <div ng-if="hora < item.hora">
+                      
+                        <div ng-if="item.hora > hora " class="small">
                                00:00
                            </div>
                     </td>
@@ -57,10 +61,15 @@
         </div>
     
 </div>
-    <div class="col-md-3" style="text-align: right">
+    <div class="col-md-3">
+        <div style="text-align: right">
         <h1 class="no-margins">{{time}}</h1>
-        <small>Tiempo transcurrido de esta hora</small>
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <small>hora</small>
+        </div>
+  
+        <div style='text-align: center;'>
+       <div id="chart_reservas_hoy" style='margin-top:-20px;'></div>
+        </div>
     </div>   
     
     <div class="modal inmodal" id="consult_reserva" tabindex="-1" role="dialog" aria-hidden="true">

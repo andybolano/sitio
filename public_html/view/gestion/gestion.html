@@ -24,7 +24,7 @@
 
                          <div class="input-group"><input type="text" placeholder="Buscador" class="input-sm form-control"  ng-model="filtro_nuevas"> <span class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
-                        <ul class="sortable-list agile-list" ng-repeat="item in vm.nuevasSolicitudes |  filter: filtro_nuevas | orderBy  | orderBy : 'fecha'  | orderBy : 'hora'  ">
+                        <ul class="sortable-list agile-list" ng-repeat="item in vm.nuevasSolicitudes |  filter: filtro_nuevas  | orderBy : 'fecha'  | orderBy : 'hora'  ">
                         
                             <li class="success-element" ng-click="vm.modalDetalle(item)">
                             <i class="fa fa-user"></i> {{item.nombres}}

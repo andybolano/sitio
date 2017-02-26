@@ -13,7 +13,9 @@
             getByFecha:getByFecha,
             getBySitio:getBySitio,
             updateReservas:updateReservas,
-            getByFechaAll:getByFechaAll
+            getByFechaAll:getByFechaAll,
+             getEstadisticasByFecha: getEstadisticasByFecha,
+             getHistorial:getHistorial
         };
         return service;
 
@@ -76,6 +78,35 @@
             var defered = $q.defer();
             var promise = defered.promise;
             $http.get(API_URL+'/reservas/sitio/'+id).then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+        }
+        
+        function getEstadisticasByFecha(id,fecha1,fecha2)
+        {
+            
+            var defered = $q.defer();
+            var promise = defered.promise;
+            $http.get(API_URL+'/reservas/sitio/'+id+'/fecha/'+fecha1+'/'+fecha2+'/estado').then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+            
+        }
+        
+        function getHistorial(id,fecha1,fecha2){
+             var defered = $q.defer();
+            var promise = defered.promise;
+            $http.get(API_URL+'/reservas/sitio/'+id+'/fecha/'+fecha1+'/'+fecha2+'/historial').then(success, error);
             return promise;
              function success(p) {
                 defered.resolve(p);

@@ -6,7 +6,7 @@
 		return this.each (function(indice) {
                    
 			if ($(this).attr('id') === undefined) $(this).attr('id', 'cntdwn'+indice);
-			if ($(this).attr('title') === undefined) $(this).attr ('title', '<p>Termino...</p>');
+			if ($(this).attr('title') === undefined) $(this).attr ('title', '<small class="text-danger">Término...</small>');
                   
 			var fecha = new Date ($(this).text()),
 			contenedor = '#'+$(this).attr('id'),
@@ -34,7 +34,7 @@
 			seg = calcage(secs,1,60);
                       
                             
-			$(id).html("<strong>"+hora+":"+min+":"+seg+"</strong>");
+			$(id).html("<strong class='text-success'>"+hora+":"+min+":"+seg+"</strong>");
 			setTimeout("$.fn.cuentaAtras.refresca(" + (secs-1) + ", '" + id + "', '"+ mensaje +"')", 1000);
 		};
 

@@ -4,7 +4,7 @@
 
     angular
         .module('BirriasSitios', ['ui.router', 'satellizer'])
-        .constant('API_URL', 'http://localhost/birrias/birrias/api/public/index.php/api')
+        .constant('API_URL', 'http://localhost/birrias/api/public/index.php/api')
         .constant('HOME', 'app.home')
         .config(function($stateProvider, $urlRouterProvider, $authProvider, API_URL) {
             
@@ -40,6 +40,11 @@
                     url: '/gestion',
                     templateUrl: 'view/gestion/gestion.html',
                      controller: 'GestionController as vm'
+                })
+                .state('app.historial', {
+                    url: '/historial',
+                    templateUrl: 'view/historial/historial.html',
+                     controller: 'HistorialController as vm'
                 })
                 .state('app.canchasregistro', {
                     url: '/canchas/registro',
