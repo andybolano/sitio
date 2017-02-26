@@ -44,6 +44,8 @@
             }
         };
         
+        
+     
         function getByFecha(id,fecha){
             var defered = $q.defer();
             var promise = defered.promise;

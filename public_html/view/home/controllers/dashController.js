@@ -2,11 +2,17 @@
     'use strict';
     angular
             .module('BirriasSitios')
-            .controller('HomeController', function(reservasService,sessionService){
+            .controller('HomeController', function(reservasService,sessionService,clienteService,$scope){
           
               var vm = this;
               vm.sitio = {};
+              vm.v_reserva = {};
+              vm.v_estadisticas = {};
+              $scope.time = "";
+              $scope.hora = "";
               vm.getReservasHoy = getReservasHoy;
+              vm.modalDetalle = modalDetalle;
+              vm.actualizarEstado = actualizarEstado;
               vm.sitio = JSON.parse(sessionStorage.getItem('data'));
         
          Date.prototype.toDateInputValue = (function () {
@@ -15,16 +21,91 @@
             return local.toJSON().slice(0, 10);
         });
         
-        
+  function hora() {
+    var f = new Date();
+    var hor = f.getHours();
+    var min = f.getMinutes();
+    var sec = f.getSeconds();
+
+    if (hor < 10) {
+      hor = 0 + String(hor);
+    }
+    if (min < 10) {
+      min = 0 + String(min);
+    }
+    if (sec < 10) {
+      sec = 0 + String(sec);
+    }
+
+  
+     $scope.$apply(function () {
+      $scope.time = hor + ":" + min + ":" + sec;
+      $scope.hora = hor + ":00";
+    });
+    
+
+  }
+
+function grafica(){
+    var ctx = document.getElementById("myChart").getContext("2d");
+   var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+}
+
+
+
               function getReservasHoy(){
+               setInterval(hora, 1000);
                var fecha = new Date().toDateInputValue();
                   var promisePost = reservasService.getByFechaAll(sessionService.getIdSitio(), fecha);
                         promisePost.then(function (d) {
                             if (d.data.length === 0) {
                                 toastr['warning']("No hay reservas : " + fecha);
+                                 vm.reservas = d.data;
                             } else {
                               vm.reservas = d.data;
-  
+                               grafica();
+                              setTimeout(function () {
+                                    $('.reloj').cuentaAtras();
+                                }, 1000);
+                               
+                                    
+                            
+                            
                             }
                         }, function (err) {
                             if (err.status == 401) {
@@ -35,9 +116,112 @@
                     });
               }
               
-              
-            });
+              function modalDetalle(reserva) {
+                    $('#consult_reserva').modal('show');
+                    vm.v_reserva = reserva;
 
+                    vm.v_estadisticas.cumplidas = 0;
+                    vm.v_estadisticas.incumplidas = 0;
+                    vm.v_estadisticas.canceladas = 0;
+
+                    var promisePost = clienteService.get(reserva.idCliente);
+                    promisePost.then(function (d) {
+                        var i = 0;
+                        for (i = 0; i < d.data.reservas.length; i++) {
+                            if (d.data.reservas[i].estado === 'cumplida') {
+                                vm.v_estadisticas.cumplidas = d.data.reservas[i].cantidad;
+                            }
+                            if (d.data.reservas[i].estado === 'incumplida') {
+                                vm.v_estadisticas.incumplidas = d.data.reservas[i].cantidad;
+                            }
+                            if (d.data.reservas[i].estado === 'cancelada') {
+                                vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
+                            }
+                        }
+
+                    }, function (err) {
+                        if (err.status == 401) {
+                            toastr["error"](err.data.respuesta);
+                        } else {
+                            toastr["error"]("Ha ocurrido un problema!");
+                        }
+                    });
+                }
+                
+                 function actualizarEstado(nuevoEstado, idReserva) {
+                    var object = "";
+                    var mensaje = "";
+                    switch (nuevoEstado)
+                    {
+                        case 1:
+                                nuevoEstado = "cumplida";
+                                object = {
+                                    estado: nuevoEstado,
+                                    idReserva: idReserva,
+                                    valor: false,
+                                    abono: false
+                                }
+                                mensaje = "La reserva ha sido cumplida";
+                            break;
+                        case 0:
+                           
+                                nuevoEstado = "incumplida";
+                                object = {
+                                    estado: nuevoEstado,
+                                    idReserva: idReserva,
+                                    valor: false,
+                                    abono: false
+                                }
+                                mensaje = "La reserva ha sido incumplida";
+     
+                            break;
+                        case 4:
+                            nuevoEstado = "cancelada";
+                            object = {
+                                estado: nuevoEstado,
+                                idReserva: idReserva,
+                                valor: false,
+                                abono: false,
+                                emisor: 'SITIO'
+                            }
+                            mensaje = "Su reserva ha sido cancelada";
+                            break;
+                    }
+                        swal(
+                                {title: "Cambiar estado de reserva",
+                                    text: "Esta seguro que desea cambiar el estado de esta reserva?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "Si, Cambiar!",
+                                    cancelButtonText: "No!",
+                                    closeOnConfirm: false, closeOnCancel: false
+                                }, function (isConfirm) {
+                            if (isConfirm) {
+          
+                                    var promisePost = reservasService.updateReservas(object);
+                                    promisePost.then(function (d) {
+                                        if (d.data.respuesta === true) {
+                                            $('#consult_reserva').modal('hide');
+                                            swal("Buen Trabajo!", mensaje, "success");
+                                            vm.getReservasHoy();
+                                        }
+                                    }, function (err) {
+                                        if (err.status == 401) {
+                                            sweetAlert('Oops', err.data.respuesta, "error");
+                                            console.log(err.data.exception);
+                                        } else {
+                                            sweetAlert("Oops...", "Ha ocurrido un problema!", "error");
+                                        }
+                                        console.log(err);
+                                    });
+                             
+                            } else {
+                                swal("Buen trabajo", "Has abortado el cambio de estado de la reserva!", "error");
+                            }
+                        });
+                }
+            });
 })();
 
 

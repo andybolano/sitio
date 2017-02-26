@@ -10638,8 +10638,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7701', end
 .triangulo_top_right{
     width: 30px;
     height: 30px;
-    background-image: url('patterns/triangle-money.png')
-			
+    background-image: url('patterns/triangle-money.png');
+    margin-top:-9px;
+    margin-right:-9px;
+    float: right;
+
 }
 
 #alert{

@@ -212,9 +212,10 @@
         }
 
         function print_reservadas(agenda) {
+          
             var element_hour = "";
             var i = 0;
-            for (i = 0; i < agenda.length; i++) {
+           for (i = 0; i < agenda.length; i++) {
                 element_hour = "li_" + agenda[i].idCancha + "_" + agenda[i].hora + "_" + agenda[i].fecha;
                 document.getElementById(element_hour).style.background = "#FF3F45";
                 document.getElementById(element_hour).style.color = "#FFFFFF";

@@ -1,10 +1,10 @@
 <div class="row  border-bottom white-bg dashboard-header" ng-init="vm.getReservasHoy();">
-    <div class="col-md-6">
-        <h2>Dashboard</h2>
+    <div class="col-md-9">
+        <h2 class="no-margins">Dashboard</h2>
         <small>Para hoy tenemos <a href="javascritp:;">{{vm.reservas.length}} reservas confirmadas</a></small>
    
         
-        <table class='table table-striped'>
+        <table class='table table-striped table-hover'>
             <thead>
             <th>
             </th>
@@ -12,24 +12,122 @@
                 Cancha
             </th>
             <th>
+                Hora
+            </th>
+            <th>
+                Cliente
+            </th>
+            <th>
                 Precio
             </th>
+            
             <th>
                 Abono requerido
             </th>
             <th>
                 Abono liquidado
             </th>
+            <th>tiempo</th>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.reservas">
+                <tr ng-repeat="item in vm.reservas" style="cursor: pointer" ng-click="vm.modalDetalle(item)">
                     <td>{{$index + 1 }}</td>
                     <td>{{item.nombrecancha }}</td>
+                    <td>{{item.hora}}:00</td>
+                    <th>{{item.nombres}}</th>
                     <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
                     <td>{{item.abonoRequerido | currency:undefined:0}}</td>
                     <td class="text-success"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
+                    <td>
+                           <div ng-if="hora >= item.hora">
+                                <span class="reloj">{{item.fecha}} {{item.hora}}:59</span>
+                           </div>
+                        <div ng-if="hora < item.hora">
+                               00:00
+                           </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
+        
+        <div ng-if="vm.reservas.length === 0" class="col-lg-12" style="text-align: center;">
+            <i class="fa fa-eye-slash ico-bg"></i>
+            <h3 class="vacio-text">No hay reservas para hoy</h3>
+           
+        </div>
     
+</div>
+    <div class="col-md-3" style="text-align: right">
+        <h1 class="no-margins">{{time}}</h1>
+        <small>Tiempo transcurrido de esta hora</small>
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>   
+    
+    <div class="modal inmodal" id="consult_reserva" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated bounceInUp">
+            <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Detalle de Reserva</h4>
+                                            <small>Toda la informacion relacionada con la reserva</small>
+                                        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Información del cliente</h3>
+                        <div class="feed-element">
+                        <a class="pull-left">
+                           <img src="images/profile-user.png" alt="" class="img-circle animated bounceIn ng-scope" width="100%" height="100%">
+                        </a>
+                        <div class="media-body ">
+                            <strong style="text-transform: uppercase" class="ng-binding">{{vm.v_reserva.nombres}}</strong>
+                            <p><strong class="ng-binding"><i class="fa fa-phone"></i> {{vm.v_reserva.telefono}}</strong></p>
+                        </div>
+                      <table class="table">
+                        <thead>
+                            <tr><th style="text-align: center;"><small class="text-muted">Cumplidas</small></th>
+                            <th style="text-align: center;"><small class="text-muted">Incumplidas</small></th>
+                            <th style="text-align: center;"><small class="text-muted">Canceladas</small></th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.cumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.incumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.canceladas}}</span></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h3>Información de reserva</h3>
+                        <p> <strong>Cancha:</strong> {{vm.v_reserva.nombrecancha}}</p>
+                        <p><i class="fa fa-calendar"></i> <span class="label label-danger">{{vm.v_reserva.fecha}}</span></p>
+                        <p><i class="fa fa-clock-o"></i> <strong><label class='label label-success'>{{vm.v_reserva.hora}} : 00</label></strong></p>
+                        <p ng-if="vm.v_reserva.estado === 'confirmadasinabono'"><span class="label label-danger">CONFIRMADA SIN ABONO</span></p>
+                        <p ng-if="vm.v_reserva.estado === 'confirmadaconabono'"><span class="label label-primary">CONFIRMADA CON ABONO</span></p>
+                       
+                    </div>
+                    
+
+                        
+                        <div class="col-md-5">
+                            <h3>Opciones de Reserva</h3>
+                            <p><strong>Valor de Reserva:</strong> {{vm.v_reserva.precio | currency:undefined:0}}</p>
+                            <p><strong>Abono requerido:</strong> {{vm.v_reserva.abonoRequerido | currency:undefined:0}}</p>
+                            <p><strong>Abono Liquidado:</strong> {{vm.v_reserva.abonoLiquidado | currency:undefined:0}}</p>
+                           
+                         <button class="btn btn-success" ng-click="vm.actualizarEstado(1,vm.v_reserva.id);"  ng-if="vm.v_reserva.hora <= hora">Cumplida</button>
+                         <button class="btn btn-warning" ng-click="vm.actualizarEstado(0,vm.v_reserva.id);"  ng-if="vm.v_reserva.hora <= hora">Incumplida</button>
+                         <button class="btn btn-danger" ng-click="vm.actualizarEstado(4,vm.v_reserva.id);" ng-if="vm.v_reserva.hora >= hora">Cancelar</button>
+   
+                            <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva">Recordar</button>
+                       
+                        </div>
+                </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+</div>
 </div>

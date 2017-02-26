@@ -97,25 +97,20 @@
                           
                     <ul class="sortable-list agile-list" ng-repeat="item in vm.confirmadas |  filter: filtro_confirmadas | orderBy : 'fecha' | orderBy : 'hora' ">
                         <li class="warning-element" ng-click="vm.modalDetalle(item)" ng-if="item.via== 'LOCAL'">
-                            
-                            <div ng-if="item.estado =='confirmadaconabono'" title="Con Abono" class="pull-right triangulo_top_right" style="margin-top:-9px;margin-right:-9px">
-                                
-                            </div>
-                            <i class="fa fa-user"></i> {{item.nombres}}
-                            <table width="100%">
-                                <tr>
-                                    <td width="50%"><i class="fa fa-phone"></i> {{item.telefono}}</td>
-                                    <td><strong>{{item.nombrecancha}}</strong></td>
-                                </tr>    
-                            </table>
-                            
-                            <div class="agile-detail ng-binding">
-                                <table width="100%">
-                                    <tr>
-                                        <td width="50%"><i class="fa fa-calendar-o"></i> <span class="label label-danger"  style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span> </td>
-                                        <td><i class="fa fa-clock-o"></i> <label class='label label-success'>{{item.hora}}:00</label></td>
-                                    </tr>
-                                </table>
+                           
+                             <div ng-if="item.estado =='confirmadaconabono'" title="Con Abono" class="triangulo_top_right"> </div>
+                             <i class="fa fa-user"></i> {{item.nombres}}
+                             
+                            <div class="row">
+                                <div class="col-xs-7">
+                                    <i class="fa fa-phone"></i> {{item.telefono}}<br>
+                                    <span class="label label-danger"  style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span>
+                                </div>
+                                <div class="col-xs-5">
+                             
+                                    <strong>{{item.nombrecancha}}</strong><br>
+                                    <i class="fa fa-clock-o"></i> <label class='label label-success'>{{item.hora}}:00</label>
+                                </div>
                             </div>
                         </li>
                     </ul>
