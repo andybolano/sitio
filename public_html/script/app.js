@@ -6,12 +6,9 @@
         .module('BirriasSitios', ['ui.router'])
         .constant('API_URL', 'http://localhost/birrias/api/public/index.php/api')
         .constant('HOME', 'app.home')
-        .config(function($stateProvider, $urlRouterProvider, $authProvider, API_URL) {
+        .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
             
-          $authProvider.authHeader = 'x-access-token';
-          $authProvider.httpInterceptor = true;
-          $authProvider.loginUrl = API_URL+'/authenticate';
-
+         $httpProvider.interceptors.push('Request');
          $urlRouterProvider.otherwise('/');
          
          $stateProvider
@@ -79,6 +76,19 @@
           });
      
 })();
+
+ angular.module("BirriasSitios").factory("Request", function(sessionService)
+{
+      var request = function request(config)
+      {
+          config.headers["Authorization"] = sessionService.getToken();
+          config.headers["Sitio"] = sessionService.getIdSitio();
+          return config;
+      };
+      return {
+          request: request
+      };
+});
 
   angular.module('BirriasSitios').directive('ngEnter', function() {
         return function(scope, elements, attrs) {
