@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('BirriasSitios', ['ui.router', 'satellizer'])
+        .module('BirriasSitios', ['ui.router'])
         .constant('API_URL', 'http://localhost/birrias/api/public/index.php/api')
         .constant('HOME', 'app.home')
         .config(function($stateProvider, $urlRouterProvider, $authProvider, API_URL) {
