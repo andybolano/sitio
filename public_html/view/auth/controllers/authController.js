@@ -8,6 +8,10 @@
         var vm = this;
         vm.user = {};
         vm.login = function() {
+            
+            if( vm.user.email === undefined ||  vm.user.email === "" || vm.user.password === "" || vm.user.password === undefined){
+                toastr["error"]("Es nesesario ingresar Usuario y contraseña");
+            }else{
             var credentials = {
                 email: vm.user.email,
                 password: vm.user.password
@@ -29,10 +33,10 @@
                             }
                         }
                         function error(error) {
-                            toastr["error"](error.data.error);
+                            toastr["error"](error.data);
                         }
                         
-           
+            }
         }
     }
 })();

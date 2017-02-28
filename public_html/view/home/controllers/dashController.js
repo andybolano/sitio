@@ -60,16 +60,16 @@ function drawChart(){
                             var i=0;
                             for(i=0; i<d.data.reservas.length; i++){
                                 if(d.data.reservas[i].estado ==='confirmadasinabono' || d.data.reservas[i].estado ==='confirmadaconabono'){
-                                    espera += d.data.reservas[i].cantidad;
+                                    espera += parseInt(d.data.reservas[i].cantidad);
                                 }
                                 if(d.data.reservas[i].estado ==='cumplida' ){
-                                    cumplidas = d.data.reservas[i].cantidad;
+                                    cumplidas = parseInt(d.data.reservas[i].cantidad);
                                 }
                                 if(d.data.reservas[i].estado ==='incumplida' ){
-                                    incumplidas = d.data.reservas[i].cantidad;
+                                    incumplidas = parseInt(d.data.reservas[i].cantidad);
                                 }
                                 if(d.data.reservas[i].estado ==='cancelada' ){
-                                    canceladas = d.data.reservas[i].cantidad;
+                                    canceladas = parseInt(d.data.reservas[i].cantidad);
                                 }
                             }
                            var data = new google.visualization.DataTable();

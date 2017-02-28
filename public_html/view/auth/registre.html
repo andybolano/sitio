@@ -11,6 +11,18 @@
                 </div>
             </div>
             <div class="m-t" role="form">
+                <div class="col-lg-12">
+                    <p class="text-center"><a ui-sref="terms" ><small>Leer terminos y condiciones de uso</small></a><p>
+                    
+                     <div class="form-group">
+                        <div class="checkbox i-checks">
+                            <label> 
+                                <input type="checkbox" id="terminos"><i>
+                                </i>&nbsp;&nbsp;<small style="font-size: 12px;">Estoy de acuerdo con los terminos del sistema</small>
+                                </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-6">
                 <div class="form-group">
                     <input type="text" class="form-control" ng-model="r.sitio.nombre" placeholder="Nombre de tu sitio" required="">
@@ -39,18 +51,8 @@
                 <div class="form-group">
                     <input type="password" class="form-control" ng-model="r.sitio.passConfirmada" placeholder="confirmar contraseña" required="">
                 </div>
-                    
-                <div class="form-group">
-                        <div class="checkbox i-checks">
-                            <label> 
-                                <input type="checkbox" id="terminos"><i>
-                                </i>&nbsp;&nbsp;<small style="font-size: 12px;">Estoy de acuerdo con los terminos del sistema</small>
-                                </label>
-                        </div>
-                </div>
-                     <a  ui-sref="terms"><p class="text-muted text-center"><small>Leer terminos y condiciones de uso</small></p></a>
                 <button type="submit" class="btn btn-warning block full-width m-b" ng-click="r.registre();">Registrarme</button>
-                 
+                
                 <p class="text-muted text-center"><small>Ya estas registrado?</small></p>
                 <a class="btn btn-sm btn-success btn-block" ui-sref="auth">iniciar sesion</a>
             </div>
