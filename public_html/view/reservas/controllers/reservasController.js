@@ -30,7 +30,29 @@
         vm.showCanchas = showCanchas;
         vm.reservar = reservar;
         vm.moveToFecha = moveToFecha;
-
+        vm.getCliente = getCliente;
+        
+        function getCliente(){
+            if(vm.Cliente.telefono !== undefined && vm.Cliente.telefono !== ""){
+            var promisePost = clienteService.getByPhone(vm.Cliente.telefono);
+                promisePost.then(function (d) {
+                    if(d.data.respuesta == false){
+                        toastr["warning"](d.data.message);
+                        vm.Cliente.nombre = "";
+                    }
+                    if(d.data.respuesta == true){
+                       vm.Cliente.nombre = d.data.user.nombres;
+                    }
+                }, function (err) {
+                    if (err.status == 401) {
+                        toastr["error"](err.data.respuesta);
+                    } else {
+                        toastr["error"]("Ha ocurrido un problema!");
+                    }
+                });
+            
+            }
+        }
         function moveToFecha(direction) {
             var f1 = new Date(vm.fecha);
             var fecha = "";

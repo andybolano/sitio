@@ -14,11 +14,13 @@
             getBySitio:getBySitio,
             updateReservas:updateReservas,
             getByFechaAll:getByFechaAll,
-             getEstadisticasByFecha: getEstadisticasByFecha,
-             getHistorial:getHistorial
+            getEstadisticasByFecha: getEstadisticasByFecha,
+            getHistorial:getHistorial,
+         
         };
         return service;
-
+        
+       
         function updateReservas(object){
            var defered = $q.defer();
             var promise = defered.promise;

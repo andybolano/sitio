@@ -117,7 +117,7 @@
                     <div class="col-lg-4">
                               <p style="font-weight: 900">Datos del Cliente</p>
                                 <small>Telefono:</small>
-                                                    <input type="number"  class="form-control" ng-model="vm.Cliente.telefono">
+                                                    <input type="number"  class="form-control" ng-model="vm.Cliente.telefono" ng-blur="vm.getCliente();">
                                                     <br><small>Nombre:</small>
                                                     <input type="text"  class="form-control" ng-model="vm.Cliente.nombre">
                                                   

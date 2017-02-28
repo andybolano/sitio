@@ -4,7 +4,7 @@
         .module('BirriasSitios')
         .controller('AuthController', AuthController);
 
-    function AuthController($auth,$state,HOME) {
+    function AuthController($state,HOME,authService) {
         var vm = this;
         vm.user = {};
         vm.login = function() {
@@ -12,18 +12,27 @@
                 email: vm.user.email,
                 password: vm.user.password
             }
-            $auth.login(credentials).then(function(d) {
-               if(d.data.result === false){
-                   toastr["error"](d.data.message);
-                   return false;
-               }
-               if(d.data.user){
-                   sessionStorage.setItem('userId',d.data.user.id);
-                   sessionStorage.setItem('email',d.data.user.email);
-                   sessionStorage.setItem('userIsLogin',true);
-                   $state.go(HOME);
-               }
-            });
+            
+             authService.authenticate(credentials).then(success, error);
+                      function success(d) {
+                            if(d.data.respuesta === false){
+                                toastr["error"](d.data.message);
+                                return false;
+                            }
+                            if(d.data.user){
+                                 var data = JSON.parse("[" + d.data.user + "]");
+                                sessionStorage.setItem('userId',data[0].id);
+                                sessionStorage.setItem('email',data[0].email);
+                                sessionStorage.setItem('token',data[0].token);
+                                sessionStorage.setItem('userIsLogin',true);
+                                $state.go(HOME);
+                            }
+                        }
+                        function error(error) {
+                            toastr["error"](error.data.error);
+                        }
+                        
+           
         }
     }
 })();

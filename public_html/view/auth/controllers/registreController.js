@@ -7,7 +7,7 @@
             .controller('RegistreController', RegistreController);
 
 
-    function RegistreController($auth, $state, registreService) {
+    function RegistreController($state, registreService) {
         var vm = this;
         vm.sitio = {};
         vm.registre = registre;

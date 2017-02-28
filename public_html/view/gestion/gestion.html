@@ -95,7 +95,7 @@
                          <div class="input-group"><input type="text" placeholder="Buscador" class="input-sm form-control"  ng-model="filtro_confirmadas"> <span class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
                           
-                    <ul class="sortable-list agile-list" ng-repeat="item in vm.confirmadas |  filter: filtro_confirmadas | orderBy : 'fecha' | orderBy : 'hora' ">
+                    <ul class="sortable-list agile-list" ng-repeat="item in vm.confirmadas |  filter: filtro_confirmadas | orderBy : ['fecha', 'hora']  ">
                         <li class="warning-element" ng-click="vm.modalDetalle(item)" ng-if="item.via== 'LOCAL'">
                            
                              <div ng-if="item.estado =='confirmadaconabono'" title="Con Abono" class="triangulo_top_right"> </div>

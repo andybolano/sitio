@@ -10,6 +10,7 @@
 
         var service = {
             get: get,
+           getByPhone:getByPhone,
         };
         return service;
 
@@ -25,6 +26,19 @@
                 defered.reject(error)
             }
         };
+        
+         function getByPhone(phone){
+            var defered = $q.defer();
+            var promise = defered.promise;
+            $http.get(API_URL+'/cliente/'+phone+'/telefono').then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+        }
     }
 })();
 

@@ -12,20 +12,25 @@
             isLoggedIn: isLoggedIn,
             getIdSitio: getIdSitio,
             getToken : getToken,
+            
         };
         return service;
 
+      
         function isLoggedIn(){
           return sessionStorage.getItem('userIsLogin') !== null;  
         };
         
          function getToken(){
-          return sessionStorage.getItem('token') !== null;  
+          if(sessionStorage.getItem('token') !== null){
+              return sessionStorage.getItem('token');
+          } 
         };
-        
         function getIdSitio(){
-            var sitio = JSON.parse(sessionStorage.getItem('data'));
-            return sitio.id;
+           if(sessionStorage.getItem('userId') !== null){
+                return sessionStorage.getItem('userId');
+           } 
+          
         }
     }
 })();

@@ -4,17 +4,26 @@
                           <span>
                              
                         <div class='img-wrap'>
-                         <img alt="image Sitio" id="profile" class="img-circle" src="images/profile-sitio.png" style="width:90px;"/>
+                        <img alt="image Sitio" id="profile" class="img-circle" src="{{menu.sitio.ruta}}" style="width:90px; height:90px;" ng-if="menu.sitio.image == 1"/>
+                         <img alt="image Sitio" id="profile" class="img-circle" src="images/profile-sitio.png" style="width:90px;height:90px;" ng-if="menu.sitio.image == 0"/>
                         </div>
                         </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
                                 <span class="clear"> 
                                     <span class="block m-t-xs"> 
-                                        <strong class="font-bold">{{menu.sitio.nombre}}</strong>   
+                                           
+                                        <strong class="font-bold">{{menu.sitio.nombre}} <b class="caret"></b></strong>   
                                         <small>{{menu.sitio.email}}</small><br>
                                          <small style='color:#FFF'>{{menu.hoy()}}</small>
+                                          
                                     </span>
                                 </span>
+                                <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                    <li><a ui-sref="app.configuracion"><i class="fa fa-gear" style="font-size:14px;color:#E55000"></i> Confirguración</a></li>
+                                <li class="divider"></li>
+                                <li><a href="javascript:;" ng-click="menu.logout()"><i class="fa fa-sign-out" style="font-size:14px;color:#E55000;"></i> Cerrar Sesión</a></li>
+                            </ul>
+                                
                             </a>
                         </div>
                         <div class="logo-element">
@@ -41,8 +50,5 @@
                     </li>
                     <li ng-class="{active : menu.isActive ('/canchas')}">
                         <a ui-sref="app.canchas"><i class="fa" style="margin-left:-2px;"><img src="fonts/cancha.svg" alt="C" title="C" style="width:18px;" /></i> <span class="nav-label" style="margin-left:-3px">Canchas</span></a>
-                    </li>
-                    <li ng-class="{active : menu.isActive ('/settings')}">
-                        <a ui-sref="app.settings"><i class="fa fa-cog"></i> <span class="nav-label">Configuración</span></a>
                     </li>
                 </ul>

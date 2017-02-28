@@ -2,11 +2,12 @@
     'use strict';
     angular
             .module('BirriasSitios')
-            .controller('MenuController', function($location,sitioService){
+            .controller('MenuController', function($location,sitioService,$state){
           
               var vm = this;
               vm.sitio = {};
                vm.getSitio = getSitio;
+               vm.logout = logout;
               
 
                 vm.isActive = function(viewLocation){
@@ -37,6 +38,20 @@
                         vm.sitio = JSON.parse(sessionStorage.getItem('data'));
                         vm.sitio.email = sessionStorage.getItem('email');
                     }
+                }
+                
+                function logout(){
+                      sitioService.logout().then(success, error);
+                      function success(d) {
+                          localStorage.clear();
+                          sessionStorage.clear();
+                           toastr['success']("sesión finalizada!");
+                          $state.go('auth');
+                          location.reload(true);
+                        }
+                        function error(error) {
+                           toastr['error'](error.data.error);
+                        }
                 }
                 
             });

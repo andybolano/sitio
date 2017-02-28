@@ -114,12 +114,13 @@ function drawChart(){
                var fecha = new Date().toDateInputValue();
                   var promisePost = reservasService.getByFechaAll(sessionService.getIdSitio(), fecha);
                         promisePost.then(function (d) {
+                             google.charts.setOnLoadCallback(drawChart);
                             if (d.data.length === 0) {
                                 toastr['warning']("No hay reservas : " + fecha);
                                  vm.reservas = d.data;
                             } else {
                               vm.reservas = d.data;
-                              google.charts.setOnLoadCallback(drawChart);
+                             
                               setTimeout(function () {
                                     $('.reloj').cuentaAtras();
                                 }, 1000);

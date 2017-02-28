@@ -4,7 +4,7 @@
 
     angular
         .module('BirriasSitios', ['ui.router'])
-        .constant('API_URL', 'http://localhost/birrias/api/public/index.php/api')
+        .constant('API_URL', 'http://localhost/birrias/birrias/api/public/index.php/api')
         .constant('HOME', 'app.home')
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
             
@@ -48,6 +48,11 @@
                      templateUrl: 'view/canchas/registro.html',
                      controller: 'CanchaController as vm'
                 })
+                 .state('app.configuracion', {
+                    url: '/configuracion',
+                     templateUrl: 'view/sitio/configuracion.html',
+                     controller: 'ConfiguracionController as vm'
+                })
                 
               //rutas publicas  
                 .state('auth', {
@@ -67,7 +72,7 @@
                 
                
       }).run(function($location,sessionService,$rootScope){
-          var rutasPrivadas = ['/','/canchas','/canchas/registro','/reserve'];
+          var rutasPrivadas = ['/','/canchas','/canchas/registro','/reserve','/canchas','/configuracion','/historial','/gestion'];
           $rootScope.$on('$stateChangeStart', function(){
              if(($.inArray($location.path(), rutasPrivadas)!== -1 ) && !sessionService.isLoggedIn()){
                  $location.path('/auth');
@@ -81,7 +86,7 @@
 {
       var request = function request(config)
       {
-          config.headers["Authorization"] = sessionService.getToken();
+          config.headers["Token"] = sessionService.getToken();
           config.headers["Sitio"] = sessionService.getIdSitio();
           return config;
       };
