@@ -158,7 +158,7 @@
                             <p><strong>Abono Liquidado:</strong> {{vm.v_reserva.abonoLiquidado | currency:undefined:0}}</p>
                             <div ng-if="vm.v_reserva.hora <= hora">
                             <small>Cuanto pagó?</small>
-                            <input type="number" class="input-sm form-control" id="pago"  onchange="format(this)">
+                            <input type="number" class="input-sm form-control" id="pago"  onchange="format(this)" ng-model="vm.v_reserva.precio">
                             </div>
                             <br>
                          <button class="btn btn-success" ng-click="vm.actualizarEstado(1,vm.v_reserva.id);"  ng-if="vm.v_reserva.hora <= hora">Cumplida</button>
