@@ -8,11 +8,13 @@
               vm.sitio = {};
               vm.v_reserva = {};
               vm.v_estadisticas = {};
+              vm.finanzas = {};
               $scope.time = "";
               $scope.hora = "";
               vm.getReservasHoy = getReservasHoy;
               vm.modalDetalle = modalDetalle;
               vm.actualizarEstado = actualizarEstado;
+
               vm.sitio = JSON.parse(sessionStorage.getItem('data'));
         
          Date.prototype.toDateInputValue = (function () {
@@ -117,10 +119,13 @@ function drawChart(){
                              google.charts.setOnLoadCallback(drawChart);
                             if (d.data.length === 0) {
                                 toastr['warning']("No hay reservas : " + fecha);
-                                 vm.reservas = d.data;
+                                 vm.reservas = d.data.reservas;
+                                  vm.finanzas.expectativa = 0;
+                                   vm.finanzas.realidad = 0;
                             } else {
-                              vm.reservas = d.data;
-                             
+                              vm.reservas = d.data.reservas;
+                              vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
+                              vm.finanzas.realidad = parseInt(d.data.finanzas.dineroEntrante);
                               setTimeout(function () {
                                     $('.reloj').cuentaAtras();
                                 }, 1000);
@@ -133,7 +138,7 @@ function drawChart(){
                             }
                     });
               }
-              
+ 
               function modalDetalle(reserva) {
                     $('#consult_reserva').modal('show');
                     vm.v_reserva = reserva;

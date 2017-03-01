@@ -78,7 +78,7 @@
                     });
                 }
 
-                function actualizarEstado(nuevoEstado, idReserva, masAbono) {
+                function actualizarEstado(nuevoEstado, idReserva) {
                     var object = "";
                     var mensaje = "";
                     var bandera = true;
@@ -126,7 +126,7 @@
                                     estado: nuevoEstado,
                                     idReserva: idReserva,
                                     valor: false,
-                                    abono: parseInt(vm.dinero.abonoCancelado + masAbono)
+                                    abono: parseInt(vm.dinero.abonoCancelado)
                                 }
                                 mensaje = "Esta reserva ha sido confirmada y ha sido registrado su abono";
                             }

@@ -16,9 +16,10 @@
                 email: vm.user.email,
                 password: vm.user.password
             }
-            
+            $('#login').attr("disabled", true);
              authService.authenticate(credentials).then(success, error);
                       function success(d) {
+                           $('#login').attr("disabled", false);
                             if(d.data.respuesta === false){
                                 toastr["error"](d.data.message);
                                 return false;
@@ -33,6 +34,7 @@
                             }
                         }
                         function error(error) {
+                            $('#login').attr("disabled", false);
                             toastr["error"](error.data);
                         }
                         
