@@ -156,7 +156,11 @@
                             <p><strong>Valor de Reserva:</strong> {{vm.v_reserva.precio | currency:undefined:0}}</p>
                             <p><strong>Abono requerido:</strong> {{vm.v_reserva.abonoRequerido | currency:undefined:0}}</p>
                             <p><strong>Abono Liquidado:</strong> {{vm.v_reserva.abonoLiquidado | currency:undefined:0}}</p>
-                           
+                            <div ng-if="vm.v_reserva.hora <= hora">
+                            <small>Cuanto pagó?</small>
+                            <input type="number" class="input-sm form-control" id="pago"  onchange="format(this)">
+                            </div>
+                            <br>
                          <button class="btn btn-success" ng-click="vm.actualizarEstado(1,vm.v_reserva.id);"  ng-if="vm.v_reserva.hora <= hora">Cumplida</button>
                          <button class="btn btn-warning" ng-click="vm.actualizarEstado(0,vm.v_reserva.id);"  ng-if="vm.v_reserva.hora <= hora">Incumplida</button>
                          <button class="btn btn-danger" ng-click="vm.actualizarEstado(4,vm.v_reserva.id);" ng-if="vm.v_reserva.hora >= hora">Cancelar</button>

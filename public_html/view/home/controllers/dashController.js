@@ -179,11 +179,17 @@ function drawChart(){
                     {
                         case 1:
                                 nuevoEstado = "cumplida";
+                                var pago = parseInt(document.getElementById("pago").value.split('.').join(''));
+                                if(document.getElementById("pago").value === ""  || document.getElementById("pago").value === 0 ){
+                                    toastr['warning']("Ingrese el valor que se pagó");
+                                    return false;
+                                }
                                 object = {
                                     estado: nuevoEstado,
                                     idReserva: idReserva,
                                     valor: false,
-                                    abono: false
+                                    abono: false,
+                                    pago: pago
                                 }
                                 mensaje = "La reserva ha sido cumplida";
                             break;
