@@ -8,7 +8,7 @@
                 vm.fecha2 = "";
                 vm.reservas = "";
                 vm.getReservas = getReservas;
-              
+                vm.finanzas = {};
                 
                 
                 
@@ -24,8 +24,13 @@
                 function getReservas(){
                    var promisePost = reservasService.getHistorial(sessionService.getIdSitio(), vm.fecha1.toDateInputValue(), vm.fecha2.toDateInputValue());
                     promisePost.then(function (d) {
-                        vm.reservas = d.data;
+                        vm.reservas = d.data.reservas;
                         google.charts.setOnLoadCallback(drawChart);
+                        
+                        vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
+                        vm.finanzas.realidad = parseInt(d.data.finanzas.dineroEntrante);
+                        vm.finanzas.abonos = parseInt(d.data.finanzas.abonos);
+                            
                     }, function (err) {
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);

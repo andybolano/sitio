@@ -77,6 +77,31 @@
                              <div style='text-align: center;'>
                             <div id="chart_reservas" style='margin-top:-20px;'></div>
                              </div>
+                            
+                            <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Ingresos</h5>
+            </div>
+                            <div class="ibox-content"  >
+                                <div class="row">
+                                <div class="col-xs-6">
+                                <h4>{{vm.finanzas.realidad | currency:undefined:0}}</h4>
+                                <small class="stats-label">Reservas</small>
+                                 </div>
+                                <div class="col-xs-6">
+                                <h4>{{vm.finanzas.abonos | currency:undefined:0}}</h4>
+                                <small class="stats-label">Abonos</small>
+                                 </div>
+                                </div>
+                                <br>
+                             <div>
+                                <h1 class="no-margins text-success">{{vm.finanzas.abonos + vm.finanzas.realidad | currency:undefined:0}}</h1>
+                                <small>Total Ingresos</small>
+                             </div>
+                            </div>
+                    </div>
+        
+            
                         </div>
                     </div>
                    
