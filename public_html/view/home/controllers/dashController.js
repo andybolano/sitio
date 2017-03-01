@@ -147,7 +147,8 @@ function drawChart(){
                     vm.v_estadisticas.cumplidas = 0;
                     vm.v_estadisticas.incumplidas = 0;
                     vm.v_estadisticas.canceladas = 0;
-
+                    
+                   
                     var promisePost = clienteService.get(reserva.idCliente);
                     promisePost.then(function (d) {
                         var i = 0;
@@ -162,7 +163,7 @@ function drawChart(){
                                 vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
                             }
                         }
-
+                         document.getElementById("pago").value = parseInt(vm.v_reserva.precio);
                     }, function (err) {
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);
