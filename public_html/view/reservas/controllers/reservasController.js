@@ -246,9 +246,9 @@
         }
 
         $scope.cargarReserva = function (horaCancha) {
-
             var fecha = document.getElementById("fechaReserva").value;
             var horacancha = horaCancha.split(",");
+           
             var hora = horacancha[0];
             var cancha = horacancha[1];
             var nombreCancha = "";
@@ -287,6 +287,7 @@
             }
             var dia = dia_semana(vm.fecha.toDateInputValue());
             var diaSemana = dias[dia];
+           
             var reserva = {"idcancha": cancha, "nombreCancha": nombreCancha, "fecha": fecha, "diaSemana": diaSemana, "hora": hora};
             if (vm.RESERVA.length > 0) {
                 var i = 0;
