@@ -117,15 +117,16 @@ function drawChart(){
                   var promisePost = reservasService.getByFechaAll(sessionService.getIdSitio(), fecha);
                         promisePost.then(function (d) {
                              google.charts.setOnLoadCallback(drawChart);
+                             
+                            vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
+                            vm.finanzas.realidad = parseInt(d.data.finanzas.dineroEntrante);
+                            vm.finanzas.abonos = parseInt(d.data.finanzas.abonos);
+                              
                             if (d.data.length === 0) {
                                 toastr['warning']("No hay reservas : " + fecha);
                                  vm.reservas = d.data.reservas;
-                                  vm.finanzas.expectativa = 0;
-                                   vm.finanzas.realidad = 0;
                             } else {
                               vm.reservas = d.data.reservas;
-                              vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
-                              vm.finanzas.realidad = parseInt(d.data.finanzas.dineroEntrante);
                               setTimeout(function () {
                                     $('.reloj').cuentaAtras();
                                 }, 1000);
