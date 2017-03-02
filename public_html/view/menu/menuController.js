@@ -32,7 +32,7 @@
                           
                         }
                         function error(error) {
-                           toastr['error'](error.data.error);
+                           toastr['error']('No autorizado!');
                         }
                     }else{
                         vm.sitio = JSON.parse(sessionStorage.getItem('data'));
