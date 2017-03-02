@@ -14,10 +14,9 @@
 <link href="css/plugins/toastr/toastr.min.css" rel=stylesheet type="text/css"/>
 <link href="css/plugins/sweetalert/sweetalert.css" rel=stylesheet type="text/css"/>
 <link href="css/style.css" rel=stylesheet type="text/css"/>
-<link href="css/plugins/iCheck/custom.css" rel=stylesheet type="text/css"/>
 <link href="css/plugins/jasny/jasny-bootstrap.min.css" rel=stylesheet>
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300" rel=stylesheet>
-<script src="https://www.gstatic.com/charts/loader.js"></script>
+
 <style>body{background-image:none;}
 .subtitule label{color:#212121;margin-left:14px;font-size:11px;}
 .mini-navbar .subtitule{display:none;}</style>
@@ -34,7 +33,6 @@
 <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="js/plugins/pace/pace.min.js"></script>
-<script src="js/plugins/iCheck/icheck.min.js"></script>
 <script src="js/plugins/toastr/toastr.min.js"></script>
 <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 <script src="js/plugins/iCheck/icheck.min.js"></script>
@@ -59,6 +57,19 @@
 <script src="script/service/canchaService.js"></script>
 <script src="script/service/reservasService.js"></script>
 <script src="script/service/clienteService.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAMeWcbz_HhR4Djb2hOP6C0odaexRNxUL8",
+    authDomain: "birrias-de4ff.firebaseapp.com",
+    databaseURL: "https://birrias-de4ff.firebaseio.com",
+    storageBucket: "birrias-de4ff.appspot.com",
+    messagingSenderId: "991363187494"
+  };
+  firebase.initializeApp(config);
+</script>
 <script>toastr.options={"closeButton":true,"debug":false,"newestOnTop":false,"progressBar":true,"positionClass":"toast-bottom-right","preventDuplicates":false,"onclick":null,"showDuration":"300","hideDuration":"1000","timeOut":"5000","extendedTimeOut":"1000","showEasing":"swing","hideEasing":"linear","showMethod":"fadeIn","hideMethod":"fadeOut"}
 function menu(){$("body").toggleClass("mini-navbar");SmoothlyMenu();}
 google.charts.load('current',{'packages':['corechart']});</script>
