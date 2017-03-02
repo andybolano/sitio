@@ -46,6 +46,7 @@
                         <th>Hora</th>
                         <th>Cliente</th>
                         <th>Precio</th>
+                        <th>Pag&oacute</th>
                         <th>Abono Requerido</th>
                         <th>Abono Liquidado</th>
                         <th>Estado</th>
@@ -59,6 +60,7 @@
                     <td>{{item.hora}}:00</td>
                     <td class="small">{{item.nombres}}</td>
                     <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
+                    <td class="text-success">{{item.pago | currency:undefined:0}}</td>
                     <td>{{item.abonoRequerido | currency:undefined:0}}</td>
                     <td class="text-success" ng-if="item.abonoLiquidado > 0"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
                     <td class="text-danger" ng-if="item.abonoLiquidado == 0"><i class="fa fa-level-down"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
