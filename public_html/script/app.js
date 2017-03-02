@@ -4,7 +4,7 @@
 
     angular
         .module('BirriasSitios', ['ui.router'])
-        .constant('API_URL', 'http://localhost/birrias/birrias/api/public/index.php/api')
+         .constant('API_URL', 'http://localhost/birrias/birrias/api/public/index.php/api')
         .constant('HOME', 'app.home')
         .config(function($stateProvider, $urlRouterProvider,$httpProvider) {
             
@@ -87,7 +87,7 @@
       var request = function request(config)
       {
           config.headers["Token"] = sessionService.getToken();
-          config.headers["Sitio"] = sessionService.getIdSitio();
+          config.headers["Sitio"] = sessionService.getIdUser();
           return config;
       };
       return {

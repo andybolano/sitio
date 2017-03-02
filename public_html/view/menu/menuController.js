@@ -47,7 +47,7 @@
                           sessionStorage.clear();
                            toastr['success']("sesión finalizada!");
                           $state.go('auth');
-                          location.reload(true);
+                      
                         }
                         function error(error) {
                            toastr['error'](error.data.error);

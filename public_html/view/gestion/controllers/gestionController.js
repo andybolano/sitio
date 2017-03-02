@@ -128,6 +128,7 @@
                                     valor: false,
                                     abono: parseInt(vm.dinero.abonoCancelado)
                                 }
+                               
                                 mensaje = "Esta reserva ha sido confirmada y ha sido registrado su abono";
                             }
                             vm.dinero = "";

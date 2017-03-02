@@ -22,11 +22,26 @@
         function post(cancha){
            var defered = $q.defer();
             var promise = defered.promise;
-           $http.post(API_URL+'/canchas',cancha,{transformRequest: angular.identity, 
+          $http.post(API_URL+'/canchas',cancha,{transformRequest: angular.identity, 
             headers: {'Content-Type': undefined}}).then(success, error);
             return promise;
              function success(p) {
-                 console.log(p)
+                 
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+        };
+        
+         function updateImage(image){
+           var defered = $q.defer();
+            var promise = defered.promise;
+           $http.post(API_URL+'/canchas/imagen',image,{transformRequest: angular.identity, 
+            headers: {'Content-Type': undefined}}).then(success, error);
+            return promise;
+             function success(p) {
+                 
                 defered.resolve(p);
             }
             function error(error) {
@@ -89,20 +104,7 @@
             }
         };
         
-        function updateImage(image){
-           var defered = $q.defer();
-            var promise = defered.promise;
-           $http.post(API_URL+'/canchas/image/',image,{transformRequest: angular.identity, 
-            headers: {'Content-Type': undefined}}).then(success, error);
-            return promise;
-             function success(p) {
-                 console.log(p)
-                defered.resolve(p);
-            }
-            function error(error) {
-                defered.reject(error)
-            }
-        }
+       
         
         
         

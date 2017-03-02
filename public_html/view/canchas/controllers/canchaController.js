@@ -1,4 +1,3 @@
-
 (function () {
     'use strict';
     angular
@@ -58,15 +57,17 @@
                                 formData.append('techo', vm.Cancha.techo);
                                 formData.append('jugadores', vm.Cancha.numeroJugadores);
                                 formData.append('image', vm.Cancha.imagen);
-
+                                $('#registro').attr("disabled", true);
                                 var promisePost = canchaService.post(formData);
                                 promisePost.then(function (d) {
+$('#registro').attr("disabled", false);
                                         vm.Cancha = "";
                                         document.getElementById("image").innerHTML = "";
                                         swal("Buen Trabajo!",d.data.message, "success");
                                         localStorage.removeItem('canchas');
                                         vm.getCanchas();
                                 }, function (err) {
+$('#registro').attr("disabled", false);
                                     if (err.status == 401) {
                                         toastr["error"](err.data.respuesta);
                                     } else {
@@ -82,9 +83,9 @@
                     if(localStorage.getItem('canchas') == null){
                         var promisePost = canchaService.get(sessionService.getIdSitio());
                         promisePost.then(function (d) {
+                       
                             localStorage.setItem('canchas', JSON.stringify(d.data));
                             vm.Canchas = d.data;
-
                         }, function (err) {
                             if (err.status == 401) {
                                 toastr["error"](err.data.respuesta);
@@ -113,7 +114,7 @@
                      
                        var promisePost = canchaService.remove(id);
                         promisePost.then(function (d) {
-                            console.log(d)
+                            
                             swal("Eliminada!", d.data.message, "success");
                               localStorage.removeItem('canchas');
                               vm.getCanchas();
@@ -132,7 +133,17 @@
                 
                 function view(item)
                 {
-                    vm.Cancha = item;
+               
+    	
+                    vm.Cancha.id = item.id;
+                    vm.Cancha.nombre = item.nombre;
+                    vm.Cancha.largo = parseInt(item.largo);  
+                    vm.Cancha.ancho = parseInt(item.ancho);
+                    vm.Cancha.jugadores = parseInt(item.jugadores);
+                    vm.Cancha.techo = item.techo;
+                    vm.Cancha.image = item.image;
+                    vm.Cancha.ruta = item.ruta;
+                    
                     $('#cancha').modal('show');
                      setTimeout(function () {
                         document.getElementById('files').addEventListener('change', archivo, false);
@@ -165,9 +176,10 @@
                                     toastr['warning']("Es nesario cargar una imagen");
                                     return false;
                                 }
-                                var promisePost = canchaService.updateImage(formData);
+                                
+                               var promisePost = canchaService.updateImage(formData);
                                 promisePost.then(function (d) {
-                                        vm.Cancha = "";
+                                        vm.Cancha = {};
                                         $('#cancha').modal('hide');
                                         document.getElementById("image").innerHTML = "";
                                         swal("Buen Trabajo!",d.data.message, "success");

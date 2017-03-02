@@ -10,6 +10,7 @@
 
         var service = {
             isLoggedIn: isLoggedIn,
+            getIdUser: getIdUser,
             getIdSitio: getIdSitio,
             getToken : getToken,
             
@@ -26,9 +27,16 @@
               return sessionStorage.getItem('token');
           } 
         };
-        function getIdSitio(){
+        function getIdUser(){
            if(sessionStorage.getItem('userId') !== null){
                 return sessionStorage.getItem('userId');
+           } 
+          
+        }
+        function getIdSitio(){
+           if(sessionStorage.getItem('sitioId') !== null){
+                return sessionStorage.getItem('sitioId');
+               
            } 
           
         }

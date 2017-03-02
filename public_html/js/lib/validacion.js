@@ -13,7 +13,6 @@ function validarNumero(e) {
 }
 
 function validarTexto(e) {
-    
   tecla = (document.all) ? e.keyCode : e.which;
     if (tecla==8) return true; 
       patron =/[A-Za-z\s]/; 

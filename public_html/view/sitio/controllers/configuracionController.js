@@ -22,6 +22,7 @@
                      var promisePost = sitioService.update(vm.sitio);
                         promisePost.then(function (d) {
                             vm.sitio = {};
+                           sessionStorage.removeItem('data');
                             vm.getSitio();
                             if(d.data.respuesta == false){
                                 toastr['error'](d.data.message);
@@ -42,7 +43,23 @@
               }
               
               function getSitio(){
+              	if(sessionStorage.getItem('data') !== null){
                   vm.sitio = JSON.parse(sessionStorage.getItem('data'));
+                  vm.sitio.email = sessionStorage.getItem('email');
+                  }else{
+                  
+                 sitioService.get().then(success, error);
+                      function success(d) {
+                           vm.sitio = d.data[0];
+                           vm.sitio.email = sessionStorage.getItem('email');
+                           sessionStorage.setItem('data',JSON.stringify(d.data[0]));
+                          
+                        }
+                        function error(error) {
+                           toastr['error'](error.data.error);
+                        }
+                        
+                  }
               }
               
               function updateImage(){
@@ -59,6 +76,7 @@
                                         vm.sitio = "";
                                         document.getElementById("image").innerHTML = "";
                                         swal("Buen Trabajo!",d.data.message, "success");
+                                         sessionStorage.removeItem('data');
                                        vm.getSitio();
                                 }, function (err) {
                                     if (err.status == 401) {

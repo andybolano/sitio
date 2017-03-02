@@ -12,17 +12,13 @@
                                 <span class="clear"> 
                                     <span class="block m-t-xs"> 
                                            
-                                        <strong class="font-bold">{{menu.sitio.nombre}} <b class="caret"></b></strong><br>  
+                                        <strong class="font-bold">{{menu.sitio.nombre}}</strong><br>   
                                         <small>{{menu.sitio.email}}</small><br>
                                          <small style='color:#FFF'>{{menu.hoy()}}</small>
                                           
                                     </span>
                                 </span>
-                                <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                    <li><a ui-sref="app.configuracion"><i class="fa fa-gear" style="font-size:14px;color:#E55000"></i> Confirguración</a></li>
-                                <li class="divider"></li>
-                                <li><a href="javascript:;" ng-click="menu.logout()"><i class="fa fa-sign-out" style="font-size:14px;color:#E55000;"></i> Cerrar Sesión</a></li>
-                            </ul>
+                                
                                 
                             </a>
                         </div>
@@ -40,7 +36,7 @@
                         <a  ui-sref="app.reserve"><i class="fa fa-soccer-ball-o"></i> <span class="nav-label">Reservar</span></a>
                     </li>
                     <li ng-class="{active : menu.isActive ('/gestion')}">
-                        <a ui-sref="app.gestion"><i class="fa fa-calendar"></i> <span class="nav-label">Gestion de Reservas</span></a>
+                        <a ui-sref="app.gestion"><i class="fa fa-calendar"></i> <span class="nav-label">Gesti&oacuten de Reservas</span></a>
                     </li>
                      <li ng-class="{active : menu.isActive ('/historial')}">
                         <a ui-sref="app.historial"><i class="fa fa-history"></i> <span class="nav-label">Historial de Reservas</span></a>
@@ -51,4 +47,13 @@
                     <li ng-class="{active : menu.isActive ('/canchas')}">
                         <a ui-sref="app.canchas"><i class="fa" style="margin-left:-2px;"><img src="fonts/cancha.svg" alt="C" title="C" style="width:18px;" /></i> <span class="nav-label" style="margin-left:-3px">Canchas</span></a>
                     </li>
+<li ng-class="{active : menu.isActive ('/configuracion')}">
+                        <a ui-sref="app.configuracion"><i class="fa fa-gear"></i> <span class="nav-label">Configuraci&oacuten</span></a>
+                    </li>
+</li>
+<li>
+                        <a href="javascript:;" ng-click="menu.logout()"><i class="fa fa-sign-out"></i> <span class="nav-label">Cerrar Sesión</span></a>
+                    </li>
+
+
                 </ul>

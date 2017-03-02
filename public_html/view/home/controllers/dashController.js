@@ -14,7 +14,6 @@
               vm.getReservasHoy = getReservasHoy;
               vm.modalDetalle = modalDetalle;
               vm.actualizarEstado = actualizarEstado;
-
               vm.sitio = JSON.parse(sessionStorage.getItem('data'));
         
          Date.prototype.toDateInputValue = (function () {
@@ -117,16 +116,20 @@ function drawChart(){
                   var promisePost = reservasService.getByFechaAll(sessionService.getIdSitio(), fecha);
                         promisePost.then(function (d) {
                              google.charts.setOnLoadCallback(drawChart);
-                             
-                            vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
+
+                              vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
                             vm.finanzas.realidad = parseInt(d.data.finanzas.dineroEntrante);
                             vm.finanzas.abonos = parseInt(d.data.finanzas.abonos);
-                              
+
                             if (d.data.length === 0) {
                                 toastr['warning']("No hay reservas : " + fecha);
                                  vm.reservas = d.data.reservas;
+                                  vm.finanzas.expectativa = 0;
+                                   vm.finanzas.realidad = 0;
                             } else {
-                              vm.reservas = d.data.reservas;
+                               vm.reservas = d.data.reservas;
+                          
+                             
                               setTimeout(function () {
                                     $('.reloj').cuentaAtras();
                                 }, 1000);
@@ -139,7 +142,7 @@ function drawChart(){
                             }
                     });
               }
- 
+              
               function modalDetalle(reserva) {
                     $('#consult_reserva').modal('show');
                     vm.v_reserva = reserva;
@@ -147,8 +150,9 @@ function drawChart(){
                     vm.v_estadisticas.cumplidas = 0;
                     vm.v_estadisticas.incumplidas = 0;
                     vm.v_estadisticas.canceladas = 0;
-                    
-                   
+
+  
+			
                     var promisePost = clienteService.get(reserva.idCliente);
                     promisePost.then(function (d) {
                         var i = 0;
@@ -163,7 +167,7 @@ function drawChart(){
                                 vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
                             }
                         }
-                         document.getElementById("pago").value = parseInt(vm.v_reserva.precio);
+	document.getElementById("pago").value = parseInt(vm.v_reserva.precio);
                     }, function (err) {
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);

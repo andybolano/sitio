@@ -34,13 +34,15 @@
                             email: vm.sitio.email,
                             password: vm.sitio.pass
                         }
-                        
+                      $('#registro').attr("disabled", true);
                      registreService.post(sitio).then(success, error);
                       function success(d) {
+  $('#registro').attr("disabled", false);
                             swal("Felicidades!", d.data.message, "success")
                              vm.sitio = "";
                         }
                         function error(error) {
+  $('#registro').attr("disabled", false);
                             sweetAlert("Oops...", d.data.message, "error");
                         }
                     }

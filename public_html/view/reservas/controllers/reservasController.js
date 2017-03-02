@@ -37,7 +37,7 @@
             var promisePost = clienteService.getByPhone(vm.Cliente.telefono);
                 promisePost.then(function (d) {
                     if(d.data.respuesta == false){
-                        toastr["warning"](d.data.message);
+                        
                         vm.Cliente.nombre = "";
                     }
                     if(d.data.respuesta == true){
@@ -246,9 +246,9 @@
         }
 
         $scope.cargarReserva = function (horaCancha) {
+
             var fecha = document.getElementById("fechaReserva").value;
             var horacancha = horaCancha.split(",");
-           
             var hora = horacancha[0];
             var cancha = horacancha[1];
             var nombreCancha = "";
@@ -287,7 +287,6 @@
             }
             var dia = dia_semana(vm.fecha.toDateInputValue());
             var diaSemana = dias[dia];
-           
             var reserva = {"idcancha": cancha, "nombreCancha": nombreCancha, "fecha": fecha, "diaSemana": diaSemana, "hora": hora};
             if (vm.RESERVA.length > 0) {
                 var i = 0;
@@ -314,7 +313,7 @@
             var token = false;
             var item = "";
             var detalle = [];
-            var estado = "";
+           
             if (vm.Cliente.nombre === undefined || vm.Cliente.telefono === undefined) {
                 toastr.warning("Aun faltan datos del cliente?");
             } else {
@@ -325,7 +324,7 @@
                 }
                 var i = 0;
                 for (i = 0; i < vm.RESERVA.length; i++) {
-                    if (document.getElementById('precio' + i).value === "" || document.getElementById('abonoRequerido' + i).value === "" || document.getElementById('abonoLiquidado' + i).value === "") {
+                    if (document.getElementById('precio' + i).value === "" || document.getElementById('abonoRequerido' + i).value === "") {
                         toastr.warning("No se ha ingresado el valor de la reserva o el abono requedo o abono liquidado?");
                         token = false;
                         return false;
@@ -335,31 +334,28 @@
                 }
                 if (token === true) {
                     for (i = 0; i < vm.RESERVA.length; i++) {
-                        if (document.getElementById('abonoLiquidado' + i).value > 0) {
-                            estado = 'confirmadaconabono';
-                        } else {
-                            estado = 'confirmadasinabono';
-                        }
+                        
+                     
                         item = {
                             precio: parseInt(document.getElementById('precio' + i).value.split('.').join('')),
                             abonoRequerido: parseInt(document.getElementById('abonoRequerido' + i).value.split('.').join('')),
-                            abonoLiquidado: parseInt(document.getElementById('abonoLiquidado' + i).value.split('.').join('')),
-                            estado: estado
+                            estado: 'confirmadasinabono'
                         };
                         detalle.push(item);
                     }
                     var reserva = {
                         nombre: vm.Cliente.nombre,
-                        telefono: vm.Cliente.telefono,
+                        telefono: vm.Cliente.telefono.toString(),
                         reserva: vm.RESERVA,
                         sitio: sessionService.getIdSitio(),
                         via: 'LOCAL',
                         tipo: tipo,
                         detalle: detalle
                     };
-
+$('#reservar').attr("disabled", true);
                     var promisePost = reservasService.post(reserva);
                     promisePost.then(function (d) {
+$('#reservar').attr("disabled", false);
                         if (d.data.respuesta === true) {
                             swal("Buen trabajo!", d.data.message, "success")
                             vm.RESERVA = [];
@@ -372,6 +368,7 @@
                             toastr["error"](d.data.message);
                         }
                     }, function (err) {
+$('#reservar').attr("disabled", true);
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);
                         } else {

@@ -39,8 +39,8 @@
                                 <td>{{i.nombre}}</td>
                                 <td>{{i.largo}} x {{i.ancho}} m</td>
                                 <td>
-                                    <p ng-if="i.techo === 0">NO</p>
-                                    <p ng-if="i.techo === 1">SI</p>
+                                    <p ng-if="i.techo === '0'">NO</p>
+                                    <p ng-if="i.techo === '1'">SI</p>
                                 </td>
                                 <td>{{i.jugadores}}</td>
                                 <td>
@@ -83,7 +83,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-5">
-                        <div ng-if="vm.Cancha.image == 0" style="margin-top:10px;text-align: center;" >
+                        <div ng-if="vm.Cancha.image == '0'" style="margin-top:10px;text-align: center;" >
                             
                               <label>Subir foto de la cancha:</label>
                             <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -101,7 +101,7 @@
                                 </div>
                             </div> 
                         </div>
-                        <div ng-if="vm.Cancha.image == 1" style="margin-top:10px;text-align: center;">
+                        <div ng-if="vm.Cancha.image == '1'" style="margin-top:10px;text-align: center;">
                             
                             
                               <label>Cambiar de la cancha:</label>

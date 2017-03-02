@@ -7,8 +7,9 @@
                 vm.fecha1 = "";
                 vm.fecha2 = "";
                 vm.reservas = "";
-                vm.getReservas = getReservas;
                 vm.finanzas = {};
+                vm.getReservas = getReservas;
+              
                 
                 
                 
@@ -27,10 +28,10 @@
                         vm.reservas = d.data.reservas;
                         google.charts.setOnLoadCallback(drawChart);
                         
-                        vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
+                          vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
                         vm.finanzas.realidad = parseInt(d.data.finanzas.dineroEntrante);
                         vm.finanzas.abonos = parseInt(d.data.finanzas.abonos);
-                            
+                        
                     }, function (err) {
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);
@@ -52,16 +53,16 @@
                             var i=0;
                             for(i=0; i<d.data.reservas.length; i++){
                                 if(d.data.reservas[i].estado ==='confirmadasinabono' || d.data.reservas[i].estado ==='confirmadaconabono'){
-                                    espera += d.data.reservas[i].cantidad;
+                                    espera += parseInt(d.data.reservas[i].cantidad);
                                 }
                                 if(d.data.reservas[i].estado ==='cumplida' ){
-                                    cumplidas = d.data.reservas[i].cantidad;
+                                    cumplidas = parseInt(d.data.reservas[i].cantidad);
                                 }
                                 if(d.data.reservas[i].estado ==='incumplida' ){
-                                    incumplidas = d.data.reservas[i].cantidad;
+                                    incumplidas = parseInt(d.data.reservas[i].cantidad);
                                 }
                                 if(d.data.reservas[i].estado ==='cancelada' ){
-                                    canceladas = d.data.reservas[i].cantidad;
+                                    canceladas = parseInt(d.data.reservas[i].cantidad);
                                 }
                             }
                             
