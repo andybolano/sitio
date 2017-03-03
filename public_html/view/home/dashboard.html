@@ -158,7 +158,7 @@
                             <p><strong>Valor de Reserva:</strong> {{vm.v_reserva.precio | currency:undefined:0}}</p>
                             <p><strong>Abono requerido:</strong> {{vm.v_reserva.abonoRequerido | currency:undefined:0}}</p>
                             <p><strong>Abono Liquidado:</strong> {{vm.v_reserva.abonoLiquidado | currency:undefined:0}}</p>
-                            
+                            <small ng-if="vm.v_reserva.hora > hora">Nota: al llegar la hora de la reserva, se activara la opci&oacuten 'cumplida' o 'incumplida'.</small>
                             <div ng-if="vm.v_reserva.hora <= hora">
                             <small>Cuanto pag&oacute?</small>
                             <input type="number" class="input-sm form-control" id="pago"  onchange="format(this)">
@@ -167,7 +167,7 @@
                            
                          <button class="btn btn-success" ng-click="vm.actualizarEstado(1,vm.v_reserva.id);"  ng-if="vm.v_reserva.hora <= hora">Cumplida</button>
                          <button class="btn btn-warning" ng-click="vm.actualizarEstado(0,vm.v_reserva.id);"  ng-if="vm.v_reserva.hora <= hora">Incumplida</button>
-                         <button class="btn btn-danger" ng-click="vm.actualizarEstado(4,vm.v_reserva.id);" ng-if="vm.v_reserva.hora >= hora">Cancelar</button>
+                      
    
                             <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva">Recordar</button>
                        

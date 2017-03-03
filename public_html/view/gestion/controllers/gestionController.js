@@ -6,14 +6,22 @@
                 var vm = this;
                 vm.getReservas = getReservas;
                 vm.modalDetalle = modalDetalle;
-                vm.actualizarEstado = actualizarEstado;
+                vm.actualizarEstadoGestion = actualizarEstadoGestion;
                 vm.nuevasSolicitudes = [];
                 vm.esperandoConfirmacion = [];
                 vm.confirmadas = [];
                 vm.v_reserva = {};
                 vm.v_estadisticas = {};
                 vm.dinero = {};
-
+                vm.fechaHoy = "";
+                
+        Date.prototype.toDateInputValue = (function () {
+            var local = new Date(this);
+            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+            return local.toJSON().slice(0, 10);
+        });
+        
+        vm.fechaHoy = new Date().toDateInputValue();
 
                 function getReservas() {
                      vm.nuevasSolicitudes = [];
@@ -68,7 +76,9 @@
                                 vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
                             }
                         }
-
+                         if(document.getElementById("pago") !== null) {            
+                            document.getElementById("pago").value = parseInt(vm.v_reserva.precio - vm.v_reserva.abonoLiquidado);
+                        }
                     }, function (err) {
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);
@@ -78,7 +88,7 @@
                     });
                 }
 
-                function actualizarEstado(nuevoEstado, idReserva) {
+                function actualizarEstadoGestion(nuevoEstado, idReserva) {
                     var object = "";
                     var mensaje = "";
                     var bandera = true;
@@ -153,6 +163,35 @@
                             }
                             mensaje = "Su reserva ha sido cancelada";
                             break;
+                            
+                        case 5:
+                            
+                              nuevoEstado = "cumplida";
+                                var pago = parseInt(document.getElementById("pago").value.split('.').join(''));
+                                if(document.getElementById("pago").value === ""  || document.getElementById("pago").value === 0 ){
+                                    toastr['warning']("Ingrese el valor que se pagó");
+                                    return false;
+                                }
+                                object = {
+                                    estado: nuevoEstado,
+                                    idReserva: idReserva,
+                                    valor: false,
+                                    abono: false,
+                                    pago: pago
+                                }
+                                mensaje = "La reserva ha sido cumplida";
+                            break
+                            
+                        case 6:
+                              nuevoEstado = "incumplida";
+                                object = {
+                                    estado: nuevoEstado,
+                                    idReserva: idReserva,
+                                    valor: false,
+                                    abono: false
+                                }
+                                mensaje = "La reserva ha sido incumplida"
+                            break
                     }
                     if (nuevoEstado === "cancelada") {
                         swal(

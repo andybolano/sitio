@@ -167,7 +167,11 @@ function drawChart(){
                                 vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
                             }
                         }
+                        
+         if(document.getElementById("pago") !== null) {            
 	document.getElementById("pago").value = parseInt(vm.v_reserva.precio - vm.v_reserva.abonoLiquidado);
+    }
+        
                     }, function (err) {
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);
