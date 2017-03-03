@@ -18,9 +18,11 @@
         var dias = new Array('', 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado');
         vm.RESERVA = [];
         vm.Cliente = {};
+        vm.Cliente.existe = false;
         vm.v_reserva = {};
         vm.v_cliente = {};
         vm.v_estadisticas = {};
+        
         //methods
         vm.reservar = reservar;
         vm.getCanchas = getCanchas;
@@ -33,15 +35,33 @@
         vm.getCliente = getCliente;
         
         function getCliente(){
+            
+            vm.v_estadisticas.cumplidas = 0;
+            vm.v_estadisticas.incumplidas = 0;
+            vm.v_estadisticas.canceladas = 0;
+            
             if(vm.Cliente.telefono !== undefined && vm.Cliente.telefono !== ""){
             var promisePost = clienteService.getByPhone(vm.Cliente.telefono);
                 promisePost.then(function (d) {
                     if(d.data.respuesta == false){
-                        
                         vm.Cliente.nombre = "";
+                         vm.Cliente.existe = false;
                     }
                     if(d.data.respuesta == true){
-                       vm.Cliente.nombre = d.data.user.nombres;
+                       vm.Cliente.nombres = d.data.user.nombres;
+                       vm.Cliente.existe = true;
+                       
+                   for (var i = 0; i < d.data.reservas.length; i++) {
+                    if (d.data.reservas[i].estado === 'cumplida') {
+                        vm.v_estadisticas.cumplidas = d.data.reservas[i].cantidad;
+                    }
+                    if (d.data.reservas[i].estado === 'incumplida') {
+                        vm.v_estadisticas.incumplidas = d.data.reservas[i].cantidad;
+                    }
+                    if (d.data.reservas[i].estado === 'cancelada') {
+                        vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
+                    }
+                }
                     }
                 }, function (err) {
                     if (err.status == 401) {
@@ -356,6 +376,7 @@ $('#reservar').attr("disabled", true);
                     var promisePost = reservasService.post(reserva);
                     promisePost.then(function (d) {
 $('#reservar').attr("disabled", false);
+vm.Cliente.existe = false;
                         if (d.data.respuesta === true) {
                             swal("Buen trabajo!", d.data.message, "success")
                             vm.RESERVA = [];
@@ -380,6 +401,7 @@ $('#reservar').attr("disabled", true);
         }
 
         $scope.viewReserva = function (reserva) {
+            
             $('#consult_reserva').modal('show');
 
             var canchas = JSON.parse(localStorage.getItem('canchas'));

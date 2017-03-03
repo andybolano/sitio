@@ -13,12 +13,12 @@
         </div>
         <div class="col-xs-2" style="text-align: right">
             <div class="spacer" style="height:10px;"></div>
-  
-           <button type="button" class="btn btn-primary" ng-click="vm.moveToFecha('-')"><i class="fa fa-chevron-left"></i></button> 
+
+            <button type="button" class="btn btn-primary" ng-click="vm.moveToFecha('-')"><i class="fa fa-chevron-left"></i></button> 
         </div>
         <div class="col-xs-5">
-              <div class="spacer" style="height:10px;"></div>
-          
+            <div class="spacer" style="height:10px;"></div>
+
             <div class="input-group">
                 <span class="input-group-btn"> 
                     <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button> 
@@ -30,22 +30,22 @@
             </div>
         </div>
         <div class="col-xs-2">
-           <div class="spacer" style="height:10px;"></div>
-         
+            <div class="spacer" style="height:10px;"></div>
+
             <button type="button" class="btn btn-primary" ng-click="vm.moveToFecha('+')"><i class="fa fa-chevron-right"></i></button> 
         </div>
     </div>
     <hr class="hr-line-dashed" style="padding: 0;margin: 0;margin-top:10px;">
     <div class="wrapper-content" style="padding-top: 0;">
         <div class="row" id="canchas">
-            
+
         </div>
     </div>
-    
-        <div class="theme-config" style="position: absolute;right: -20px;">
+
+    <div class="theme-config" style="position: absolute;right: -20px;">
         <div class="theme-config-box show">
             <div class="spin-icon">
-                
+
                 <i class="fa fa-cogs fa-spin"></i> 
             </div>
             <div class="skin-settings">
@@ -57,19 +57,19 @@
                 <div ng-if="vm.RESERVA.length > 0">
                     <div style="max-height:450px;overflow-y: auto;">
                         <li ng-repeat="item in vm.RESERVA" class="list-group-item">
-                             <span class="pull-right badge">{{item.hora}}:00</span>
+                            <span class="pull-right badge">{{item.hora}}:00</span>
                             {{item.nombreCancha}}<br>
                             <strong>{{item.diaSemana}}- {{item.fecha}}</strong>
-                           
+
                         </li>
                     </div>
                     <button class="btn btn-primary" style="width: 100%;" onclick="$('#reserva').modal('show')">
-                            EFECTUAR RESERVA
-                        </button>
+                        EFECTUAR RESERVA
+                    </button>
                 </div>
 
 
-                
+
             </div>
         </div>
     </div>
@@ -79,21 +79,21 @@
     <div class="modal-dialog modal-lg" style="width:90%;">
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                            <h4 class="modal-title">Registro de Reserva</h4>
-                                            <small>Termina de digilenciar la informacion para registrarla.</small>
-                                        </div>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Registro de Reserva</h4>
+                <small>Termina de digilenciar la informacion para registrarla.</small>
+            </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-8">
                         <table class="table table-striped">
                             <thead>
-                                <th>Cancha</th>
-                                <th>Fecha</th>
-                                <th>Hora</th>
-                                <th>Precio</th>
-                                <th>Abono requerido</th>
-                              
+                            <th>Cancha</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Precio</th>
+                            <th>Abono requerido</th>
+
                             </thead>
                             <tbody>
                                 <tr ng-repeat="item in vm.RESERVA">
@@ -106,30 +106,54 @@
                                     <td>
                                         {{item.hora}}:00
                                     </td>
-                                     <td width="20%"><input type="number"  class="form-control" id="precio{{$index}}"  onchange="format(this)" ></td>
-                                     <td width="20%"><input type="number"  value="0" class="form-control" id="abonoRequerido{{$index}}"  onchange="format(this)" ></td>
+                                    <td width="20%"><input type="number"  class="form-control" id="precio{{$index}}"  onchange="format(this)" ></td>
+                                    <td width="20%"><input type="number"  value="0" class="form-control" id="abonoRequerido{{$index}}"  onchange="format(this)" ></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-lg-4">
-                              <p style="font-weight: 900">Datos del Cliente</p>
-                                <small>Telefono:</small>
-                                                    <input type="number"  class="form-control" ng-model="vm.Cliente.telefono" ng-blur="vm.getCliente();">
-                                                    <br><small>Nombre:</small>
-                                                    <input type="text"  class="form-control" ng-model="vm.Cliente.nombre">
-                                                  
+                        <p style="font-weight: 900">Datos del Cliente</p>
+                        <small>Telefono:</small>
+                        <input type="number"  class="form-control" ng-model="vm.Cliente.telefono" ng-blur="vm.getCliente();">
+                        <div ng-if='vm.Cliente.existe === false'>
+                            <small>Nombre:</small>
+                            <input type="text"  class="form-control" ng-model="vm.Cliente.nombre">
+                        </div>
+                                                    
+                     <div class="feed-element"  ng-if='vm.Cliente.existe === true'>
+                        <a class="pull-left">
+                           <img src="images/profile-user.png" alt="" class="img-circle animated bounceIn ng-scope" width="100%" height="100%">
+                        </a>
+                        <div class="media-body ">
+                            <strong style="text-transform: uppercase">{{vm.Cliente.nombres}}</strong>
+                            <p><strong><i class="fa fa-phone"></i> {{vm.Cliente.telefono}}</strong></p>
+                        </div>
+                      <table class="table">
+                        <thead>
+                            <tr><th style="text-align: center;"><small class="text-muted">Cumplidas</small></th>
+                            <th style="text-align: center;"><small class="text-muted">Incumplidas</small></th>
+                            <th style="text-align: center;"><small class="text-muted">Canceladas</small></th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.cumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.incumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.canceladas}}</span></td>
+                        </tr>
+                        </tbody>
+                      </table>
                     </div>
-                      
+                     
+                    </div>
                 </div>
+
             </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary" ng-click="vm.reservar();" id="reservar"><i class="fa fa-cloud-upload"></i> Registrar Reserva</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" ng-click="vm.reservar();" id="reservar"><i class="fa fa-cloud-upload"></i> Registrar Reserva</button>
+            </div>
         </div>
     </div>
 </div>
-</div>
-
 <div ng-include="'view/includes/modalReserva.html'">
 </div>
