@@ -48,7 +48,7 @@
                          vm.Cliente.existe = false;
                     }
                     if(d.data.respuesta == true){
-                       vm.Cliente.nombres = d.data.user.nombres;
+                       vm.Cliente.nombre = d.data.user.nombres;
                        vm.Cliente.existe = true;
                        
                    for (var i = 0; i < d.data.reservas.length; i++) {
