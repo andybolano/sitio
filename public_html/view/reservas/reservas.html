@@ -1,4 +1,6 @@
 <div class="row  border-bottom white-bg page-heading" ng-init="vm.getCanchas();">
+    
+
     <div class="row">
         <div class="col-xs-3">
             <h2>Rerservar</h2>
@@ -49,13 +51,21 @@
                 <i class="fa fa-cogs fa-spin"></i> 
             </div>
             <div class="skin-settings">
-                <div class="title">Reservación  <span class="badge badge-danger">{{vm.RESERVA.length}}</span></div>
+                <div class="title">
+                    <span ng-if="vm.reservaMover.existe == false">Reservación</span>
+                    <span ng-if="vm.reservaMover.existe == true">Actualizando Reserva</span>
+                    <span class="badge badge-danger" ng-if="vm.reservaMover.existe == false">{{vm.RESERVA.length}}</span></div>
                 <div class="setings-item" ng-if="vm.RESERVA.length == 0" style="text-align: center;">
                     <i class="fa fa-eye-slash ico-bg"></i>
                     <h4 class="vacio-text">No se han cargado reservas</h4>
                 </div>
                 <div ng-if="vm.RESERVA.length > 0">
                     <div style="max-height:450px;overflow-y: auto;">
+                        <div class="setings-item" style="text-align: center;" ng-if="vm.reservaMover.existe == true">
+                        <small>
+                            Seleccione nueva fecha y hora de reserva..
+                        </small>
+                        </div>
                         <li ng-repeat="item in vm.RESERVA" class="list-group-item">
                             <span class="pull-right badge">{{item.hora}}:00</span>
                             {{item.nombreCancha}}<br>
@@ -63,8 +73,14 @@
 
                         </li>
                     </div>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="$('#reserva').modal('show')">
+                    <button class="btn btn-primary" style="width: 100%;" onclick="$('#reserva').modal('show')" ng-if="vm.reservaMover.existe == false">
                         EFECTUAR RESERVA
+                    </button>
+                    <button class="btn btn-danger" style="width: 100%;" ng-click="vm.cancelarActualizacion();" ng-if="vm.reservaMover.existe == true">
+                        CANCELAR ACTUALIZACIÓN
+                    </button>
+                    <button class="btn btn-warning" style="width: 100%;" onclick="$('#reserva').modal('show')" ng-if="vm.reservaMover.existe == true">
+                        ACTUALIZAR RESERVA
                     </button>
                 </div>
 
@@ -74,6 +90,8 @@
         </div>
     </div>
 </div>
+
+
 
 <div class="modal inmodal" id="reserva" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" style="width:90%;">
@@ -150,7 +168,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" ng-click="vm.reservar();" id="reservar"><i class="fa fa-cloud-upload"></i> Registrar Reserva</button>
+                <button type="button" class="btn btn-primary" ng-click="vm.reservar();" id="reservar"  ng-if="vm.reservaMover.existe == false"><i class="fa fa-cloud-upload"></i> Registrar Reserva</button>
+                <button type="button" class="btn btn-danger" ng-click="vm.actualizarReserva();" id="actualizar"  ng-if="vm.reservaMover.existe == true"><i class="fa fa-refresh"></i> Actualizar Reserva</button>
             </div>
         </div>
     </div>

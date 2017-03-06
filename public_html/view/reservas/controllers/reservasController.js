@@ -19,9 +19,12 @@
         vm.RESERVA = [];
         vm.Cliente = {};
         vm.Cliente.existe = false;
+        vm.reservaMover = {};
+        vm.reservaMover.existe = false;
         vm.v_reserva = {};
         vm.v_cliente = {};
         vm.v_estadisticas = {};
+        
         
         //methods
         vm.reservar = reservar;
@@ -33,6 +36,8 @@
         vm.reservar = reservar;
         vm.moveToFecha = moveToFecha;
         vm.getCliente = getCliente;
+        vm.cancelarActualizacion = cancelarActualizacion;
+        vm.actualizarReserva = actualizarReserva;
         
         function getCliente(){
             
@@ -109,7 +114,41 @@
             vm.diaSemana = dias[dia];
         }
 
+        function moverReserva(){
+           var reserva = JSON.parse(localStorage.getItem('reservaMover'));
+             vm.RESERVA.push({
+                 "id":reserva.id,
+                   "idcancha": reserva.idCancha, 
+                    "nombreCancha": reserva.nombrecancha, 
+                    "fecha": reserva.fecha, 
+                    "diaSemana": reserva.diaSemana, 
+                    "hora": reserva.hora
+                }); 
+           vm.Cliente.existe = true;
+           vm.Cliente.telefono = parseInt(reserva.telefono);
+           vm.Cliente.nombre = reserva.nombres;
+           vm.v_estadisticas.cumplidas = reserva.estadisticas.cumplidas;
+           vm.v_estadisticas.incumplidas = reserva.estadisticas.incumplidas;
+           vm.v_estadisticas.canceladas = reserva.estadisticas.canceladas;
+        }
+        
+        function cancelarActualizacion(){
+            localStorage.removeItem('reservaMover');
+                           vm.Cliente.existe = false;
+                           vm.reservaMover.existe = false;
+                            vm.RESERVA = [];
+                            vm.Cliente = "";
+                            $("#reserva").modal('hide');
+                            getCanchas();
+            
+        }
+        
         function getCanchas() {
+            if(localStorage.getItem('reservaMover') !== null){
+               vm.reservaMover.existe = true;
+                moverReserva();
+            }
+            
             if (localStorage.getItem('canchas') == null) {
                 var promisePost = canchaService.get(sessionService.getIdSitio());
                 promisePost.then(function (d) {
@@ -267,6 +306,7 @@
 
         $scope.cargarReserva = function (horaCancha) {
            
+                
             var fecha = document.getElementById("fechaReserva").value;
             var horacancha = horaCancha.split(",");
             var hora = horacancha[0];
@@ -294,7 +334,29 @@
             }
 
 
+if(localStorage.getItem('reservaMover') !== null){
+            $scope.$apply(function(){
+                   vm.RESERVA[0].idcancha = cancha;
+                   vm.RESERVA[0].hora = hora;
+                   vm.RESERVA[0].fecha = fecha;
+            var data_canchas = JSON.parse(localStorage.getItem('canchas'));
+            var i = 0;
+            for (i = 0; i < data_canchas.length; i++)
+            {
 
+                if (parseInt(cancha) === parseInt(data_canchas[i].id))
+                {
+                    vm.RESERVA[0].nombreCancha = data_canchas[i].nombre;
+                }
+            }
+                 
+           var dia = dia_semana(vm.fecha.toDateInputValue());
+            var diaSemana = dias[dia];
+            vm.RESERVA[0].diaSemana = diaSemana;
+
+            });    
+          }else{
+                
             var data_canchas = JSON.parse(localStorage.getItem('canchas'));
             var i = 0;
             for (i = 0; i < data_canchas.length; i++)
@@ -326,7 +388,7 @@
                 vm.RESERVA;
             });
 
-
+            }
         }
 
         function reservar() {
@@ -398,6 +460,51 @@ $('#reservar').attr("disabled", true);
                     });
                 }
             }
+        }
+        
+        function actualizarReserva(){
+             if (document.getElementById('precio' + 0).value === "" || document.getElementById('abonoRequerido' + 0).value === "") {
+                        toastr.warning("No se ha ingresado el valor de la reserva o el abono requedo o abono liquidado?");
+                        return false;
+                    }
+                    
+               var object = 
+               {
+                   precio: parseInt(document.getElementById('precio' + 0).value.split('.').join('')),
+                   abonoRequerido: parseInt(document.getElementById('abonoRequerido' + 0).value.split('.').join('')),
+                   fecha:vm.RESERVA[0].fecha,
+                   hora:vm.RESERVA[0].hora,
+                   diaSemana:vm.RESERVA[0].diaSemana,
+                   cancha:vm.RESERVA[0].idcancha,
+                   idReserva:vm.RESERVA[0].id
+               }   
+              $('#actualizar').attr("disabled", true); 
+              
+              var promisePost = reservasService.actualizarFecha(object);
+                    promisePost.then(function (d) {
+                      $('#actualizar').attr("disabled", false);
+                         
+                        if (d.data.respuesta === true) {
+                           localStorage.removeItem('reservaMover');
+                           vm.Cliente.existe = false;
+                           vm.reservaMover.existe = false;
+                            swal("Buen trabajo!", d.data.message, "success")
+                            vm.RESERVA = [];
+                            vm.Cliente = "";
+                            $("#reserva").modal('hide');
+                            getCanchas();
+                        } else {
+                            toastr["error"](d.data.message);
+                        }
+                    }, function (err) {
+                $('#actualizar').attr("disabled", true);
+                                        if (err.status == 401) {
+                                            toastr["error"](err.data.respuesta);
+                                        } else {
+                                            toastr["error"]("Ha ocurrido un problema!");
+                                        }
+                    });
+              
         }
 
         $scope.viewReserva = function (reserva) {

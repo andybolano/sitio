@@ -2,11 +2,12 @@
     'use strict';
     angular
             .module('BirriasSitios')
-            .controller('GestionController', function (reservasService, sessionService, clienteService) {
+            .controller('GestionController', function (reservasService, sessionService, clienteService,$state) {
                 var vm = this;
                 vm.getReservas = getReservas;
                 vm.modalDetalle = modalDetalle;
                 vm.actualizarEstadoGestion = actualizarEstadoGestion;
+                vm.moverReserva = moverReserva;
                 vm.nuevasSolicitudes = [];
                 vm.esperandoConfirmacion = [];
                 vm.confirmadas = [];
@@ -23,6 +24,13 @@
         
         vm.fechaHoy = new Date().toDateInputValue();
 
+
+function moverReserva(){
+    $('#consult_reserva').modal('hide');
+    vm.v_reserva.estadisticas = vm.v_estadisticas;
+    localStorage.setItem("reservaMover",JSON.stringify(vm.v_reserva));
+    $state.go("app.reserve");
+}
                 function getReservas() {
                      vm.nuevasSolicitudes = [];
                      vm.esperandoConfirmacion = [];

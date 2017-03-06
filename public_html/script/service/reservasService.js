@@ -16,11 +16,26 @@
             getByFechaAll:getByFechaAll,
             getEstadisticasByFecha: getEstadisticasByFecha,
             getHistorial:getHistorial,
+            actualizarFecha:actualizarFecha
          
         };
         return service;
         
+       //para actualizar fecha y hora
+       function actualizarFecha(object){
+           var defered = $q.defer();
+            var promise = defered.promise;
+            $http.put(API_URL+'/reservas/fecha/'+object.idReserva, object).then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+       }
        
+       //para actualizar estado y abono
         function updateReservas(object){
            var defered = $q.defer();
             var promise = defered.promise;
