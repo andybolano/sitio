@@ -23,7 +23,7 @@
                     return local.toJSON().slice(0, 10);
                 });
 
-                function hora() {
+        function hora() {
                     var f = new Date();
                     var hor = f.getHours();
                     var min = f.getMinutes();
@@ -48,11 +48,11 @@
 
                 }
 
-
         function getCanchas() {
                     if (localStorage.getItem('canchas') === null) {
                         var promisePost = canchaService.get(sessionService.getIdSitio());
                         promisePost.then(function (d) {
+                            console.log(d.data.precios)
                             localStorage.setItem('canchas', JSON.stringify(d.data.canchas));
                         }, function (err) {
                             if (err.status == 401) {
@@ -67,7 +67,7 @@
                     }
                 }
 
-                function drawChart() {
+        function drawChart() {
                     // Create the data table.
                     var incumplidas = 0;
                     var canceladas = 0;
@@ -126,9 +126,7 @@
                     });
                 }
 
-                
-
-                function getReservasHoy() {
+        function getReservasHoy() {
                     setInterval(hora, 1000);
                     var fecha = new Date().toDateInputValue();
                     var promisePost = reservasService.getByFechaAll(sessionService.getIdSitio(), fecha);
@@ -161,7 +159,7 @@
                     });
                 }
 
-                function modalDetalle(reserva) {
+        function modalDetalle(reserva) {
                     $('#consult_reserva').modal('show');
                     vm.v_reserva = reserva;
 
@@ -196,7 +194,8 @@
                         }
                     });
                 }
-                function actualizarEstado(nuevoEstado, idReserva) {
+                
+        function actualizarEstado(nuevoEstado, idReserva) {
                     var object = "";
                     var mensaje = "";
                     switch (nuevoEstado)
@@ -274,7 +273,8 @@
                         }
                     });
                 }
-            });
+                
+        });
 })();
 
 

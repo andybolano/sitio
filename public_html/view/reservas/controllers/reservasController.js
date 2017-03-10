@@ -103,12 +103,6 @@
 
         vm.fecha = new Date();
 
-
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-
         function diaSemana() {
             var dia = dia_semana(vm.fecha.toDateInputValue());
             vm.diaSemana = dias[dia];
