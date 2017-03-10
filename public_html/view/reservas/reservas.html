@@ -69,8 +69,8 @@
                         <li ng-repeat="item in vm.RESERVA" class="list-group-item">
                             <span class="pull-right badge">{{item.hora}}:00</span>
                             {{item.nombreCancha}}<br>
-                            <strong>{{item.diaSemana}}- {{item.fecha}}</strong>
-
+                            <strong>{{item.diaSemana}}- {{item.fecha}}</strong><br>
+                            <strong>Precio:</strong> {{item.precio | currency:undefined:0}}
                         </li>
                     </div>
                     <button class="btn btn-primary" style="width: 100%;" onclick="$('#reserva').modal('show')" ng-if="vm.reservaMover.existe == false">

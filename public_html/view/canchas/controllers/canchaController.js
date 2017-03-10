@@ -42,8 +42,10 @@
                     var promisePost = canchaService.putPrecios(cancha, vm.precios);
                     promisePost.then(function (d) {
                         if (d.data.respuesta === true) {
-                            $('#precios').modal('hide');
+                          $('#precios').modal('hide');
                             toastr["success"](d.data.message);
+                           localStorage.removeItem('canchas');
+                           vm.getCanchas();
                         } else {
                             toastr["error"]("Ha ocurrido un problema");
                         }

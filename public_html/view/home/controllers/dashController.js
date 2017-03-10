@@ -52,7 +52,7 @@
                     if (localStorage.getItem('canchas') === null) {
                         var promisePost = canchaService.get(sessionService.getIdSitio());
                         promisePost.then(function (d) {
-                            console.log(d.data.precios)
+                            localStorage.setItem('precios', JSON.stringify(d.data.precios));
                             localStorage.setItem('canchas', JSON.stringify(d.data.canchas));
                         }, function (err) {
                             if (err.status == 401) {
