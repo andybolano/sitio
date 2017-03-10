@@ -14,11 +14,37 @@
             updateState:updateState,
             remove:remove,
             update:update,
-            updateImage:updateImage
+            updateImage:updateImage,
+            getPrecios : getPrecios,
+            putPrecios : putPrecios
             
         };
         return service;
 
+  function getPrecios(id){ 
+           var defered = $q.defer();
+            var promise = defered.promise;
+            $http.get(API_URL+'/canchas/'+id+'/precios').then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error);
+            }
+        };
+      function putPrecios(id,precios){ 
+           var defered = $q.defer();
+            var promise = defered.promise;
+            $http.put(API_URL+'/canchas/'+id+'/precios', precios).then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+        };    
         function post(cancha){
            var defered = $q.defer();
             var promise = defered.promise;
@@ -33,6 +59,7 @@
                 defered.reject(error)
             }
         };
+        
         
          function updateImage(image){
            var defered = $q.defer();

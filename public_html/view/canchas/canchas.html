@@ -30,6 +30,7 @@
                                 <th title="Por equipo"># jugadores</th>
                                 <th>Estado</th>
                                 <th style="text-align:center;">ver</th>
+                                <th>Precios</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -54,6 +55,9 @@
                                 <td style="text-align:center;">
                                     <a href="javascript:;" title="Ver"><i class="fa fa-eye ico text-blue" ng-click="vm.view(i)"></i></a>
                                 </td>
+                                <td style="text-align:center;">
+                                    <a href="javascript:;" title="Ver precios"><i class="fa fa-money ico text-orange" ng-click="vm.viewPrice(i)"></i></a>
+                                </td>
                                 <td>
                                     <a href="javascript:;" title="Eliminar" ng-click="vm.eliminar(i.id)"><i class="fa fa-trash ico text-red"></i></a>
                                 </td>
@@ -71,7 +75,50 @@
             </div>
 </div> 
 
-
+<div class="modal inmodal" id="precios" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width:90%;">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Precios {{vm.Cancha.nombre}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table">
+                            <thead>
+                                <th>Hora</th>
+                                <th>Domingo</th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Miercoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                                <th>Sábado</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in vm.precios">
+                                    <td>{{item.HORA}}</td>
+                                    <td><input type="text" ng-model="item.DOMINGO" class="form-control" onchange="format(this)"></td>
+                                    <td><input type="text" ng-model="item.LUNES" class="form-control" onchange="format(this)"></td>
+                                    <td><input type="text" ng-model="item.MARTES" class="form-control" onchange="format(this)"></td>
+                                    <td><input type="text" ng-model="item.MIERCOLES" class="form-control" onchange="format(this)"></td>
+                                    <td><input type="text" ng-model="item.JUEVES" class="form-control" onchange="format(this)"></td>
+                                    <td><input type="text" ng-model="item.VIERNES" class="form-control" onchange="format(this)"></td>
+                                    <td><input type="text" ng-model="item.SABADO" class="form-control" onchange="format(this)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" ng-click="vm.updatePrices(vm.Cancha.id);"><i class="fa fa-cloud-upload"></i> Guardar Cambios</button>
+        </div>
+    </div>
+</div>
+</div>
 
 <div class="modal inmodal" id="cancha" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">

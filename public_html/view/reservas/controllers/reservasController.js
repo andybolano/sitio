@@ -152,7 +152,7 @@
             if (localStorage.getItem('canchas') == null) {
                 var promisePost = canchaService.get(sessionService.getIdSitio());
                 promisePost.then(function (d) {
-                    localStorage.setItem('canchas', JSON.stringify(d.data));
+                      localStorage.setItem('canchas', JSON.stringify(d.data.canchas));
                     vm.Canchas = d.data;
                     vm.showCanchas();
                     if (vm.Canchas.length == 0) {
