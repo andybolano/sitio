@@ -124,8 +124,9 @@
                     if (localStorage.getItem('canchas') == null) {
                         var promisePost = canchaService.get(sessionService.getIdSitio());
                         promisePost.then(function (d) {
+                            localStorage.setItem('precios', JSON.stringify(d.data.precios));
                              localStorage.setItem('canchas', JSON.stringify(d.data.canchas));
-                            vm.Canchas = d.data;
+                            vm.Canchas = d.data.canchas;
                         }, function (err) {
                             if (err.status == 401) {
                                 toastr["error"](err.data.respuesta);

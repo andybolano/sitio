@@ -124,7 +124,7 @@
                                     <td>
                                         {{item.hora}}:00
                                     </td>
-                                    <td width="20%"><input type="number"  class="form-control" id="precio{{$index}}"  onchange="format(this)" ></td>
+                                    <td width="20%"><input type="text"  class="form-control" id="precio{{$index}}"  onchange="format(this)"  value="{{item.precio}}" ></td>
                                     <td width="20%"><input type="number"  value="0" class="form-control" id="abonoRequerido{{$index}}"  onchange="format(this)" ></td>
                                 </tr>
                             </tbody>

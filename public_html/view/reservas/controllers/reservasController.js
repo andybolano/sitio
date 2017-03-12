@@ -51,23 +51,26 @@
                     if (d.data.respuesta == false) {
                         vm.Cliente.nombre = "";
                         vm.Cliente.existe = false;
+                        return false;
                     }
                     if (d.data.respuesta == true) {
                         vm.Cliente.nombre = d.data.user.nombres;
                         vm.Cliente.existe = true;
-
-                        for (var i = 0; i < d.data.reservas.length; i++) {
-                            if (d.data.reservas[i].estado === 'cumplida') {
-                                vm.v_estadisticas.cumplidas = d.data.reservas[i].cantidad;
-                            }
-                            if (d.data.reservas[i].estado === 'incumplida') {
-                                vm.v_estadisticas.incumplidas = d.data.reservas[i].cantidad;
-                            }
-                            if (d.data.reservas[i].estado === 'cancelada') {
-                                vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
-                            }
-                        }
-                    }
+                       
+                            for (var i = 0; i < d.data.reservas.length; i++) {
+                                if (d.data.reservas[i].estado === 'cumplida') {
+                                    vm.v_estadisticas.cumplidas = d.data.reservas[i].cantidad;
+                                }
+                                if (d.data.reservas[i].estado === 'incumplida') {
+                                    vm.v_estadisticas.incumplidas = d.data.reservas[i].cantidad;
+                                }
+                                if (d.data.reservas[i].estado === 'cancelada') {
+                                    vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
+                                }
+                         }
+                     }
+                       
+                    
                 }, function (err) {
                     if (err.status == 401) {
                         toastr["error"](err.data.respuesta);
@@ -146,6 +149,7 @@
             if (localStorage.getItem('canchas') == null) {
                 var promisePost = canchaService.get(sessionService.getIdSitio());
                 promisePost.then(function (d) {
+                    localStorage.setItem('precios', JSON.stringify(d.data.precios));
                     localStorage.setItem('canchas', JSON.stringify(d.data.canchas));
                     vm.Canchas = d.data;
                     vm.showCanchas();
@@ -353,16 +357,27 @@
             } else {
 
               
+              if (vm.RESERVA.length > 0) {
+                    var i = 0;
+                    for (i = 0; i < vm.RESERVA.length; i++) {
+                        if (vm.RESERVA[i].idcancha === cancha && vm.RESERVA[i].hora === hora && vm.RESERVA[i].fecha === fecha)
+                        {
+                            vm.RESERVA.splice(i, 1);
+                            token = true;
+                        }
+                    }
+                }
+                
+              if (token === false) {
                 var data_canchas = JSON.parse(localStorage.getItem('canchas'));
                 var data_precio = JSON.parse(localStorage.getItem('precios'));
-
                 var i = 0;
                 for (i = 0; i < data_canchas.length; i++)
                 {
-
                     if (parseInt(cancha) === parseInt(data_canchas[i].id))
                     {
                         nombreCancha = data_canchas[i].nombre;
+                    
                         if(parseInt(data_precio[i].cancha) === parseInt(cancha)){
                          var y = 0;
                           var precios = data_precio[i].precios;
@@ -377,35 +392,18 @@
                                     if(msgsKeys[i] === dia){
                                     var msgType     = msgsKeys[i];
                                     var msgContent  = precios[y][msgType];
+                                    msgContent = msgContent.toString()+".";
                                     precio = parseInt(msgContent.split('.').join(''));
                                     break;
                                     }
-
                                 }
-                                
                              }
-                             
                            }
-                        }
-                           
+                        }    
                     }
-                }
-                
-                var reserva = {"idcancha": cancha, "nombreCancha": nombreCancha, "fecha": fecha, "diaSemana": diaSemana, "hora": hora, "precio":precio};
-                console.log(reserva)
-                if (vm.RESERVA.length > 0) {
-                    var i = 0;
-                    for (i = 0; i < vm.RESERVA.length; i++) {
-                        if (vm.RESERVA[i].idcancha === cancha && vm.RESERVA[i].hora === hora && vm.RESERVA[i].fecha === fecha)
-                        {
-                            vm.RESERVA.splice(i, 1);
-                            token = true;
-                        }
-                    }
-                }
-
-                if (token === false) {
-                    vm.RESERVA.push(reserva);
+                }             
+                var reserva = {"idcancha": cancha, "nombreCancha": nombreCancha, "fecha": fecha, "diaSemana": diaSemana, "hora": hora, "precio":parseInt(precio)};
+                vm.RESERVA.push(reserva);
                 }
                 $scope.$apply(function () {
                     vm.RESERVA;
