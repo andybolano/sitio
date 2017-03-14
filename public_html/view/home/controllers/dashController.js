@@ -7,7 +7,7 @@
                 var vm = this;
                 vm.sitio = {};
                 vm.v_reserva = {};
-                vm.v_estadisticas = {};
+
                 vm.finanzas = {};
                 $scope.time = "";
                 $scope.hora = "";
@@ -162,37 +162,6 @@
         function modalDetalle(reserva) {
                     $('#consult_reserva').modal('show');
                     vm.v_reserva = reserva;
-
-                    vm.v_estadisticas.cumplidas = 0;
-                    vm.v_estadisticas.incumplidas = 0;
-                    vm.v_estadisticas.canceladas = 0;
-                    
-                    var promisePost = clienteService.get(reserva.idCliente);
-                    promisePost.then(function (d) {
-                        var i = 0;
-                        for (i = 0; i < d.data.reservas.length; i++) {
-                            if (d.data.reservas[i].estado === 'cumplida') {
-                                vm.v_estadisticas.cumplidas = d.data.reservas[i].cantidad;
-                            }
-                            if (d.data.reservas[i].estado === 'incumplida') {
-                                vm.v_estadisticas.incumplidas = d.data.reservas[i].cantidad;
-                            }
-                            if (d.data.reservas[i].estado === 'cancelada') {
-                                vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
-                            }
-                        }
-
-                        if (document.getElementById("pago") !== null) {
-                            document.getElementById("pago").value = parseInt(vm.v_reserva.precio - vm.v_reserva.abonoLiquidado);
-                        }
-
-                    }, function (err) {
-                        if (err.status == 401) {
-                            toastr["error"](err.data.respuesta);
-                        } else {
-                            toastr["error"]("Ha ocurrido un problema!");
-                        }
-                    });
                 }
                 
         function actualizarEstado(nuevoEstado, idReserva) {

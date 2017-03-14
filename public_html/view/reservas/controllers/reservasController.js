@@ -23,7 +23,6 @@
         vm.reservaMover.existe = false;
         vm.v_reserva = {};
         vm.v_cliente = {};
-        vm.v_estadisticas = {};
 
 
         //methods
@@ -41,36 +40,18 @@
 
         function getCliente() {
 
-            vm.v_estadisticas.cumplidas = 0;
-            vm.v_estadisticas.incumplidas = 0;
-            vm.v_estadisticas.canceladas = 0;
-
             if (vm.Cliente.telefono !== undefined && vm.Cliente.telefono !== "") {
                 var promisePost = clienteService.getByPhone(vm.Cliente.telefono);
                 promisePost.then(function (d) {
                     if (d.data.respuesta == false) {
-                        vm.Cliente.nombre = "";
+                        vm.Cliente.nombres = "";
                         vm.Cliente.existe = false;
                         return false;
                     }
                     if (d.data.respuesta == true) {
-                        vm.Cliente.nombre = d.data.user.nombres;
+                        vm.Cliente = d.data.cliente;
                         vm.Cliente.existe = true;
-                       
-                            for (var i = 0; i < d.data.reservas.length; i++) {
-                                if (d.data.reservas[i].estado === 'cumplida') {
-                                    vm.v_estadisticas.cumplidas = d.data.reservas[i].cantidad;
-                                }
-                                if (d.data.reservas[i].estado === 'incumplida') {
-                                    vm.v_estadisticas.incumplidas = d.data.reservas[i].cantidad;
-                                }
-                                if (d.data.reservas[i].estado === 'cancelada') {
-                                    vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
-                                }
-                         }
                      }
-                       
-                    
                 }, function (err) {
                     if (err.status == 401) {
                         toastr["error"](err.data.respuesta);
@@ -417,7 +398,7 @@
             var item = "";
             var detalle = [];
 
-            if (vm.Cliente.nombre === undefined || vm.Cliente.telefono === undefined) {
+            if (vm.Cliente.nombres === undefined || vm.Cliente.telefono === undefined) {
                 toastr.warning("Aun faltan datos del cliente?");
             } else {
                 var tipo = "SIMPLE";
@@ -529,7 +510,6 @@
         }
 
         $scope.viewReserva = function (reserva) {
-
             $('#consult_reserva').modal('show');
 
             var canchas = JSON.parse(localStorage.getItem('canchas'));
@@ -543,26 +523,11 @@
                 vm.v_reserva = reserva;
                 vm.v_reserva.cancha = cancha;
             });
-            vm.v_estadisticas.cumplidas = 0;
-            vm.v_estadisticas.incumplidas = 0;
-            vm.v_estadisticas.canceladas = 0;
+
 
             var promisePost = clienteService.get(reserva.idCliente);
             promisePost.then(function (d) {
                 vm.v_cliente = d.data.cliente;
-
-                for (var i = 0; i < d.data.reservas.length; i++) {
-                    if (d.data.reservas[i].estado === 'cumplida') {
-                        vm.v_estadisticas.cumplidas = d.data.reservas[i].cantidad;
-                    }
-                    if (d.data.reservas[i].estado === 'incumplida') {
-                        vm.v_estadisticas.incumplidas = d.data.reservas[i].cantidad;
-                    }
-                    if (d.data.reservas[i].estado === 'cancelada') {
-                        vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
-                    }
-                }
-
             }, function (err) {
                 if (err.status == 401) {
                     toastr["error"](err.data.respuesta);

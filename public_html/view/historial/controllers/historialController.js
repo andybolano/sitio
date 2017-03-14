@@ -9,7 +9,7 @@
                 vm.reservas = "";
                 vm.finanzas = {};
                 vm.v_reserva = {};
-                vm.v_estadisticas = {};
+                vm.v_cliente = {};
                 vm.getReservas = getReservas;
                 vm.viewReserva = viewReserva;
               
@@ -24,9 +24,7 @@
         
         vm.fecha1 = new Date();
         vm.fecha2 = new Date();
-        
-        
-        
+ 
        function viewReserva(reserva){
        
             $('#consult_reserva').modal('show');
@@ -38,38 +36,15 @@
                     break;
                 }
             }
-            
                 vm.v_reserva = reserva;
                 vm.v_reserva.cancha = cancha;
-        
-            vm.v_estadisticas.cumplidas = 0;
-            vm.v_estadisticas.incumplidas = 0;
-            vm.v_estadisticas.canceladas = 0;
-
-            var promisePost = clienteService.get(reserva.idCliente);
-            promisePost.then(function (d) {
-                vm.v_cliente = d.data.cliente;
-
-                for (var i = 0; i < d.data.reservas.length; i++) {
-                    if (d.data.reservas[i].estado === 'cumplida') {
-                        vm.v_estadisticas.cumplidas = d.data.reservas[i].cantidad;
-                    }
-                    if (d.data.reservas[i].estado === 'incumplida') {
-                        vm.v_estadisticas.incumplidas = d.data.reservas[i].cantidad;
-                    }
-                    if (d.data.reservas[i].estado === 'cancelada') {
-                        vm.v_estadisticas.canceladas = d.data.reservas[i].cantidad;
-                    }
-                }
-
-            }, function (err) {
-                if (err.status == 401) {
-                    toastr["error"](err.data.respuesta);
-                } else {
-                    toastr["error"]("Ha ocurrido un problema!");
-                }
-            });
+                vm.v_cliente.nombres = reserva.nombres;
+                vm.v_cliente.telefono = reserva.telefono;
+                vm.v_cliente.cumplidas= reserva.cumplidas;
+                vm.v_cliente.incumplidas = reserva.incumplidas;
+                vm.v_cliente.canceladas = reserva.canceladas;
         }
+        
                 function getReservas(){
                    var promisePost = reservasService.getHistorial(sessionService.getIdSitio(), vm.fecha1.toDateInputValue(), vm.fecha2.toDateInputValue());
                     promisePost.then(function (d) {
