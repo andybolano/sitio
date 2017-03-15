@@ -12,9 +12,6 @@
                 vm.v_estadisticas = {};
                 vm.getReservas = getReservas;
                 vm.viewReserva = viewReserva;
-              
-                
-                
                 
         Date.prototype.toDateInputValue = (function () {
             var local = new Date(this);
@@ -74,9 +71,10 @@
                    var promisePost = reservasService.getHistorial(sessionService.getIdSitio(), vm.fecha1.toDateInputValue(), vm.fecha2.toDateInputValue());
                     promisePost.then(function (d) {
                         vm.reservas = d.data.reservas;
+                        
                         google.charts.setOnLoadCallback(drawChart);
                         
-                          vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
+                        vm.finanzas.expectativa = parseInt(d.data.finanzas.posibleEntrada);
                         vm.finanzas.realidad = parseInt(d.data.finanzas.dineroEntrante);
                         vm.finanzas.abonos = parseInt(d.data.finanzas.abonos);
                         
