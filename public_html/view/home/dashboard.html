@@ -1,4 +1,4 @@
-<div class="row  border-bottom white-bg dashboard-header" ng-init="vm.getReservasHoy();">
+<div class="row  border-bottom white-bg dashboard-header" ng-init="vm.getReservasHoy();vm.getCanchas()">
     <div class="row">
     <div class="col-xs-9">
         <h2 class="no-margins">Dashboard</h2>
@@ -133,9 +133,9 @@
                             <th style="text-align: center;"><small class="text-muted">Canceladas</small></th>
                         </tr></thead>
                         <tbody><tr>
-                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.cumplidas}}</span></td>
-                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.incumplidas}}</span></td>
-                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_estadisticas.canceladas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_reserva.cumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_reserva.incumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.v_reserva.canceladas}}</span></td>
                         </tr>
                         </tbody>
                       </table>
