@@ -23,6 +23,7 @@
         vm.reservaMover.existe = false;
         vm.v_reserva = {};
         vm.v_cliente = {};
+        
 
 
         //methods
@@ -39,21 +40,22 @@
         vm.actualizarReserva = actualizarReserva;
 
         function getCliente() {
-
+            if(vm.Cliente.existe === false){
             if (vm.Cliente.telefono !== undefined && vm.Cliente.telefono !== "") {
                 var promisePost = clienteService.getByPhone(vm.Cliente.telefono);
                 promisePost.then(function (d) {
-                    if (d.data.respuesta == false) {
+                   
+                    if (d.data.respuesta === false) {
                         vm.Cliente.nombres = "";
                         vm.Cliente.existe = false;
                         return false;
                     }
-                    if (d.data.respuesta == true) {
+                    if (d.data.respuesta === true) {
                         vm.Cliente = d.data.cliente;
                         vm.Cliente.existe = true;
                      }
                 }, function (err) {
-                    if (err.status == 401) {
+                    if (err.status === 401) {
                         toastr["error"](err.data.respuesta);
                     } else {
                         toastr["error"]("Ha ocurrido un problema!");
@@ -61,6 +63,7 @@
                 });
 
             }
+        }
         }
         function moveToFecha(direction) {
             var f1 = new Date(vm.fecha);
@@ -94,6 +97,7 @@
 
         function moverReserva() {
             var reserva = JSON.parse(localStorage.getItem('reservaMover'));
+          
             vm.RESERVA.push({
                 "id": reserva.id,
                 "idcancha": reserva.idCancha,
@@ -104,10 +108,10 @@
             });
             vm.Cliente.existe = true;
             vm.Cliente.telefono = parseInt(reserva.telefono);
-            vm.Cliente.nombre = reserva.nombres;
-            vm.v_estadisticas.cumplidas = reserva.estadisticas.cumplidas;
-            vm.v_estadisticas.incumplidas = reserva.estadisticas.incumplidas;
-            vm.v_estadisticas.canceladas = reserva.estadisticas.canceladas;
+            vm.Cliente.nombres = reserva.nombres;
+            vm.Cliente.cumplidas = reserva.cumplidas;
+            vm.Cliente.incumplidas = reserva.incumplidas;
+            vm.Cliente.canceladas = reserva.canceladas;
         }
 
         function cancelarActualizacion() {
@@ -488,11 +492,11 @@
 
                 if (d.data.respuesta === true) {
                     localStorage.removeItem('reservaMover');
-                    vm.Cliente.existe = false;
                     vm.reservaMover.existe = false;
                     swal("Buen trabajo!", d.data.message, "success")
                     vm.RESERVA = [];
-                    vm.Cliente = "";
+                    vm.Cliente = {};
+                    vm.Cliente.existe = false;
                     $("#reserva").modal('hide');
                     getCanchas();
                 } else {
