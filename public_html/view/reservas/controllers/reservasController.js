@@ -444,13 +444,14 @@
                     var promisePost = reservasService.post(reserva);
                     promisePost.then(function (d) {
                         $('#reservar').attr("disabled", false);
-                        vm.Cliente.existe = false;
+                   
                         if (d.data.respuesta === true) {
                             swal("Buen trabajo!", d.data.message, "success")
                             vm.RESERVA = [];
-                            vm.Cliente = "";
-                            reserva = "";
+                            vm.Cliente = {};
+                            reserva = {};
                             detalle = [];
+                            vm.Cliente.existe = false;
                             $("#reserva").modal('hide');
                             getAgendaDiaByCancha();
                         } else {
