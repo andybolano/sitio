@@ -2,13 +2,26 @@
     'use strict';
     angular
             .module('BirriasSitios')
-            .controller('MenuController', function($location,sitioService,$state){
+            .controller('MenuController', function($location,sitioService,$state,sessionService){
           
               var vm = this;
               vm.sitio = {};
                vm.getSitio = getSitio;
                vm.logout = logout;
-              
+            
+                
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('b4015226d5614422f631', {
+              encrypted: true
+            });
+
+            var channel = pusher.subscribe('private-'+sessionService.getToken());
+            channel.bind('nuevaReserva', function(data) {
+              alert(data.message);
+            });
+            
+            
 
                 vm.isActive = function(viewLocation){
                     return viewLocation === $location.path();
@@ -41,6 +54,7 @@
                 }
                 
                 function logout(){
+                    pusher.unsubscribe('private-'+sessionService.getToken());
                       sitioService.logout().then(success, error);
                       function success(d) {
                           localStorage.clear();
