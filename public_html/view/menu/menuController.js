@@ -16,10 +16,15 @@
               encrypted: true
             });
 
-            var channel = pusher.subscribe('private-'+sessionService.getToken());
+         /*   var channel = pusher.subscribe('private-'+sessionService.getToken());
             channel.bind('nuevaReserva', function(data) {
               alert(data.message);
-            });
+            });*/
+                
+           var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(data.message);
+    });
             
             
 
