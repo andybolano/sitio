@@ -35,9 +35,11 @@
                     </div>
                     <div class="col-md-4">
                         <h3>Información de reserva</h3>
+                         <p><strong>Via:</strong> {{vm.v_reserva.via}}</p>
                         <p> <strong>Cancha:</strong> {{vm.v_reserva.cancha}}</p>
                         <p><i class="fa fa-calendar"></i> <span class="label label-danger">{{vm.v_reserva.fecha}}</span></p>
                         <p><i class="fa fa-clock-o"></i> <strong> <label class='label label-success'> {{vm.v_reserva.hora}} : 00</label></strong></p>
+                       <p ng-if="vm.v_reserva.estado === 'esperandorevision'"><span class="label label-danger" id="alert">ESPERANDO REVISION</span></p>
                         <p ng-if="vm.v_reserva.estado === 'confirmadasinabono'"><span class="label label-danger">CONFIRMADA SIN ABONO</span></p>
                         <p ng-if="vm.v_reserva.estado === 'confirmadaconabono'"><span class="label label-primary">CONFIRMADA CON ABONO</span></p>
                         <p ng-if="vm.v_reserva.estado === 'cumplida'"><span class="label label-success">CUMPLIDA</span></p>

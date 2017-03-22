@@ -2,30 +2,85 @@
     'use strict';
     angular
             .module('BirriasSitios')
-            .controller('MenuController', function($location,sitioService,$state,sessionService){
+            .controller('MenuController', function($location,sitioService,$state,sessionService,API_URL,notificacion){
           
-              var vm = this;
-              vm.sitio = {};
-               vm.getSitio = getSitio;
-               vm.logout = logout;
+            var vm = this;
+            vm.sitio = {};
+            vm.getSitio = getSitio;
+            vm.logout = logout;
+            vm.pusher = pusher;
+            vm.notificacion = {};
             
-                
-            Pusher.logToConsole = true;
-
-            var pusher = new Pusher('b4015226d5614422f631', {
-              encrypted: true
-            });
-
-         /*   var channel = pusher.subscribe('private-'+sessionService.getToken());
-            channel.bind('nuevaReserva', function(data) {
-              alert(data.message);
-            });*/
-                
-           var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      alert(data.message);
-    });
+                         
+             
+             if (Notification.permission === 'default') {
+                    Notification.requestPermission(function (permission) {
+                        // callback
+                        console.log(permission)
+                        if (permission === 'granted') {
+                            console.log("Permiso para usar notificaciones");
+                        }
+                    });
+                }   
+            function pusher(){   
+                  Pusher.logToConsole = false;
+                    var pusher = new Pusher('b4015226d5614422f631', {
+                      encrypted: true,
+                      authTransport: 'jsonp',
+                      authEndpoint:API_URL+"/pusher_auth",
+                      auth:{
+                          userid:sessionService.getIdSitio()
+                      }
+                    });
+                    
+                    var socketId = null;
+                    pusher.connection.bind('connected', function() {
+                      console.log("Conectado: "+ pusher.connection.socket_id);
+                        socketId = pusher.connection.socket_id;
+                    });
+                    pusher.connection.bind('state_change', function(states) {
+                        console.log("Conexion a cambiado de estado:" + states.current);
+                    });
+                    pusher.connection.bind('disconnected', function() {
+                        
+                      console.log("desconectado: "+ socketId);
+                    });                
+                   var channel = pusher.subscribe('private-sitio_'+sessionService.getIdSitio());
+                     channel.bind('nuevaReserva', function(data) {
+                      showMensaje(data);
+                    });
+                    channel.bind('actualizacionReserva', function(data) {
+                      showMensaje(data);
+                    });
+            }
             
+            function showMensaje(data){
+                if (data.usuario.image == 1) {
+                var image = data.usuario.url;
+                } else {
+                    var image = "images/profile-user.png";
+                }
+
+                 swal({title: data.titulo,
+                        text: "<img src='"+image+"'  class='img-circle' style='width:60px; heigth:60px;'><br><br><h3>" + data.usuario.nombres + " " + data.usuario.apellidos + "</h3>" + data.message,
+                        html: true
+                    });
+
+                var opciones = {
+                    iconUrl: image,
+                    icon: image,
+                    sound: "images/arbitro.mp3",
+                    soundUrl: "images/arbitro.mp3",
+                    body: data.usuario.nombres + " " + data.usuario.apellidos,
+                    tag: "etiqueta"
+                };
+
+                vm.notificacion.titulo = data.titulo;
+                vm.notificacion.opciones = opciones;
+                vm.notificacion.url = data.url;
+
+                var res = notificacion.show(vm.notificacion);
+            }
             
 
                 vm.isActive = function(viewLocation){
@@ -59,7 +114,6 @@
                 }
                 
                 function logout(){
-                    pusher.unsubscribe('private-'+sessionService.getToken());
                       sitioService.logout().then(success, error);
                       function success(d) {
                           localStorage.clear();

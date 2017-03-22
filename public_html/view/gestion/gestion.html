@@ -96,7 +96,7 @@
                                 <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
                           
                     <ul class="sortable-list agile-list" ng-repeat="item in vm.confirmadas |  filter: filtro_confirmadas | orderBy : ['fecha', 'hora']  ">
-                        <li class="warning-element" ng-click="vm.modalDetalle(item)" ng-if="item.via== 'LOCAL'">
+                        <li class="warning-element" ng-click="vm.modalDetalle(item)">
                            
                              <div ng-if="item.estado =='confirmadaconabono'" title="Con Abono" class="triangulo_top_right"> </div>
                              <i class="fa fa-user"></i> {{item.nombres}}
@@ -122,7 +122,7 @@
 
 
 <div class="modal inmodal" id="consult_reserva" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" style="width:90%">
         <div class="modal-content animated bounceInUp">
             <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
@@ -158,27 +158,30 @@
                     </div>
                     <div class="col-md-3">
                         <h3>Información de reserva</h3>
+                        <p><strong>Via:</strong> {{vm.v_reserva.via}}</p>
                         <p> <strong>Cancha:</strong> {{vm.v_reserva.nombrecancha}}</p>
                         <p><i class="fa fa-calendar"></i> <span class="label label-danger">{{vm.v_reserva.fecha}}</span>
                         <i class="fa fa-clock-o"></i> <strong><label class='label label-success'>{{vm.v_reserva.hora}} : 00</label></strong></p>
                         <p> <a href="javascript:;" ng-click="vm.moverReserva();"><i class="fa fa-refresh"></i> Mover Reserva</a></p>
+       
+                        <p ng-if="vm.v_reserva.estado === 'esperandorevision'"><span class="label label-danger" id="alert">ESPERANDO REVISION</span></p>
                         <p ng-if="vm.v_reserva.estado === 'confirmadasinabono'"><span class="label label-danger">CONFIRMADA SIN ABONO</span></p>
                         <p ng-if="vm.v_reserva.estado === 'confirmadaconabono'"><span class="label label-primary">CONFIRMADA CON ABONO</span></p>
                         <p ng-if="vm.v_reserva.estado === 'cumplida'"><span class="label label-success">CUMPLIDA</span></p>
                         <p ng-if="vm.v_reserva.estado === 'incumplida'"><span class="label label-default">INCUMPLIDA</span></p>
                         <p ng-if="vm.v_reserva.estado === 'cancelada'"><span class="label label-default">CANCELADA</span></p>
                     </div>
-                     <div class="col-md-5" ng-if="vm.v_reserva.estado == 'esperandoRevision'">
+                     <div class="col-md-5" ng-if="vm.v_reserva.estado == 'esperandorevision'">
                             <h3>Opciones de Reserva</h3>
                             <small>Valor de reserva:</small>
                             <input type="number" class="input-sm form-control" ng-model="vm.dinero.precio">
                      
                             <small>Abono Requerido:</small>
-                            <input type="number" class="input-sm form-control" ng-model="vm.dinero.abono">
+                            <input type="number" class="input-sm form-control" ng-model="vm.dinero.abonoRequerido">
                             <br>
                           
-                            <button class="btn"style="background-color:#FF7701;color:#FFF" ng-click="actualizarEstadoGestion(1,vm.v_reserva.id);">Pedir Confirmacion</button>
-                            <button class="btn btn-danger" ng-click="vm.actualizarEstadoGestion(4,vm.v_reserva.id);" title="Cancelar Reserva">Cancelar</button>
+                            <button class="btn"style="background-color:#FF7701;color:#FFF" ng-click="vm.actualizarEstadoGestion(1,vm.v_reserva.id);">Pedir Confirmacion</button>
+                            <button class="btn btn-danger" ng-click="vm.actualizarEstadoGestion(4,vm.v_reserva.id);" title="Cancelar Reserva">Cancelar reserva</button>
                         </div>
                         
                         <div class="col-md-5" ng-if="vm.v_reserva.estado == 'esperandoconfirmacion'">

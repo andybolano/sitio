@@ -63,6 +63,7 @@ function moverReserva(){
                 }
 
                 function modalDetalle(reserva) {
+                   vm.dinero.precio = reserva.precio;
                     $('#consult_reserva').modal('show');
                     vm.v_reserva = reserva;
                          if(document.getElementById("pago") !== null) {            
@@ -78,16 +79,19 @@ function moverReserva(){
                     switch (nuevoEstado)
                     {
                         case 1:
-                            if (vm.dinero.cancha == undefined) {
+                            if (vm.dinero.precio == undefined) {
                                 toastr.warning("Informale a tu cliente el valor de la cancha!");
                                 bandera = false;
                             } else {
                                 nuevoEstado = "esperandoconfirmacion";
+                                if(vm.dinero.abonoRequerido == undefined){
+                                    vm.dinero.abonoRequerido = 0;
+                                }
                                 object = {
                                     estado: nuevoEstado,
                                     idReserva: idReserva,
-                                    valor: vm.dinero.cancha,
-                                    abono: vm.dinero.abono
+                                    valor: vm.dinero.precio,
+                                    abono: vm.dinero.abonoRequerido
                                 }
                                 mensaje = "Se ha enviado la solicitud de confirmacion a tu cliente";
                             }
@@ -124,7 +128,7 @@ function moverReserva(){
                                
                                 mensaje = "Esta reserva ha sido confirmada y ha sido registrado su abono";
                             }
-                            vm.dinero = "";
+                            vm.dinero = {};
                             break;
                         case 3:
                             nuevoEstado = "confirmadasinabono";

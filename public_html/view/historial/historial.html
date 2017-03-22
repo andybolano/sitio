@@ -67,6 +67,7 @@
                     <td class="text-success" ng-if="item.abonoLiquidado > 0"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
                     <td class="text-danger" ng-if="item.abonoLiquidado == 0"><i class="fa fa-level-down"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
                     <td>
+                        <label ng-if="item.estado == 'esperandorevision'" class="label label-danger" id="alert">Esperando revision</label>
                         <label ng-if="item.estado == 'cumplida'" class="label label-success">Cumplida</label>
                         <label ng-if="item.estado == 'incumplida'" class="label label-warning">Incumplida</label>
                         <label ng-if="item.estado == 'cancelada'" class="label label-danger">Cancelada</label>
