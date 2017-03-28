@@ -8,6 +8,7 @@
                 vm.modalDetalle = modalDetalle;
                 vm.actualizarEstadoGestion = actualizarEstadoGestion;
                 vm.moverReserva = moverReserva;
+                vm.recordar = recordar;
                 vm.pusher = pusher;
                 vm.nuevasSolicitudes = [];
                 vm.esperandoConfirmacion = [];
@@ -21,6 +22,24 @@
                     return local.toJSON().slice(0, 10);
                 });
                 vm.fechaHoy = new Date().toDateInputValue();
+                
+                 function recordar(idCliente, estado){
+                    var object = {
+                        idCliente:idCliente,
+                        estado:estado
+                    }
+
+                   var promisePost = reservasService.recordar(object);
+                               promisePost.then(function (d) {
+                                   toastr["success"](d.data.message);
+                               }, function (err) {
+                                   if (err.status == 401) {
+                                       toastr["error"](err.data.respuesta);
+                                   } else {
+                                       toastr["error"]("Ha ocurrido un problema al enviar la notificación!");
+                                   }
+                               }); 
+                }   
                 function pusher() {
                     var channel = PUSHER.subscribe('private-sitio_' + sessionService.getIdSitio());
                     channel.bind('nuevaReserva', function (data) {
@@ -67,7 +86,7 @@
                     });
                 }
                 function modalDetalle(reserva) {
-                    vm.dinero.precio = reserva.precio;
+                    vm.dinero.precio = parseInt(reserva.precio);
                     $('#consult_reserva').modal('show');
                     vm.v_reserva = reserva;
                     if (document.getElementById("pago") !== null) {

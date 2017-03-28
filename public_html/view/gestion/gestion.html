@@ -183,7 +183,7 @@
                             <h3>Opciones de Reserva</h3>
                             <p><strong>Valor de Reserva:</strong> {{vm.v_reserva.precio | currency:undefined:0}}</p>
                             <p><strong>Abono requerido:</strong> {{vm.v_reserva.abonoRequerido | currency:undefined:0}}</p>
-                            <button class="btn" style="background-color:#FF7701;color:#FFF" >Reenviar Alerta</button>
+                            <button class="btn" style="background-color:#FF7701;color:#FFF" ng-click="vm.recordar(vm.v_reserva.idCliente,vm.v_reserva.estado);">Reenviar Alerta</button>
                             <button class="btn btn-danger" ng-click="vm.actualizarEstadoGestion(4,vm.v_reserva.id);" title="Cancelar Reserva">Cancelar</button>
                         </div>
                         
@@ -206,7 +206,7 @@
                               <button class="btn btn-success" ng-click="vm.actualizarEstadoGestion(5,vm.v_reserva.id);"  ng-if="vm.v_reserva.fecha < vm.fechaHoy">Cumplida</button>
                             <button class="btn btn-warning" ng-click="vm.actualizarEstadoGestion(6,vm.v_reserva.id);" ng-if="vm.v_reserva.fecha < vm.fechaHoy" >Incumplida</button>
                             <button class="btn btn-danger" ng-click="vm.actualizarEstadoGestion(4,vm.v_reserva.id);" title="Cancelar Reserva"  ng-if="vm.v_reserva.fecha >= vm.fechaHoy">Cancelar Reserva</button>
-                             <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva"  ng-if="vm.v_reserva.fecha >= vm.fechaHoy">Recordar</button>
+                             <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva"  ng-if="vm.v_reserva.fecha >= vm.fechaHoy" ng-click="vm.recordar(vm.v_reserva.idCliente,vm.v_reserva.estado);">Recordar</button>
                                 
                         </div>
                         
@@ -229,7 +229,7 @@
                             <button class="btn btn-success" ng-click="vm.actualizarEstadoGestion(21,vm.v_reserva.id);" ng-if="vm.v_reserva.fecha >= vm.fechaHoy">Registrar Abono</button>
                            <button class="btn btn-success" ng-click="vm.actualizarEstadoGestion(5,vm.v_reserva.id);"  ng-if="vm.v_reserva.fecha < vm.fechaHoy">Cumplida</button>
                             <button class="btn btn-warning" ng-click="vm.actualizarEstadoGestion(6,vm.v_reserva.id);" ng-if="vm.v_reserva.fecha < vm.fechaHoy" >Incumplida</button>
-                            <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva"  ng-if="vm.v_reserva.fecha >= vm.fechaHoy">Recordar</button>
+                            <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva"  ng-if="vm.v_reserva.fecha >= vm.fechaHoy" ng-click="vm.recordar(vm.v_reserva.idCliente,vm.v_reserva.estado);">Recordar</button>
                         </div>
                 </div>
             </div>
