@@ -16,7 +16,8 @@
             getByFechaAll:getByFechaAll,
             getEstadisticasByFecha: getEstadisticasByFecha,
             getHistorial:getHistorial,
-            actualizarFecha:actualizarFecha
+            actualizarFecha:actualizarFecha,
+            recordar:recordar
          
         };
         return service;
@@ -26,6 +27,19 @@
            var defered = $q.defer();
             var promise = defered.promise;
             $http.put(API_URL+'/reservas/fecha/'+object.idReserva, object).then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+       }
+       
+       function recordar(object){
+           var defered = $q.defer();
+            var promise = defered.promise;
+            $http.post(API_URL+'/reserva/recordar', object).then(success, error);
             return promise;
              function success(p) {
                 defered.resolve(p);

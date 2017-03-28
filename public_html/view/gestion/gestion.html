@@ -1,4 +1,4 @@
-<div class="row  border-bottom white-bg page-heading" ng-init="vm.getReservas();">
+<div class="row  border-bottom white-bg page-heading" ng-init="vm.getReservas();vm.pusher();">
     <div class="col-xs-6">
         <h2>Gesti&oacuten de Reservas</h2>
         <ol class="breadcrumb">
@@ -21,33 +21,28 @@
                         <span class="label label-primary" ng-if="vm.nuevasSolicitudes.length == 0">{{vm.nuevasSolicitudes.length}}</span>
                     </h3>
                     <p class="small">Reservas realizadas de forma remota por tus clientes.</p>
-
                          <div class="input-group"><input type="text" placeholder="Buscador" class="input-sm form-control"  ng-model="filtro_nuevas"> <span class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
-                        <ul class="sortable-list agile-list" ng-repeat="item in vm.nuevasSolicitudes |  filter: filtro_nuevas  | orderBy : 'fecha'  | orderBy : 'hora'  ">
-                        
-                            <li class="success-element" ng-click="vm.modalDetalle(item)">
-                            <i class="fa fa-user"></i> {{item.nombres}}
+                        <ul class="sortable-list agile-list"  ng-repeat="item in vm.nuevasSolicitudes |  filter: filtro_nuevas  | orderBy : 'fecha'  | orderBy : 'hora'  ">
+                         <li  ng-click="vm.modalDetalle(item)" id="alert" style="color:#FFF">
+                            <i class="fa fa-user" style="color:#FFF"></i> {{item.nombres}}
                             <table width="100%">
                                 <tr>
-                                    <td width="50%"><i class="fa fa-phone"></i> {{item.telefono}}</td>
-                                    <td><strong>{{item.cancha.nombre}}</strong></td>
+                                    <td width="50%" style="color:#FFF"><i class="fa fa-phone" style="color:#FFF"></i> {{item.telefono}}</td>
+                                    <td><strong style="color:#FFF">{{item.cancha.nombre}}</strong></td>
                                 </tr>    
                             </table>
                             
                             <div class="agile-detail ng-binding">
                                 <table width="100%">
                                     <tr>
-                                        <td width="50%"><i class="fa fa-calendar-o"></i> <span class="label label-danger"  style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span> </td>
-                                        <td><i class="fa fa-clock-o"></i> <label class='label label-success'>{{item.hora}}:00</label></td>
+                                        <td width="50%"><span style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span> </td>
+                                        <td><i class="fa fa-clock-o" style="color:#FFF"></i> <label>{{item.hora}}:00</label></td>
                                     </tr>
                                 </table>
                             </div>
                         </li>
-                        
-                           
                     </ul>         
-                   
                 </div>
             </div>
         </div>
@@ -60,7 +55,7 @@
 
                          <div class="input-group"><input type="text" placeholder="Buscador" class="input-sm form-control"  ng-model="filtro_esperando"> <span class="input-group-btn">
                                 <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
-                          <ul class="sortable-list agile-list" ng-repeat="item in vm.esperandoConfirmacion |  filter: filtro_esperando  | orderBy : 'fecha' | orderBy : 'hora' ">
+                          <ul class="sortable-list agile-list"  ng-repeat="item in vm.esperandoConfirmacion |  filter: filtro_esperando  | orderBy : 'fecha' | orderBy : 'hora' ">
                         <li class="info-element" ng-click="vm.modalDetalle(item)">
                             <i class="fa fa-user"></i> {{item.nombres}}
                             <table width="100%">
@@ -73,7 +68,7 @@
                             <div class="agile-detail ng-binding">
                                 <table width="100%">
                                     <tr>
-                                        <td width="50%"><i class="fa fa-calendar-o"></i> <span class="label label-danger"  style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span> </td>
+                                        <td width="50%"><span class="label label-danger"  style="font-size: 11px;"> {{item.fecha}} - {{item.diaSemana}}</span> </td>
                                         <td><i class="fa fa-clock-o"></i> <label class='label label-success'>{{item.hora}}:00</label></td>
                                     </tr>
                                 </table>

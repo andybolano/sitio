@@ -170,7 +170,7 @@
                          <button class="btn btn-warning" ng-click="vm.actualizarEstado(0,vm.v_reserva.id);"  ng-if="vm.v_reserva.hora <= hora">Incumplida</button>
                       
    
-                            <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva">Recordar</button>
+                         <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva" ng-click="vm.recordar(vm.v_reserva.idCliente,vm.v_reserva.estado);">Recordar</button>
                        
                         </div>
                 </div>

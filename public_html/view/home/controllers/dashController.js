@@ -15,6 +15,7 @@
                 vm.modalDetalle = modalDetalle;
                 vm.actualizarEstado = actualizarEstado;
                 vm.getCanchas = getCanchas;
+                vm.recordar = recordar;
                 vm.sitio = JSON.parse(sessionStorage.getItem('data'));
 
                 Date.prototype.toDateInputValue = (function () {
@@ -47,6 +48,24 @@
 
 
                 }
+                
+         function recordar(idCliente, estado){
+             var object = {
+                 idCliente:idCliente,
+                 estado:estado
+             }
+
+            var promisePost = reservasService.recordar(object);
+                        promisePost.then(function (d) {
+                            toastr["success"](d.data.message);
+                        }, function (err) {
+                            if (err.status == 401) {
+                                toastr["error"](err.data.respuesta);
+                            } else {
+                                toastr["error"]("Ha ocurrido un problema al enviar la notificación!");
+                            }
+                        }); 
+         }       
 
         function getCanchas() {
                     if (localStorage.getItem('canchas') === null) {

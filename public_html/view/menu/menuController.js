@@ -2,7 +2,7 @@
     'use strict';
     angular
             .module('BirriasSitios')
-            .controller('MenuController', function($location,sitioService,$state,sessionService,API_URL,notificacion){
+            .controller('MenuController', function($location,sitioService,$state,sessionService,PUSHER,notificacion){
           
             var vm = this;
             vm.sitio = {};
@@ -23,29 +23,18 @@
                     });
                 }   
             function pusher(){   
-                  Pusher.logToConsole = false;
-                    var pusher = new Pusher('b4015226d5614422f631', {
-                      encrypted: true,
-                      authTransport: 'jsonp',
-                      authEndpoint:API_URL+"/pusher_auth",
-                      auth:{
-                          userid:sessionService.getIdSitio()
-                      }
-                    });
-                    
                     var socketId = null;
-                    pusher.connection.bind('connected', function() {
-                      console.log("Conectado: "+ pusher.connection.socket_id);
-                        socketId = pusher.connection.socket_id;
+                    PUSHER.connection.bind('connected', function() {
+                      console.log("Conectado: "+ PUSHER.connection.socket_id);
+                        socketId = PUSHER.connection.socket_id;
                     });
-                    pusher.connection.bind('state_change', function(states) {
+                    PUSHER.connection.bind('state_change', function(states) {
                         console.log("Conexion a cambiado de estado:" + states.current);
                     });
-                    pusher.connection.bind('disconnected', function() {
-                        
+                    PUSHER.connection.bind('disconnected', function() {
                       console.log("desconectado: "+ socketId);
                     });                
-                   var channel = pusher.subscribe('private-sitio_'+sessionService.getIdSitio());
+                   var channel = PUSHER.subscribe('private-sitio_'+sessionService.getIdSitio());
                      channel.bind('nuevaReserva', function(data) {
                       showMensaje(data);
                     });

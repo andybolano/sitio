@@ -2,46 +2,51 @@
     'use strict';
     angular
             .module('BirriasSitios')
-            .controller('GestionController', function (reservasService, sessionService, clienteService,$state) {
+            .controller('GestionController', function (reservasService, sessionService, $state, PUSHER) {
                 var vm = this;
                 vm.getReservas = getReservas;
                 vm.modalDetalle = modalDetalle;
                 vm.actualizarEstadoGestion = actualizarEstadoGestion;
                 vm.moverReserva = moverReserva;
+                vm.pusher = pusher;
                 vm.nuevasSolicitudes = [];
                 vm.esperandoConfirmacion = [];
                 vm.confirmadas = [];
                 vm.v_reserva = {};
-          
                 vm.dinero = {};
                 vm.fechaHoy = "";
-                
-        Date.prototype.toDateInputValue = (function () {
-            var local = new Date(this);
-            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-            return local.toJSON().slice(0, 10);
-        });
-        
-        vm.fechaHoy = new Date().toDateInputValue();
-
-
-function moverReserva(){
-    $('#consult_reserva').modal('hide');
-    vm.v_reserva.estadisticas = vm.v_estadisticas;
-    localStorage.setItem("reservaMover",JSON.stringify(vm.v_reserva));
-    $state.go("app.reserve");
-}
+                Date.prototype.toDateInputValue = (function () {
+                    var local = new Date(this);
+                    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+                    return local.toJSON().slice(0, 10);
+                });
+                vm.fechaHoy = new Date().toDateInputValue();
+                function pusher() {
+                    var channel = PUSHER.subscribe('private-sitio_' + sessionService.getIdSitio());
+                    channel.bind('nuevaReserva', function (data) {
+                        getReservas();
+                    });
+                    channel.bind('actualizacionReserva', function (data) {
+                        getReservas();
+                    });
+                }
+                function moverReserva() {
+                    $('#consult_reserva').modal('hide');
+                    vm.v_reserva.estadisticas = vm.v_estadisticas;
+                    localStorage.setItem("reservaMover", JSON.stringify(vm.v_reserva));
+                    $state.go("app.reserve");
+                }
                 function getReservas() {
-                     vm.nuevasSolicitudes = [];
-                     vm.esperandoConfirmacion = [];
-                     vm.confirmadas = [];
+                    vm.nuevasSolicitudes = [];
+                    vm.esperandoConfirmacion = [];
+                    vm.confirmadas = [];
                     var promisePost = reservasService.getBySitio(sessionService.getIdSitio());
                     promisePost.then(function (d) {
                         if (d.data.length > 0) {
                             var i = 0;
                             for (i = 0; i < d.data.length; i++)
                             {
-                         
+
                                 if (d.data[i].estado == 'esperandorevision') {
                                     vm.nuevasSolicitudes.push(d.data[i]);
                                 } else if (d.data[i].estado == "esperandoconfirmacion") {
@@ -61,17 +66,14 @@ function moverReserva(){
                         }
                     });
                 }
-
                 function modalDetalle(reserva) {
-                   vm.dinero.precio = reserva.precio;
+                    vm.dinero.precio = reserva.precio;
                     $('#consult_reserva').modal('show');
                     vm.v_reserva = reserva;
-                         if(document.getElementById("pago") !== null) {            
-                            document.getElementById("pago").value = parseInt(vm.v_reserva.precio - vm.v_reserva.abonoLiquidado);
-                        }
-                   
+                    if (document.getElementById("pago") !== null) {
+                        document.getElementById("pago").value = parseInt(vm.v_reserva.precio - vm.v_reserva.abonoLiquidado);
+                    }
                 }
-
                 function actualizarEstadoGestion(nuevoEstado, idReserva) {
                     var object = "";
                     var mensaje = "";
@@ -84,7 +86,7 @@ function moverReserva(){
                                 bandera = false;
                             } else {
                                 nuevoEstado = "esperandoconfirmacion";
-                                if(vm.dinero.abonoRequerido == undefined){
+                                if (vm.dinero.abonoRequerido == undefined) {
                                     vm.dinero.abonoRequerido = 0;
                                 }
                                 object = {
@@ -125,7 +127,7 @@ function moverReserva(){
                                     valor: false,
                                     abono: parseInt(vm.dinero.abonoCancelado)
                                 }
-                               
+
                                 mensaje = "Esta reserva ha sido confirmada y ha sido registrado su abono";
                             }
                             vm.dinero = {};
@@ -150,34 +152,34 @@ function moverReserva(){
                             }
                             mensaje = "Su reserva ha sido cancelada";
                             break;
-                            
+
                         case 5:
-                            
-                              nuevoEstado = "cumplida";
-                                var pago = parseInt(document.getElementById("pago").value.split('.').join(''));
-                                if(document.getElementById("pago").value === ""  || document.getElementById("pago").value === 0 ){
-                                    toastr['warning']("Ingrese el valor que se pagó");
-                                    return false;
-                                }
-                                object = {
-                                    estado: nuevoEstado,
-                                    idReserva: idReserva,
-                                    valor: false,
-                                    abono: false,
-                                    pago: pago
-                                }
-                                mensaje = "La reserva ha sido cumplida";
+
+                            nuevoEstado = "cumplida";
+                            var pago = parseInt(document.getElementById("pago").value.split('.').join(''));
+                            if (document.getElementById("pago").value === "" || document.getElementById("pago").value === 0) {
+                                toastr['warning']("Ingrese el valor que se pagó");
+                                return false;
+                            }
+                            object = {
+                                estado: nuevoEstado,
+                                idReserva: idReserva,
+                                valor: false,
+                                abono: false,
+                                pago: pago
+                            }
+                            mensaje = "La reserva ha sido cumplida";
                             break
-                            
+
                         case 6:
-                              nuevoEstado = "incumplida";
-                                object = {
-                                    estado: nuevoEstado,
-                                    idReserva: idReserva,
-                                    valor: false,
-                                    abono: false
-                                }
-                                mensaje = "La reserva ha sido incumplida"
+                            nuevoEstado = "incumplida";
+                            object = {
+                                estado: nuevoEstado,
+                                idReserva: idReserva,
+                                valor: false,
+                                abono: false
+                            }
+                            mensaje = "La reserva ha sido incumplida"
                             break
                     }
                     if (nuevoEstado === "cancelada") {
@@ -208,7 +210,6 @@ function moverReserva(){
                                         } else {
                                             sweetAlert("Oops...", "Ha ocurrido un problema!", "error");
                                         }
-                                        console.log(err);
                                     });
                                 }
                             } else {
@@ -219,7 +220,7 @@ function moverReserva(){
                         if (bandera === true) {
                             var promisePost = reservasService.updateReservas(object);
                             promisePost.then(function (d) {
-                             
+
                                 if (d.data.respuesta == true) {
                                     $('#consult_reserva').modal('hide');
                                     swal("Buen Trabajo!", mensaje, "success");
