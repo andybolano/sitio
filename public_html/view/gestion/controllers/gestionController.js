@@ -167,7 +167,8 @@
                                 idReserva: idReserva,
                                 valor: false,
                                 abono: false,
-                                emisor: 'SITIO'
+                                emisor: 'SITIO',
+                                detonador:1
                             }
                             mensaje = "Su reserva ha sido cancelada";
                             break;

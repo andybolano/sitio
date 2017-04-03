@@ -36,6 +36,7 @@
                 vm.v_reserva = reserva;
                 vm.v_reserva.cancha = cancha;
                 vm.v_cliente.nombres = reserva.nombres;
+                vm.v_cliente.apellidos = reserva.apellidos;
                 vm.v_cliente.telefono = reserva.telefono;
                 vm.v_cliente.cumplidas= reserva.cumplidas;
                 vm.v_cliente.incumplidas = reserva.incumplidas;

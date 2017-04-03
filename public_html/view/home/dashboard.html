@@ -41,7 +41,7 @@
                     <td>{{$index + 1 }}</td>
                     <td>{{item.nombrecancha }}</td>
                     <td>{{item.hora}}:00</td>
-                    <th>{{item.nombres}}</th>
+                    <th>{{item.nombres}} {{item.apellidos}}</th>
                     <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
                     <td>{{item.abonoRequerido | currency:undefined:0}}</td>
                     <td class="text-success" ng-if="item.abonoLiquidado > 0"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
@@ -123,7 +123,7 @@
                            <img src="images/profile-user.png" alt="" class="img-circle animated bounceIn ng-scope" width="100%" height="100%">
                         </a>
                         <div class="media-body ">
-                            <strong style="text-transform: uppercase" class="ng-binding">{{vm.v_reserva.nombres}}</strong>
+                            <strong style="text-transform: uppercase" class="ng-binding">{{vm.v_reserva.nombres}} {{vm.v_reserva.apellidos}}</strong>
                             <p><strong class="ng-binding"><i class="fa fa-phone"></i> {{vm.v_reserva.telefono}}</strong></p>
                         </div>
                       <table class="table">

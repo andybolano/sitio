@@ -25,7 +25,7 @@
                                 <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
                         <ul class="sortable-list agile-list"  ng-repeat="item in vm.nuevasSolicitudes |  filter: filtro_nuevas  | orderBy : 'fecha'  | orderBy : 'hora'  ">
                          <li  ng-click="vm.modalDetalle(item)" id="alert" style="color:#FFF">
-                            <i class="fa fa-user" style="color:#FFF"></i> {{item.nombres}}
+                            <i class="fa fa-user" style="color:#FFF"></i> {{item.nombres}} {{item.apellidos}}
                             <table width="100%">
                                 <tr>
                                     <td width="50%" style="color:#FFF"><i class="fa fa-phone" style="color:#FFF"></i> {{item.telefono}}</td>
@@ -57,7 +57,7 @@
                                 <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> </span></div>
                           <ul class="sortable-list agile-list"  ng-repeat="item in vm.esperandoConfirmacion |  filter: filtro_esperando  | orderBy : 'fecha' | orderBy : 'hora' ">
                         <li class="info-element" ng-click="vm.modalDetalle(item)">
-                            <i class="fa fa-user"></i> {{item.nombres}}
+                            <i class="fa fa-user"></i> {{item.nombres}} {{item.apellidos}}
                             <table width="100%">
                                 <tr>
                                     <td width="50%"><i class="fa fa-phone"></i> {{item.telefono}}</td>
@@ -94,7 +94,7 @@
                         <li class="warning-element" ng-click="vm.modalDetalle(item)">
                            
                              <div ng-if="item.estado =='confirmadaconabono'" title="Con Abono" class="triangulo_top_right"> </div>
-                             <i class="fa fa-user"></i> {{item.nombres}}
+                             <i class="fa fa-user"></i> {{item.nombres}} {{item.apellidos}}
                              
                             <div class="row">
                                 <div class="col-xs-7">
@@ -133,7 +133,7 @@
                            <img src="images/profile-user.png" alt="" class="img-circle animated bounceIn ng-scope" width="100%" height="100%">
                         </a>
                         <div class="media-body ">
-                            <strong style="text-transform: uppercase" class="ng-binding">{{vm.v_reserva.nombres}}</strong>
+                            <strong style="text-transform: uppercase" class="ng-binding">{{vm.v_reserva.nombres}} {{vm.v_reserva.apellidos}} </strong>
                             <p><strong class="ng-binding"><i class="fa fa-phone"></i> {{vm.v_reserva.telefono}}</strong></p>
                         </div>
                       <table class="table">
@@ -206,7 +206,7 @@
                               <button class="btn btn-success" ng-click="vm.actualizarEstadoGestion(5,vm.v_reserva.id);"  ng-if="vm.v_reserva.fecha < vm.fechaHoy">Cumplida</button>
                             <button class="btn btn-warning" ng-click="vm.actualizarEstadoGestion(6,vm.v_reserva.id);" ng-if="vm.v_reserva.fecha < vm.fechaHoy" >Incumplida</button>
                             <button class="btn btn-danger" ng-click="vm.actualizarEstadoGestion(4,vm.v_reserva.id);" title="Cancelar Reserva"  ng-if="vm.v_reserva.fecha >= vm.fechaHoy">Cancelar Reserva</button>
-                             <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva"  ng-if="vm.v_reserva.fecha >= vm.fechaHoy" ng-click="vm.recordar(vm.v_reserva.idCliente,vm.v_reserva.estado);">Recordar</button>
+                             <button  ng-if="vm.v_reserva.via == 'REMOTA' && vm.v_reserva.fecha >= vm.fechaHoy" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva"  ng-click="vm.recordar(vm.v_reserva.idCliente,vm.v_reserva.estado);">Recordar</button>
                                 
                         </div>
                         
@@ -229,7 +229,7 @@
                             <button class="btn btn-success" ng-click="vm.actualizarEstadoGestion(21,vm.v_reserva.id);" ng-if="vm.v_reserva.fecha >= vm.fechaHoy">Registrar Abono</button>
                            <button class="btn btn-success" ng-click="vm.actualizarEstadoGestion(5,vm.v_reserva.id);"  ng-if="vm.v_reserva.fecha < vm.fechaHoy">Cumplida</button>
                             <button class="btn btn-warning" ng-click="vm.actualizarEstadoGestion(6,vm.v_reserva.id);" ng-if="vm.v_reserva.fecha < vm.fechaHoy" >Incumplida</button>
-                            <button ng-if="vm.v_reserva.via == 'REMOTA'" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva"  ng-if="vm.v_reserva.fecha >= vm.fechaHoy" ng-click="vm.recordar(vm.v_reserva.idCliente,vm.v_reserva.estado);">Recordar</button>
+                            <button ng-if="vm.v_reserva.via == 'REMOTA' && vm.v_reserva.fecha >= vm.fechaHoy" class="btn" style="background-color:#FF7701;color:#FFF"  title="Recuerdale a tu cliente esta reserva"  ng-click="vm.recordar(vm.v_reserva.idCliente,vm.v_reserva.estado);">Recordar</button>
                         </div>
                 </div>
             </div>
