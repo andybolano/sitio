@@ -24,8 +24,6 @@
         vm.v_reserva = {};
         vm.v_cliente = {};
         
-
-
         //methods
         vm.reservar = reservar;
         vm.getCanchas = getCanchas;
@@ -40,7 +38,7 @@
         vm.actualizarReserva = actualizarReserva;
 
         function getCliente() {
-            if(vm.Cliente.existe === false){
+       
             if (vm.Cliente.telefono !== undefined && vm.Cliente.telefono !== "") {
                 var promisePost = clienteService.getByPhone(vm.Cliente.telefono);
                 promisePost.then(function (d) {
@@ -63,8 +61,9 @@
                 });
 
             }
+        
         }
-        }
+        
         function moveToFecha(direction) {
             var f1 = new Date(vm.fecha);
             var fecha = "";
@@ -116,10 +115,10 @@
 
         function cancelarActualizacion() {
             localStorage.removeItem('reservaMover');
-            vm.Cliente.existe = false;
             vm.reservaMover.existe = false;
             vm.RESERVA = [];
-            vm.Cliente = "";
+            vm.Cliente = {};
+            vm.Cliente.existe = false;
             $("#reserva").modal('hide');
             getCanchas();
 
@@ -515,6 +514,7 @@
         }
 
         $scope.viewReserva = function (reserva) {
+         
             $('#consult_reserva').modal('show');
 
             var canchas = JSON.parse(localStorage.getItem('canchas'));

@@ -14,7 +14,8 @@
             }else{
             var credentials = {
                 email: vm.user.email,
-                password: vm.user.password
+                password: vm.user.password,
+                regId: 'NULL'
             }
             $('#login').attr("disabled", true);
              authService.authenticate(credentials).then(success, error);

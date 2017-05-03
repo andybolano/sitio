@@ -52,7 +52,8 @@
          function recordar(idCliente, estado){
              var object = {
                  idCliente:idCliente,
-                 estado:estado
+                 estado:estado,
+                 sitio:sessionService.getIdSitio()
              }
 
             var promisePost = reservasService.recordar(object);
