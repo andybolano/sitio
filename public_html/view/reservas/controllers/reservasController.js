@@ -16,6 +16,8 @@
         vm.diaSemana = "";
         vm.fecha = "";
         var dias = new Array('', 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado');
+        vm.dias = [];
+        vm.horas = ['5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
         vm.RESERVA = [];
         vm.Cliente = {};
         vm.Cliente.existe = false;
@@ -23,6 +25,8 @@
         vm.reservaMover.existe = false;
         vm.v_reserva = {};
         vm.v_cliente = {};
+        vm.r_recurrente = {};
+        vm.r_reservas_recurrente = [];
         
         //methods
         vm.reservar = reservar;
@@ -37,6 +41,74 @@
         vm.cancelarActualizacion = cancelarActualizacion;
         vm.actualizarReserva = actualizarReserva;
 
+        vm.showReservaRecurrente = function(){
+            vm.dias = dias;
+            $('#modalReservaRecurrente').modal('show');
+        }
+        
+        vm.registrar_reservar_recurrente = function(){
+      
+       var nombreCancha = "";
+       var precios = "";
+        var data_canchas = JSON.parse(localStorage.getItem('canchas'));
+         var data_precio = JSON.parse(localStorage.getItem('precios'));
+          var i = 0;
+      
+                for (i = 0; i < data_canchas.length; i++)
+                {
+                  
+                    if (parseInt(vm.r_recurrente.cancha) === parseInt(data_canchas[i].id))
+                    {
+                        nombreCancha = data_canchas[i].nombre;
+      
+                        if(parseInt(data_precio[i].cancha) === parseInt(vm.r_recurrente.cancha)){
+                          precios = data_precio[i].precios;                    
+                      } 
+                    }
+                } 
+          var f1 = vm.r_recurrente.fechaIni.toDateInputValue();
+          var f2 = vm.r_recurrente.fechaFin.toDateInputValue();
+          var inicio = new Date(f1);
+          var fin =  new Date(f2);
+          
+      
+          var timeDiff = Math.abs(fin.getTime() - inicio.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); //Días entre las dos fechas
+         
+
+            for (var i=0; i <= diffDays; i++) 
+            {
+                if (inicio.getDay() == vm.r_recurrente.dia - 1) {
+                     for(var y = 0; y < precios.length; y++){
+                       
+                    var stringA = precios[y].HORA;
+                    var stringB = vm.r_recurrente.hora+':00';
+                             if(stringA===stringB){
+                                 alert();
+                               /*  diaSemana = dias[inicio.getDay()].replace(/á/gi,"a");
+                                
+                                 var dia = diaSemana.toUpperCase();
+                                 var msgList = precios[y];
+                                 var msgsKeys = Object.keys(msgList);
+                                for(var i=0; i< msgsKeys.length; i++)
+                                    {
+                                        if(msgsKeys[i] === dia){
+                                        var msgType     = msgsKeys[i];
+                                        var msgContent  = precios[y][msgType];
+                                        msgContent = msgContent.toString()+".";
+                                        var precio = parseInt(msgContent.split('.').join(''));
+                                        break;
+                                        }
+                                    }*/
+                             }
+                           }
+                   vm.r_reservas_recurrente.push({'fecha':inicio.getDate()+"-"+parseInt(inicio.getMonth()+1)+"-"+inicio.getFullYear(),diaSemana:dias[vm.r_recurrente.dia],'hora':vm.r_recurrente.hora,'nombreCancha':nombreCancha,'idCancha':vm.r_recurrente.cancha,'abonoRequerido':0,'precio':0});
+                }
+                
+                inicio.setDate(inicio.getDate() + 1);
+            }
+   
+        }
         function getCliente() {
        
             if (vm.Cliente.telefono !== undefined && vm.Cliente.telefono !== "") {
