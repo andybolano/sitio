@@ -24,6 +24,8 @@
                     return local.toJSON().slice(0, 10);
                 });
 
+
+                
         function hora() {
                     var f = new Date();
                     var hor = f.getHours();

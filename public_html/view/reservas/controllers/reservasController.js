@@ -261,6 +261,7 @@
                 if (d.data.length === 0) {
                     toastr['warning']("No hay reservas : " + fecha);
                 } else {
+                    console.log(d.data)
                     print_reservadas(d.data);
                 }
             }, function (err) {
@@ -282,7 +283,7 @@
                 element_hour = "li_" + agenda[i].idCancha + "_" + agenda[i].hora + "_" + agenda[i].fecha;
                 document.getElementById(element_hour).style.background = "#FF3F45";
                 document.getElementById(element_hour).style.color = "#FFFFFF";
-                document.getElementById(element_hour).innerHTML = "<div style='width:100%;cursor:pointer;padding: 2px 6px 2px 12px'  onclick='angular.element(this).scope().viewReserva(" + JSON.stringify(agenda[i]) + ")' ><i class='fa fa-eye' ></i>&nbsp;&nbsp;" + agenda[i].hora + ":00</div>";
+                document.getElementById(element_hour).innerHTML = "<div class='content-reserva'  onclick='angular.element(this).scope().viewReserva(" + JSON.stringify(agenda[i]) + ")' ><i class='fa fa-eye' ></i>&nbsp;&nbsp;" + agenda[i].hora + ":00 " +agenda[i].nombres+" "+ agenda[i].apellidos  +"</div>";
             }
         }
 

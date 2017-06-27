@@ -11,6 +11,7 @@
         var service = {
             get: get,
            getByPhone:getByPhone,
+           getBySitio:getBySitio
         };
         return service;
 
@@ -26,7 +27,18 @@
                 defered.reject(error)
             }
         };
-        
+        function getBySitio(idSitio){
+             var defered = $q.defer();
+            var promise = defered.promise;
+            $http.get(API_URL+'/clientes/sitio/'+idSitio).then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+        }
          function getByPhone(phone){
             var defered = $q.defer();
             var promise = defered.promise;

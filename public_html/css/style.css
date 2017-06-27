@@ -3,3 +3,12 @@ h1,h2{color:#E55000}.animation-text-box p,.faq-item .tag-item,.file-manager h5,.
     background-color: #c62828;
     border-color:#c62828;
 }
+
+.content-reserva{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    width:100%;
+    cursor:pointer;
+    padding: 2px 2px 2px 2px
+}
