@@ -7395,3 +7395,10 @@ body.mini-navbar .nav-header {
     cursor:pointer;
     padding: 2px 2px 2px 2px
 }
+
+.contet-form{
+    background-color: #FFF;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    border:1px solid #e5e5e5;
+}

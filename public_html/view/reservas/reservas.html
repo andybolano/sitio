@@ -102,7 +102,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Registro de Reserva</h4>
-                <small>Termina de digilenciar la informacion para registrarla.</small>
+                <small>Termina de digilenciar la información para registrarla.</small>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -140,6 +140,10 @@
                         <div ng-if='vm.Cliente.existe === false'>
                             <small>Nombre:</small>
                             <input type="text"  class="form-control" ng-model="vm.Cliente.nombre">
+                            <small>Reseña de cliente:</small>
+                            <textarea class="form-control" ng-model="vm.Cliente.resenia">
+                                
+                            </textarea>
                         </div>
                                                     
                      <div class="feed-element"  ng-if='vm.Cliente.existe === true'>
@@ -163,6 +167,10 @@
                         </tr>
                         </tbody>
                       </table>
+                          <label>Reseña del cliente:</label>
+                         <textarea class="form-control" ng-model="vm.Cliente.resenia">
+                                
+                        </textarea>
                     </div>
                      
                     </div>
@@ -178,16 +186,16 @@
     </div>
 </div>
 <div class="modal inmodal" id="modalReservaRecurrente" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" style="width:90%;">
+    <div class="modal-dialog modal-lg" style="width:96%;">
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Registro de Reserva recurrente</h4>
-                <small>Termina de digilenciar la informacion para registrarla.</small>
+                <small>Digilencia la información para registrarla.</small>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-9">
                         <div class="row">
                             <div class="col-lg-2">
                                 <label>Dia:</label>
@@ -201,7 +209,7 @@
                                     <option ng-repeat="i in vm.horas" value="{{i}}">{{i}}:00</option>
                                 </select>
                             </div>
-                            <div class='col-lg-4'>
+                            <div class='col-lg-5'>
                                 <div class='row'>
                                     <div class='col-xs-6'>
                                     <label>fecha Inicio:</label>
@@ -214,17 +222,22 @@
                                 </div>
        
                             </div>
-                            <div class='col-lg-3'>
+                            <div class='col-lg-2'>
                                 <label>Cancha:</label>
                                 <select class="form-control" ng-model='vm.r_recurrente.cancha'>
                                     <option ng-repeat="i in vm.Canchas" value="{{i.id}}">{{i.nombre}}</option>
                                 </select>
+                         
+                            </div>
+                            <div class="col-lg-1">
+                                  <button class="btn btn-success" style="margin-top:23px;" ng-click="vm.calcular_reservas_recurrentes();"><i class="fa fa-check"></i></button>
                             </div>
                         </div>
-                        <table class="table table-striped">
+                        <hr class="hr-line-dashed">
+                        <table class="table table-striped" style="margin-top:10px;">
                             <thead>
                             <th>Cancha</th>
-                            <th>Fecha</th>
+                            <th>Fechas</th>
                             <th>Hora</th>
                             <th>Precio</th>
                             <th>Abono requerido</th>
@@ -247,13 +260,18 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3 contet-form">
                         <p style="font-weight: 900">Datos del Cliente</p>
                         <small>Telefono:</small>
                         <input type="text"  class="form-control" ng-model="vm.Cliente.telefono" ng-blur="vm.getCliente();">
                         <div ng-if='vm.Cliente.existe === false'>
                             <small>Nombre:</small>
                             <input type="text"  class="form-control" ng-model="vm.Cliente.nombre">
+                            <br>
+                            <small>Reseña de cliente:</small>
+                            <textarea class="form-control" ng-model="vm.Cliente.resenia">
+                                
+                            </textarea>
                         </div>
                                                     
                      <div class="feed-element"  ng-if='vm.Cliente.existe === true'>
@@ -277,6 +295,10 @@
                         </tr>
                         </tbody>
                       </table>
+                         <label>Reseña del cliente:</label>
+                         <textarea class="form-control" ng-model="vm.Cliente.resenia">
+                                
+                        </textarea>
                     </div>
                      
                     </div>
@@ -285,7 +307,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" ng-click="vm.registrar_reservar_recurrente();" id="reservar"><i class="fa fa-cloud-upload"></i> Registrar Reserva</button>
+                <button type="button" class="btn btn-primary" ng-click="vm.reservar_recurrente();" id="reservar_recurrente"><i class="fa fa-cloud-upload"></i> Registrar Reserva</button>
             </div>
         </div>
     </div>

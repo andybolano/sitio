@@ -17,7 +17,7 @@
         vm.fecha = "";
         var dias = new Array('', 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado');
         vm.dias = [];
-        vm.horas = ['5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+        vm.horas = ['05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
         vm.RESERVA = [];
         vm.Cliente = {};
         vm.Cliente.existe = false;
@@ -46,7 +46,29 @@
             $('#modalReservaRecurrente').modal('show');
         }
         
-        vm.registrar_reservar_recurrente = function(){
+        vm.calcular_reservas_recurrentes = function(){
+      
+      
+      if(!vm.r_recurrente.dia){
+          toastr['warning']('Seleccionar dia');
+          return ;
+      }
+      
+      if(!vm.r_recurrente.hora){
+          toastr['warning']('Seleccionar hora');
+          return;
+      }
+      
+      if(!vm.r_recurrente.fechaIni){
+          toastr['warning']('Seleccionar fecha de inicio');
+          return;
+      }
+      
+       if(!vm.r_recurrente.fechaFin){
+          toastr['warning']('Seleccionar fecha de final');
+          return;
+      }
+      
       
        var nombreCancha = "";
        var precios = "";
@@ -72,6 +94,11 @@
           var fin =  new Date(f2);
           
       
+      if(fin.getTime() - inicio.getTime() < 0){
+          toastr['warning']('Fecha "final" debe de ser mayor a la fecha de "inicio"');
+          return;
+      }
+      vm.r_reservas_recurrente = [];
           var timeDiff = Math.abs(fin.getTime() - inicio.getTime());
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); //Días entre las dos fechas
          
@@ -80,35 +107,105 @@
             {
                 if (inicio.getDay() == vm.r_recurrente.dia - 1) {
                      for(var y = 0; y < precios.length; y++){
-                       
-                    var stringA = precios[y].HORA;
-                    var stringB = vm.r_recurrente.hora+':00';
-                             if(stringA===stringB){
-                                 alert();
-                               /*  diaSemana = dias[inicio.getDay()].replace(/á/gi,"a");
-                                
-                                 var dia = diaSemana.toUpperCase();
-                                 var msgList = precios[y];
-                                 var msgsKeys = Object.keys(msgList);
-                                for(var i=0; i< msgsKeys.length; i++)
-                                    {
-                                        if(msgsKeys[i] === dia){
-                                        var msgType     = msgsKeys[i];
-                                        var msgContent  = precios[y][msgType];
-                                        msgContent = msgContent.toString()+".";
-                                        var precio = parseInt(msgContent.split('.').join(''));
-                                        break;
+                        var stringA = precios[y].HORA;
+                        var stringB = vm.r_recurrente.hora+":00";
+                                 if(stringA === stringB){
+                                     
+                                     diaSemana = dias[vm.r_recurrente.dia].replace(/á/gi,"a");
+                                     var dia_ = diaSemana.toUpperCase();
+                                     
+                                     var msgList = precios[y];
+                                     var msgsKeys = Object.keys(msgList);
+                                  
+                                    for(var x=0; x< msgsKeys.length; x++)
+                                        {
+                                            if(msgsKeys[x] === dia_){
+                                            var msgType     = msgsKeys[x];
+                                            var msgContent  = precios[y][msgType];
+                                            msgContent = msgContent.toString()+".";
+                                            var precio = parseInt(msgContent.split('.').join(''));
+                                            break;
+                                            }
                                         }
-                                    }*/
-                             }
-                           }
-                   vm.r_reservas_recurrente.push({'fecha':inicio.getDate()+"-"+parseInt(inicio.getMonth()+1)+"-"+inicio.getFullYear(),diaSemana:dias[vm.r_recurrente.dia],'hora':vm.r_recurrente.hora,'nombreCancha':nombreCancha,'idCancha':vm.r_recurrente.cancha,'abonoRequerido':0,'precio':0});
+                                 }
+                     }
+                     
+                    var dia = inicio.getDate();
+                    var mes = parseInt(inicio.getMonth()+1);
+                     
+                    dia = dia.toString();if(dia.length < 2)dia = "0" + dia;
+                    mes = mes.toString();if(mes.length < 2)mes = "0" + mes;
+                    
+                     
+                   vm.r_reservas_recurrente.push({'fecha':inicio.getFullYear()+"-"+mes+"-"+dia,'diaSemana':dias[vm.r_recurrente.dia],'hora':vm.r_recurrente.hora,'nombreCancha':nombreCancha,'idcancha':vm.r_recurrente.cancha,'abonoRequerido':0,'precio':precio});
                 }
-                
                 inicio.setDate(inicio.getDate() + 1);
             }
-   
         }
+        
+        vm.reservar_recurrente = function(){
+            var detalle = [];
+            var item = "";
+            if(vm.r_reservas_recurrente.length <= 0){
+                toastr.warning("Por favor cargar reservas");
+                return;
+            }
+            if (vm.Cliente.nombres === undefined || vm.Cliente.telefono === undefined) {
+                toastr.warning("Aun faltan datos del cliente?");
+                return;
+            } 
+            var i = 0;
+            for (i = 0; i < vm.r_reservas_recurrente.length; i++) {
+                        item = {
+                            precio: parseInt(vm.r_reservas_recurrente[i].precio),
+                            abonoRequerido: parseInt(vm.r_reservas_recurrente[i].abonoRequerido),
+                            estado: 'confirmadasinabono'
+                        };
+                        detalle.push(item);
+                    }
+             var reserva = {
+                        nombre: vm.Cliente.nombre,
+                        telefono: vm.Cliente.telefono.toString(),
+                        resenia:vm.Cliente.resenia,
+                        reserva:vm.r_reservas_recurrente,
+                        sitio: sessionService.getIdSitio(),
+                        via: 'LOCAL',
+                        tipo: 'RECURRENTE',
+                        detalle: detalle
+                    };
+                    
+               
+                    $('#reservar_recurrente').attr("disabled", true);
+                     var promisePost = reservasService.post(reserva);
+                    promisePost.then(function (d) {
+                        $('#reservar_recurrente').attr("disabled", false);
+                   
+                        if (d.data.respuesta === true) {
+                            swal("Buen trabajo!", d.data.message, "success")
+                            vm.r_reservas_recurrente = [];
+                            vm.Cliente = {};
+                            reserva = {};
+                            detalle = [];
+                            vm.Cliente.existe = false;
+                            $("#modalReservaRecurrente").modal('hide');
+                            getAgendaDiaByCancha();
+                        } else {
+                            toastr["error"](d.data.message);
+                        }
+                        
+                         
+                    }, function (err) {
+                        $('#reservar_recurrente').attr("disabled", false);
+                        if (err.status == 401) {
+                            toastr["error"](err.data.respuesta);
+                        } else {
+                            toastr["error"]("Ha ocurrido un problema!");
+                        }
+                    });
+            
+            
+        }
+        
         function getCliente() {
        
             if (vm.Cliente.telefono !== undefined && vm.Cliente.telefono !== "") {
@@ -333,7 +430,6 @@
                 if (d.data.length === 0) {
                     toastr['warning']("No hay reservas : " + fecha);
                 } else {
-                    console.log(d.data)
                     print_reservadas(d.data);
                 }
             }, function (err) {
@@ -355,7 +451,11 @@
                 element_hour = "li_" + agenda[i].idCancha + "_" + agenda[i].hora + "_" + agenda[i].fecha;
                 document.getElementById(element_hour).style.background = "#FF3F45";
                 document.getElementById(element_hour).style.color = "#FFFFFF";
-                document.getElementById(element_hour).innerHTML = "<div class='content-reserva'  onclick='angular.element(this).scope().viewReserva(" + JSON.stringify(agenda[i]) + ")' ><i class='fa fa-eye' ></i>&nbsp;&nbsp;" + agenda[i].hora + ":00 " +agenda[i].nombres+" "+ agenda[i].apellidos  +"</div>";
+                var apellidos = agenda[i].apellidos;
+                if(apellidos == null){
+                    apellidos = "";
+                }
+                document.getElementById(element_hour).innerHTML = "<div class='content-reserva'  onclick='angular.element(this).scope().viewReserva(" + JSON.stringify(agenda[i]) + ")' ><i class='fa fa-eye' ></i>&nbsp;&nbsp;" + agenda[i].hora + ":00 " +agenda[i].nombres+" "+ apellidos  +"</div>";
             }
         }
 
@@ -506,12 +606,14 @@
                     var reserva = {
                         nombre: vm.Cliente.nombre,
                         telefono: vm.Cliente.telefono.toString(),
+                        resenia:vm.Cliente.resenia,
                         reserva: vm.RESERVA,
                         sitio: sessionService.getIdSitio(),
                         via: 'LOCAL',
                         tipo: tipo,
                         detalle: detalle
                     };
+                
                     $('#reservar').attr("disabled", true);
                     var promisePost = reservasService.post(reserva);
                     promisePost.then(function (d) {
@@ -530,7 +632,7 @@
                             toastr["error"](d.data.message);
                         }
                     }, function (err) {
-                        $('#reservar').attr("disabled", true);
+                        $('#reservar').attr("disabled", false);
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);
                         } else {
@@ -587,7 +689,7 @@
         }
 
         $scope.viewReserva = function (reserva) {
-         
+       
             $('#consult_reserva').modal('show');
 
             var canchas = JSON.parse(localStorage.getItem('canchas'));
