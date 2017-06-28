@@ -75,7 +75,30 @@
                 vm.isActive = function(viewLocation){
                     return viewLocation === $location.path();
                 }
-                
+                vm.titulo = function(){
+                    if ($location.path() === "/canchas") {
+                            return "CANCHAS";
+                        }
+                     if ($location.path() === "/clientes") {
+                            return "MIS CLIENTES";
+                        }
+                          if ($location.path() === "/historial") {
+                            return "HISTORIAL DE RESERVAS";
+                        }
+                        if ($location.path() === "/gestion") {
+                            return "GESTIÓN DE RESERVAS";
+                        }
+                         if ($location.path() === "/reserve") {
+                            return "RESERVAR";
+                        }
+                         if ($location.path() === "/configuracion") {
+                            return "CONFIGURACIÓN DE SITIO";
+                        }
+                        if ($location.path() === "/") {
+                            return "INICIO";
+                        }
+                        
+                }
                 vm.hoy = function (){
                     var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
                     var diasSemana = new Array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
