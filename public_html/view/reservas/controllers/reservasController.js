@@ -29,13 +29,12 @@
         vm.r_reservas_recurrente = [];
         
         //methods
-        vm.reservar = reservar;
+        
         vm.getCanchas = getCanchas;
         vm.diaSemana = diaSemana;
         vm.showAgendaDiaByCancha = showAgendaDiaByCancha;
         vm.getAgendaDiaByCancha = getAgendaDiaByCancha;
         vm.showCanchas = showCanchas;
-        vm.reservar = reservar;
         vm.moveToFecha = moveToFecha;
         vm.getCliente = getCliente;
         vm.cancelarActualizacion = cancelarActualizacion;
@@ -111,7 +110,7 @@
                         var stringB = vm.r_recurrente.hora+":00";
                                  if(stringA === stringB){
                                      
-                                     diaSemana = dias[vm.r_recurrente.dia].replace(/á/gi,"a");
+                                     var diaSemana = dias[vm.r_recurrente.dia].replace(/á/gi,"a");
                                      var dia_ = diaSemana.toUpperCase();
                                      
                                      var msgList = precios[y];
@@ -447,8 +446,10 @@
 
             var element_hour = "";
             var i = 0;
+          
             for (i = 0; i < agenda.length; i++) {
                 element_hour = "li_" + agenda[i].idCancha + "_" + agenda[i].hora + "_" + agenda[i].fecha;
+            
                 document.getElementById(element_hour).style.background = "#FF3F45";
                 document.getElementById(element_hour).style.color = "#FFFFFF";
                 var apellidos = agenda[i].apellidos;
@@ -569,7 +570,7 @@
             }
         }
 
-        function reservar() {
+        vm.reservar = function() {
             var token = false;
             var item = "";
             var detalle = [];
