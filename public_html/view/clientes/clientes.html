@@ -1,8 +1,17 @@
 <div class="wrapper wrapper-content">
 <div class="row border-bottom white-bg page-heading" ng-init="vm.getClientes();">
   <div class="row ">
+      <div class="col-xs-6">
+           <div class="espacer" style="height:20px;"></div>
+           Clientes: <span class="badge badge-primary">{{vm.Clientes.length}}</span>
+      </div>
     <div class="col-xs-6">
-        <div class="espacer" style="height:20px;"></div>
+        <div class="espacer" style="height:10px;"></div>
+        <div class="input-group"><input type="text" placeholder="Buscar cliente" class="input-sm form-control ng-pristine ng-valid ng-touched" ng-model="filtro"> 
+              <span class="input-group-btn">
+          <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> 
+              </span>
+          </div>
     </div>
   </div>
 
@@ -16,19 +25,181 @@
                                 <th>#</th>
                                 <th>Nombres</th>  
                                 <th>Telefono</th>
+                                <th>Origen</th>
                                 <th>Reservas</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="i in vm.Clientes | orderBy:'nombres'">
+                            <tr ng-repeat="i in vm.Clientes | orderBy:'nombres' | filter:filtro">
                                 <td>{{$index + 1}}</td>
                                 <td>{{i.nombres}} {{i.apellidos}}</td>
                                 <td>{{i.telefono}}</td>
+                                <td><span class="badge badge-success" ng-if="i.apellidos !== null" title="Cliente desde la app">App</span><span class="badge badge-info"  ng-if="i.apellidos == null" title="Cliente registrador desde aquí!">Local</span></td>
                                 <td>{{i.cantidadReservas}}</td>
+                                <th><a href="javascript:;" ng-click="vm.showCliente(i);"><i class="ico fa fa-eye text-blue"></i></a></th>
                             </tr>
                         </tbody>
                     </table>
             </div>
 </div>
+</div>
+</div>
+
+<div class="modal inmodal" id="modalCliente" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 98%;">
+        <div class="modal-content animated bounceInUp">
+            <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Detalle de Cliente</h4>
+                                            <small>Toda la informacion relacionada con tu cliente</small>
+                                        </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                      <div class="ibox-content text-center contet-form" style="padding-top: 10px;">
+                        
+                                <div class="m-b-sm">
+                                        <img alt="image" class="img-circle" src="images/profile-user.png" style="width: 100px;height: 100px;" ng-if="vm.cliente.image == 0">
+                                        <img alt="image" class="img-circle" src="{{vm.cliente.url}}" style="width: 100px;height: 100px;" ng-if="vm.cliente.image == 1">
+                                </div>
+                                  <h3>{{vm.cliente.nombres}} {{vm.cliente.apellidos}}</h3>
+                                   <p class="font-bold">{{vm.cliente.telefono}}</p>
+                                  <p class="font-bold">{{vm.cliente.resenia}}</p>
+
+                     <table class="table">
+                        <thead>
+                            <tr><th style="text-align: center;"><small class="text-muted">Cumplidas</small></th>
+                            <th style="text-align: center;"><small class="text-muted">Incumplidas</small></th>
+                            <th style="text-align: center;"><small class="text-muted">Canceladas</small></th>
+                        </tr></thead>
+                        <tbody><tr>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.cliente.cumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.cliente.incumplidas}}</span></td>
+                            <td style="text-align: center;"><span class="label label-danger" style=" font-size:16px;">{{vm.cliente.canceladas}}</span></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                            </div>
+                        
+                        <div class="ibox-content contet-form" style="margin-top:10px;">
+                            <h3>Resevas en mi sitio: <span class="badge badge-primary">{{vm.Reservas.length}}</span></h3>
+                                <div>
+                                    <div>
+                                        <span>Cumplidas: {{vm.estadisticas_reservas.cumplida}}</span>
+                                        <small class="pull-right"> {{vm.estadisticas_reservas.cumplida_porcentaje}}%</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: {{vm.estadisticas_reservas.cumplida_porcentaje}}%" class="progress-bar progress-bar-success"></div>
+                                        <small class="pull-right"></small>
+                                    </div>
+
+                                    <div>
+                                        <span>Incumplidas: {{vm.estadisticas_reservas.incumplida}}</span>
+                                        <small class="pull-right">{{vm.estadisticas_reservas.incumplida_porcentaje}}%</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                         <div style="width: {{vm.estadisticas_reservas.incumplida_porcentaje}}%" class="progress-bar progress-bar-warning"></div>
+                                    </div>
+
+                                    <div>
+                                        <span>Canceladas: {{vm.estadisticas_reservas.cancelada}}</span>
+                                        <small class="pull-right">{{vm.estadisticas_reservas.cancelada_porcentaje}}%</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: {{vm.estadisticas_reservas.cancelada_porcentaje}}%" class="progress-bar progress-bar-danger"></div>
+                                    </div>
+
+                                    <div>
+                                        <span>Confirmada sin abono: {{vm.estadisticas_reservas.confirmadasinabono}}</span>
+                                        <small class="pull-right">{{vm.estadisticas_reservas.confirmadasinabono_porcentaje}}%</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: {{vm.estadisticas_reservas.confirmadasinabono_porcentaje}}%" class="progress-bar progress-bar-info"></div>
+                                    </div>
+                                    
+                                    <div>
+                                        <span>Confirmada con abono: {{vm.estadisticas_reservas.confirmadaconabono}}</span>
+                                        <small class="pull-right">{{vm.estadisticas_reservas.confirmadaconabono_porcentaje}}%</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width:{{vm.estadisticas_reservas.confirmadaconabono_porcentaje}}%" class="progress-bar"></div>
+                                    </div>
+                                    
+                                    <div>
+                                        <span>Esperando revisión: {{vm.estadisticas_reservas.esperandorevision}}</span>
+                                        <small class="pull-right">{{vm.estadisticas_reservas.esperandorevision_porcentaje}}%</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: {{vm.estadisticas_reservas.esperandorevision_porcentaje}}%" class="progress-bar progress-bar-warning"></div>
+                                    </div>
+                                    
+                                    <div>
+                                        <span>Confirmada Confirmación: {{vm.estadisticas_reservas.esperandoconfirmacion}}</span>
+                                        <small class="pull-right">{{vm.estadisticas_reservas.esperandoconfirmacion_porcentaje}}%</small>
+                                    </div>
+                                    <div class="progress progress-small">
+                                        <div style="width: {{vm.estadisticas_reservas.esperandoconfirmacion_porcentaje}}%" class="progress-bar progress-bar-warning"></div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <h3>Historial de reservas</h3>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="input-group"><input type="text" placeholder="Buscar" class="input-sm form-control ng-pristine ng-valid ng-touched" ng-model="filtro2"> 
+              <span class="input-group-btn">
+          <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> 
+              </span>
+          </div>
+                            </div>
+                        </div>
+                        <hr class="hr-line-dashed">
+                        <table class="table table-striped">
+                        <thead>
+                        <th></th>
+                        <th>Cancha</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Precio</th>
+                        <th>Pag&oacute</th>
+                       
+                        <th>Abono Liquidado</th>
+                        <th>Estado</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat='item in vm.Reservas | filter:filtro2 | orderBy : "-fecha" ' >
+                                
+                                     <td>{{$index + 1 }}</td>
+                    <td>{{item.nombreCancha }}</td>
+                    <td>{{item.fecha}} - <small>{{item.diaSemana}}</small></td>
+                    <td>{{item.hora}}:00</td>
+                    <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
+                    <td class="text-success">{{item.pago | currency:undefined:0}}</td>
+                  
+                    <td class="text-success" ng-if="item.abonoLiquidado > 0"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
+                    <td class="text-danger" ng-if="item.abonoLiquidado == 0"><i class="fa fa-level-down"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
+                    <td>
+                        <label ng-if="item.estado == 'esperandorevision'" class="label label-danger" id="alert">Esperando revision</label>
+                        <label ng-if="item.estado == 'cumplida'" class="label label-success">Cumplida</label>
+                        <label ng-if="item.estado == 'incumplida'" class="label label-warning">Incumplida</label>
+                        <label ng-if="item.estado == 'cancelada'" class="label label-danger">Cancelada</label>
+                        <label ng-if="item.estado == 'confirmadaconabono'" class="label label-primary">Confirmada con abono</label>
+                        <label ng-if="item.estado == 'confirmadasinabono'" class="label label-info">Confirmada sin abono</label>
+                    </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
 </div>
 </div>

@@ -40,7 +40,7 @@ h3, h4, h5 {
 }
 .nav>li>a {
     font-weight:600;
-    padding:14px 20px 14px 25px
+    padding:14px 5px 14px 25px
 }
 .nav>li.active>a {
     color:#fff
@@ -165,7 +165,7 @@ h3, h4, h5 {
 }
 .minimalize-styl-2 {
     padding:4px 12px;
-    margin:14px 5px 5px 20px;
+    margin:7px 5px 5px 10px;
     font-size:14px;
     float:left
 }
@@ -3178,7 +3178,8 @@ code {
     clear:both;
     margin-bottom:25px;
     margin-top:0;
-    padding:0
+    padding:0;
+    border:1px solid #E7EAEC;
 }
 .ibox.collapsed .ibox-content {
     display:none
@@ -3287,7 +3288,7 @@ table.table-mail tr td {
     right:0
 }
 .bg-muted, .gray-bg {
-    background-color:#f3f3f4
+    background-color:#F3F3F4
 }
 .white-bg {
     background-color:#fff
@@ -7253,10 +7254,10 @@ body.md-skin {
     }
 }
 .bg-menu {
-    background-color:#354546;
+    background-color:#03363D;
     color:#354546;
-    background-size:50% 100%;
-    background-image:url(patterns/bg.menu.jpg)
+   /* background-size:50% 100%;
+    background-image:url(patterns/bg.menu.jpg)*/
 }
 .nav-header {
     padding:33px 25px;
@@ -7402,3 +7403,7 @@ body.mini-navbar .nav-header {
     padding-bottom: 20px;
     border:1px solid #e5e5e5;
 }
+
+body{background-image:none;}
+.subtitule label{color:#008da0;margin-left:14px;font-size:11px;}
+.mini-navbar .subtitule{display:none;}

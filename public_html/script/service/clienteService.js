@@ -11,10 +11,22 @@
         var service = {
             get: get,
            getByPhone:getByPhone,
-           getBySitio:getBySitio
+           getBySitio:getBySitio,
+           getHistoriaBySitio:getHistoriaBySitio
         };
         return service;
-
+        function getHistoriaBySitio(idCliente, idSitio){
+            var defered = $q.defer();
+            var promise = defered.promise;
+            $http.get(API_URL+'/cliente/historia/sitio/'+idCliente+'/'+idSitio).then(success, error);
+            return promise;
+             function success(p) {
+                defered.resolve(p);
+            }
+            function error(error) {
+                defered.reject(error)
+            }
+        }
         function get(id){
            var defered = $q.defer();
             var promise = defered.promise;

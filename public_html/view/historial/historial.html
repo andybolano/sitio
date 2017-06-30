@@ -1,4 +1,4 @@
-<div class="row  border-bottom white-bg page-heading" ng-init="vm.getReservas();">
+<div class="row white-bg page-heading" ng-init="vm.getReservas();">
     <div class='row'> 
     <div class='col-md-3'>
          <div class="spacer" style="height:5px;"></div>
@@ -24,6 +24,14 @@
         <div class="spacer" style="height:23px;"></div>
         <button class='btn btn-success' ng-click="vm.getReservas()"><i class='fa fa-search'></i> Consultar</button>
     </div>
+        <div class="col-md-4">
+            <div class="spacer" style="height: 25px;"></div>
+            <div class="input-group"><input type="text" placeholder="Buscar" class="input-sm form-control ng-pristine ng-valid ng-touched" ng-model="filtro"> 
+              <span class="input-group-btn">
+          <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> 
+              </span>
+          </div>
+        </div>
     </div>    
     
     <hr class="hr-line-dashed">
@@ -43,7 +51,7 @@
                         <th>Estado</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat='item in vm.reservas' ng-click="vm.viewReserva(item)" style='cursor:pointer'>
+                            <tr ng-repeat='item in vm.reservas | filter:filtro' ng-click="vm.viewReserva(item)" style='cursor:pointer'>
                                 
                                      <td>{{$index + 1 }}</td>
                     <td>{{item.nombrecancha }}</td>

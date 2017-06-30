@@ -1,11 +1,11 @@
 <div class="wrapper wrapper-content">
-<div class="row border-bottom white-bg page-heading" ng-init="vm.getCanchas();">
+<div class="row white-bg page-heading" ng-init="vm.getCanchas();">
   <div class="row ">
     <div class="col-xs-6">
      
     </div>
     <div class="col-xs-6">
-        <div class="espacer" style="height:20px;"></div>
+          <div class="spacer" style="height:10px;"></div>
         <a class="btn btn-success  pull-right" ui-sref="app.canchasregistro"><i class="fa fa-plus-circle"></i> Nueva Cancha</a>
     </div>
   </div>
@@ -28,7 +28,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="i in vm.Canchas">
+                            <tr ng-repeat="i in vm.Canchas | orderBy:'nombre'">
                                 <td>{{$index + 1}}</td>
                                 <td>{{i.nombre}}</td>
                                 <td>{{i.largo}} x {{i.ancho}} m</td>

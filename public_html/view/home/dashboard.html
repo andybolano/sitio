@@ -1,9 +1,16 @@
-<div class="row  border-bottom white-bg dashboard-header" ng-init="vm.getReservasHoy();vm.getCanchas()">
+<div class="row  white-bg dashboard-header" ng-init="vm.getReservasHoy();vm.getCanchas()">
     <div class="row">
-    <div class="col-xs-9">
+    <div class="col-xs-5">
         <h2 class="no-margins">Hola, {{vm.sitio.nombre}}</h2>
         <small>Para hoy tenemos <a href="javascritp:;">{{vm.reservas.length}} reservas confirmadas</a></small>
      </div>
+        <div class="col-xs-4">
+            <div class="input-group"><input type="text" placeholder="Buscar" class="input-sm form-control ng-pristine ng-valid ng-touched" ng-model="filtro"> 
+              <span class="input-group-btn">
+          <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> 
+              </span>
+          </div>
+        </div>
     <div class="col-xs-3" style="text-align: right">
         <h1 class="no-margins">{{time}}</h1>
         <small>hora</small>
@@ -37,7 +44,7 @@
             <th>tiempo</th>
             </thead>
             <tbody>
-                <tr ng-repeat="item in vm.reservas | orderBy : 'hora' " style="cursor: pointer" ng-click="vm.modalDetalle(item)">
+                <tr ng-repeat="item in vm.reservas | filter:filtro |orderBy : 'hora' " style="cursor: pointer" ng-click="vm.modalDetalle(item)">
                     <td>{{$index + 1 }}</td>
                     <td>{{item.nombrecancha }}</td>
                     <td>{{item.hora}}:00</td>
