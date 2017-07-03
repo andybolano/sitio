@@ -58,7 +58,7 @@
                               
                           }
                           if(vm.Reservas[i].estado == 'confirmadaconabono'){
-                              vm.estadisticas_reservas.confirmadasinabono += 1; 
+                              vm.estadisticas_reservas.confirmadaconabono += 1; 
                               
                           }
                          
@@ -73,13 +73,14 @@
                       }
 
                       
-                         vm.estadisticas_reservas.cumplida_porcentaje =Math.round((vm.estadisticas_reservas.cumplida*100)/vm.Reservas.length);
+                       /*  vm.estadisticas_reservas.cumplida_porcentaje =Math.round((vm.estadisticas_reservas.cumplida*100)/vm.Reservas.length);
                          vm.estadisticas_reservas.incumplida_porcentaje =Math.round((vm.estadisticas_reservas.incumplida*100)/vm.Reservas.length);
                          vm.estadisticas_reservas.cancelada_porcentaje =Math.round((vm.estadisticas_reservas.cancelada*100)/vm.Reservas.length);
                          vm.estadisticas_reservas.confirmadasinabono_porcentaje =Math.round((vm.estadisticas_reservas.confirmadasinabono*100)/vm.Reservas.length);
                          vm.estadisticas_reservas.confirmadaconabono_porcentaje =Math.round((vm.estadisticas_reservas.confirmadaconabono*100)/vm.Reservas.length);
                          vm.estadisticas_reservas.esperandorevision_porcentaje =Math.round((vm.estadisticas_reservas.esperandorevision*100)/vm.Reservas.length);
-                         vm.estadisticas_reservas.esperandoconfirmacion_porcentaje =Math.round((vm.estadisticas_reservas.esperandoconfirmacion*100)/vm.Reservas.length);
+                         vm.estadisticas_reservas.esperandoconfirmacion_porcentaje =Math.round((vm.estadisticas_reservas.esperandoconfirmacion*100)/vm.Reservas.length);*/
+drawChart(vm.estadisticas_reservas);
                     }, function (err) {
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);
@@ -89,5 +90,39 @@
                     });
                 }
             }
+
+function drawChart(estadisticas) {
+               
+           
+
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Topping');
+                        data.addColumn('number', 'Slices');
+                        data.addRows([
+                            ['Incumplidas', estadisticas.incumplida],
+                            ['Canceladas', estadisticas.cancelada],
+                            ['Cumplidas', estadisticas.cumplida],
+                            ['Confirmadas', estadisticas.confirmadasinabono + estadisticas.confirmadaconabono],
+                            ['En Espera', estadisticas.esperandoconfirmacion + estadisticas.esperandorevision]
+                        ]);
+
+                        // Set chart options
+                        var options = {'title': 'Reservas',
+                            'width': 280,
+                            'height': 280,
+                            colors: ['#F8AC59', '#ed5565', '#1C84C6', '#23c6c8','#1AB394'],
+
+                            pieHole: 0.5,
+                            pieSliceTextStyle: {
+                                color: 'white',
+                            },
+                            legend: 'none'
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('chart_reservas'));
+                        chart.draw(data, options);
+
+                   
+                }
     
     })();

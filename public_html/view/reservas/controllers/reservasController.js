@@ -41,6 +41,8 @@
         vm.actualizarReserva = actualizarReserva;
 
         vm.showReservaRecurrente = function(){
+         vm.Cliente = {};
+        vm.Cliente.existe = false;
             vm.dias = dias;
             $('#modalReservaRecurrente').modal('show');
         }

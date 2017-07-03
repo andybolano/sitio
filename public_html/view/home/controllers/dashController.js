@@ -127,7 +127,7 @@
                         var options = {'title': 'Reservas hoy',
                             'width': 280,
                             'height': 280,
-                            colors: ['#F8AC59', '#ed5565', '#1C84C6', '#1AB394'],
+                            colors: ['#F8AC59', '#ed5565', '#1C84C6', '#23c6c8'],
 
                             pieHole: 0.5,
                             pieSliceTextStyle: {

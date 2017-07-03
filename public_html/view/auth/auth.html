@@ -1,45 +1,5 @@
-<div style="width: 100%; height:100%">
-    <br>
-    <br>
-    <div class="loginColumns animated fadeInDown">
-        <div class="ibox-content z-depth">
-            <div class="animated bounceIn" style="text-align: center;margin-top: -130px;"> <img src="images/logo.png" alt="" style="width: 40%" /> </div>
-            <div class="row">
-                <div class="col-md-6" style="color:#E34145">
-                    <h2 class="font-bold">Birrias para Negocios</h2>
-                    <p> Pon tu negocio a dispocisión de la comunidad deportiva. </p>
-                    <p> Ten el control de las reservas de tus canchas y la información de tus clientes. </p>
-                    <p> Obtén información al milímetro de tu empresa. </p>
-                    <p> Organiza torneos para la comunidad deportiva. </p>
-                    <p> <small>Te brindamos todo el soporte y acompañamiento requerido para que tu experiencia sea la mejor. Tu información estará segura y disponible en el lugar que te encuentres.</small> </p>
-                    <div>
-                        <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=dlAkQhTPGC2a53u2immK0TIXKyaBQvfBfs8UudxiRYcRoDOA6ruVPVSQknH7"></script></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="m-t" role="form">
-                        <form>
-                            <div class="form-group">
-                                <input type="email" id="user" ng-model="auth.user.email" name="email" class="form-control" placeholder="correo electronico" onblur="validarEmail(this.value,1)" required=""> </div>
-                            <div class="form-group">
-                                <input type="password" id="pass" name="pass" ng-model="auth.user.password" class="form-control" placeholder="Contraseña" required=""> </div>
-                            <button class="btn btn-warning block full-width m-b " ng-click="auth.login();" id="login">Iniciar Sesión</button>
-                            <a href="#/recordar"> <small>Olvidaste tu contraseña?</small> </a>
-                            <p class="text-muted text-center"> <small>No tienes a tu empresa registrada?</small> </p><a class="btn btn-sm btn-success btn-block" ui-sref="registre">Registrala aquí!</a> </form>
-                        <p class="m-t">
-                            <center><small>.</small></center>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <p class="m-t"><img src="images/logo_min.png" style="width:25px" alt="" />&nbsp;<small>Birrias Soccer para negocios &copy; 2017</small> </p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div style="width: 100%; height:100%"> <br><br><div class="loginColumns animated fadeInDown"> <div class="ibox-content z-depth"> <div class="animated bounceIn" style="text-align: center;margin-top: -130px;"> <img src="images/logo.png" alt="" style="width: 40%"/> </div><div class="row">
+ <div class="col-md-6" style="color:#E34145"> <h2 class="font-bold">Birrias para Negocios</h2> <p> Pon tu negocio a dispocisión de la comunidad deportiva. </p><p> Ten el control de las reservas de tus canchas y la información de tus clientes. </p><p> Obtén información al milímetro de tu empresa. </p><p> Organiza torneos para la comunidad deportiva. </p><p> <small>Te brindamos todo el soporte y acompañamiento requerido para que tu experiencia sea la mejor. Tu información estará segura y disponible en el lugar que te encuentres.</small> </p>
 </div>
-<script>
-    $(document).ready(function() {
-        $('#user').focus();
-    });
-</script>
+
+<div class="col-md-6"> <div class="m-t" role="form" > <form> <div class="form-group"> <input type="email" id="user" ng-model="auth.user.email" name="email" class="form-control" placeholder="correo electronico" onblur="validarEmail(this.value,1)" required=""> </div><div class="form-group"> <input type="password" id="pass" name="pass" ng-model="auth.user.password" class="form-control" placeholder="Contraseña" required=""> </div><button class="btn btn-warning block full-width m-b " ng-click="auth.login();" id="login">Iniciar Sesión</button> <a href="#/recordar"> <small>Olvidaste tu contraseña?</small> </a> <p class="text-muted text-center"> <small>No tienes a tu empresa registrada?</small> </p><a class="btn btn-sm btn-success btn-block" ui-sref="registre">Registrala aquí!</a> </form> <p class="m-t"> <center><small>.</small></center> </p></div></div><div class="col-lg-12"> <p class="m-t"><img src="images/logo_min.png" style="width:25px" alt=""/>&nbsp;<small>Birrias Soccer para negocios &copy; 2017</small> </p></div></div></div></div></div><script>$(document).ready(function(){$('#user').focus();}); </script>

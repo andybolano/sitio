@@ -36,6 +36,8 @@
                 vm.v_reserva = reserva;
                 vm.v_reserva.cancha = cancha;
                 vm.v_cliente.nombres = reserva.nombres;
+                 vm.v_cliente.image = reserva.image;
+                  vm.v_cliente.url = reserva.url;
                 vm.v_cliente.apellidos = reserva.apellidos;
                 vm.v_cliente.resenia = reserva.resenia;
                 vm.v_cliente.telefono = reserva.telefono;
