@@ -3,23 +3,17 @@
   <div class="row ">
       <div class="col-xs-6">
            <div class="espacer" style="height:20px;"></div>
-           Clientes: <span class="badge badge-primary">{{vm.Clientes.length}}</span>
+           Total Clientes: <span class="badge badge-primary">{{vm.Clientes.length}}</span>
       </div>
     <div class="col-xs-6">
-        <div class="espacer" style="height:10px;"></div>
-        <div class="input-group"><input type="text" placeholder="Buscar cliente" class="input-sm form-control ng-pristine ng-valid ng-touched" ng-model="filtro"> 
-              <span class="input-group-btn">
-          <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> 
-              </span>
-          </div>
+       
     </div>
   </div>
 
  <hr class="hr-line-dashed">
     <div class="row">
         <div class="col-xs-12">
-
-                    <table class="table table-striped table-hover">
+                   <table class="table table-striped table-bordered table-hover " id="editableClientes" >
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -31,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="i in vm.Clientes | orderBy:'nombres' | filter:filtro" style="cursor: pointer" ng-click="vm.showCliente(i);">
+                            <tr ng-repeat="i in vm.Clientes | orderBy:'nombres' " style="cursor: pointer" ng-click="vm.showCliente(i);">
                                 <td>{{$index + 1}}</td>
                                 <td>{{i.nombres}} {{i.apellidos}}</td>
                                 <td>{{i.telefono}}</td>
@@ -40,6 +34,15 @@
                             
                             </tr>
                         </tbody>
+                         <tfoot>
+                        <tr>
+                            <th>#</th>
+                                <th>Nombres</th>  
+                                <th>Telefono</th>
+                                <th>Origen</th>
+                             <th>Reservas</th>
+                        </tr>
+                        </tfoot>
                     </table>
             </div>
 </div>
@@ -164,15 +167,30 @@
                                 <h3>Historial de reservas</h3>
                             </div>
                             <div class="col-lg-8">
-                                <div class="input-group"><input type="text" placeholder="Buscar" class="input-sm form-control ng-pristine ng-valid ng-touched" ng-model="filtro2"> 
-              <span class="input-group-btn">
-          <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> 
-              </span>
-          </div>
+                               
                             </div>
+                            </div>
+ 
+                        <hr class="hr-line-dashed">
+                        <div class="row">
+                        <div class="col-lg-3">
+                            <p class="text-success">Reservas Cumplidas: <span style="color:#000">{{vm.getTotal('price') | currency:undefined:0}}</span></p>
+                        </div>
+                          <div class="col-lg-3">
+                              <p class="text-success">Valor pagado: <span style="color:#000">{{vm.getTotal('pagado') | currency:undefined:0}}</span></p>
+                        </div>
+                            
+                            <div class="col-lg-3">
+                              <p class="text-warning">Deuda: <span style="color:#000">{{vm.getTotal('price') - vm.getTotal('pagado') | currency:undefined:0}}</span></p>
+                        </div>
+                            <div class="col-lg-3">
+                              <p class="text-navy">En espera: <span style="color:#000">{{vm.getTotal('espera') | currency:undefined:0}}</span></p> 
+                        </div>
+                            
                         </div>
                         <hr class="hr-line-dashed">
-                        <table class="table table-striped">
+                        
+                         <table class="table table-striped table-bordered table-hover " id="editableReservas" >
                         <thead>
                         <th></th>
                         <th>Cancha</th>
@@ -180,30 +198,29 @@
                         <th>Hora</th>
                         <th>Precio</th>
                         <th>Pag&oacute</th>
-                       
                         <th>Abono Liquidado</th>
                         <th>Estado</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat='item in vm.Reservas | filter:filtro2 | orderBy : "-fecha" ' >
+                            <tr ng-repeat='item in vm.Reservas  | orderBy : "-fecha" ' >
                                 
-                                     <td>{{$index + 1 }}</td>
-                    <td>{{item.nombreCancha }}</td>
-                    <td>{{item.fecha}} - <small>{{item.diaSemana}}</small></td>
-                    <td>{{item.hora}}:00</td>
-                    <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
-                    <td class="text-success">{{item.pago | currency:undefined:0}}</td>
-                  
-                    <td class="text-success" ng-if="item.abonoLiquidado > 0"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
-                    <td class="text-danger" ng-if="item.abonoLiquidado == 0"><i class="fa fa-level-down"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
-                    <td>
-                        <label ng-if="item.estado == 'esperandorevision'" class="label label-danger" id="alert">Esperando revision</label>
-                        <label ng-if="item.estado == 'cumplida'" class="label label-success">Cumplida</label>
-                        <label ng-if="item.estado == 'incumplida'" class="label label-warning">Incumplida</label>
-                        <label ng-if="item.estado == 'cancelada'" class="label label-danger">Cancelada</label>
-                        <label ng-if="item.estado == 'confirmadaconabono'" class="label label-primary">Confirmada con abono</label>
-                        <label ng-if="item.estado == 'confirmadasinabono'" class="label label-info">Confirmada sin abono</label>
-                    </td>
+                               <td>{{$index + 1 }}</td>
+                           <td>{{item.nombreCancha }}</td>
+                           <td style="width:20%">{{item.fecha}} - <small>{{item.diaSemana}}</small></td>
+                           <td>{{item.hora}}:00</td>
+                           <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
+                           <td class="text-success">{{item.pago | currency:undefined:0}}</td>
+
+                           <td class="text-success" ng-if="item.abonoLiquidado > 0"><i class="fa fa-level-up"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
+                           <td class="text-danger" ng-if="item.abonoLiquidado == 0"><i class="fa fa-level-down"></i> {{item.abonoLiquidado | currency:undefined:0}}</td>
+                           <td>
+                               <label ng-if="item.estado == 'esperandorevision'" class="label label-danger" id="alert">Esperando revision</label>
+                               <label ng-if="item.estado == 'cumplida'" class="label label-success">Cumplida</label>
+                               <label ng-if="item.estado == 'incumplida'" class="label label-warning">Incumplida</label>
+                               <label ng-if="item.estado == 'cancelada'" class="label label-danger">Cancelada</label>
+                               <label ng-if="item.estado == 'confirmadaconabono'" class="label label-primary">Confirmada con abono</label>
+                               <label ng-if="item.estado == 'confirmadasinabono'" class="label label-info">Confirmada sin abono</label>
+                           </td>
                             </tr>
                         </tbody>
                     </table>
@@ -216,3 +233,4 @@
     </div>
 </div>
 </div>
+
