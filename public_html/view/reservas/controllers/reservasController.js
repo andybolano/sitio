@@ -609,6 +609,7 @@
                     var reserva = {
                         nombre: vm.Cliente.nombre,
                         telefono: vm.Cliente.telefono.toString(),
+                        usuario:sessionStorage.getItem('email'),
                         resenia:vm.Cliente.resenia,
                         reserva: vm.RESERVA,
                         sitio: sessionService.getIdSitio(),
@@ -658,6 +659,7 @@
                         abonoRequerido: parseInt(document.getElementById('abonoRequerido' + 0).value.split('.').join('')),
                         fecha: vm.RESERVA[0].fecha,
                         hora: vm.RESERVA[0].hora,
+                        usuario:sessionStorage.getItem('email'),
                         diaSemana: vm.RESERVA[0].diaSemana,
                         cancha: vm.RESERVA[0].idcancha,
                         idReserva: vm.RESERVA[0].id

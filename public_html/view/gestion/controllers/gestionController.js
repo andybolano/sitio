@@ -87,6 +87,7 @@
                     });
                 }
                 function modalDetalle(reserva) {
+                   
                     vm.dinero.precio = parseInt(reserva.precio);
                     $('#consult_reserva').modal('show');
                     vm.v_reserva = reserva;
