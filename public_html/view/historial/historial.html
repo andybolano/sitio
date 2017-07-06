@@ -25,19 +25,14 @@
         <button class='btn btn-success' ng-click="vm.getReservas()"><i class='fa fa-search'></i> Consultar</button>
     </div>
         <div class="col-md-4">
-            <div class="spacer" style="height: 25px;"></div>
-            <div class="input-group"><input type="text" placeholder="Buscar" class="input-sm form-control ng-pristine ng-valid ng-touched" ng-model="filtro"> 
-              <span class="input-group-btn">
-          <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-search"></i></button> 
-              </span>
-          </div>
+            <
         </div>
     </div>    
     
     <hr class="hr-line-dashed">
                     <div class="row">
                         <div class="col-md-9">
-                      <table class="table table-striped table-hover">
+                      <table class="table table-striped table-bordered table-hover " id="editableHistorial">
                         <thead>
                         <th></th>
                         <th>Cancha</th>
@@ -53,13 +48,13 @@
                         <th>Estado</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeat='item in vm.reservas | filter:filtro' ng-click="vm.viewReserva(item)" style='cursor:pointer'>
+                            <tr ng-repeat='item in vm.reservas ' ng-click="vm.viewReserva(item)" style='cursor:pointer'>
                                 
                                      <td>{{$index + 1 }}</td>
                     <td>{{item.nombrecancha }}</td>
                     <td>{{item.fecha}}</td>
                     <td>{{item.hora}}:00</td>
-                    <td>{{item.via}}</td>
+                    td><td><span class="badge badge-success" ng-if="item.via == 'REMOTA'" title="Reserva desde la app">{{item.via}}</span><span class="badge badge-info"  ng-if="item.via == 'LOCAL'" title="Cliente registrador desde aquí!">{{item.via}}</span></td></td>
                     <td>{{item.usuario}}</td>
                     <td class="small">{{item.nombres}} {{item.apellidos}}</td>
                     <td class="text-navy">{{item.precio | currency:undefined:0}}</td>

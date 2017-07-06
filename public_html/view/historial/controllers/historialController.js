@@ -57,6 +57,11 @@
                         vm.finanzas.realidad = parseInt(d.data.finanzas.dineroEntrante);
                         vm.finanzas.abonos = parseInt(d.data.finanzas.abonos);
                         
+                          setTimeout(function(){
+                            var oTable = $('#editableHistorial').DataTable();
+                         },500);
+
+                        
                     }, function (err) {
                         if (err.status == 401) {
                             toastr["error"](err.data.respuesta);

@@ -29,6 +29,9 @@
                 Hora
             </th>
             <th>
+                via
+            </th>
+            <th>
                 Cliente
             </th>
             <th>
@@ -48,6 +51,7 @@
                     <td>{{$index + 1 }}</td>
                     <td>{{item.nombrecancha }}</td>
                     <td>{{item.hora}}:00</td>
+                    <td><td><span class="badge badge-success" ng-if="item.via == 'REMOTA'" title="Reserva desde la app">{{item.via}}</span><span class="badge badge-info"  ng-if="item.via == 'LOCAL'" title="Cliente registrador desde aquí!">{{item.via}}</span></td></td>
                     <th>{{item.nombres}} {{item.apellidos}}</th>
                     <td class="text-navy">{{item.precio | currency:undefined:0}}</td>
                     <td>{{item.abonoRequerido | currency:undefined:0}}</td>

@@ -278,6 +278,10 @@
             vm.Cliente.existe = true;
             vm.Cliente.telefono = parseInt(reserva.telefono);
             vm.Cliente.nombres = reserva.nombres;
+            vm.Cliente.apellidos = reserva.apellidos;
+            vm.Cliente.resenia = reserva.resenia;
+            vm.Cliente.image = reserva.image;
+            vm.Cliente.url = reserva.url;
             vm.Cliente.cumplidas = reserva.cumplidas;
             vm.Cliente.incumplidas = reserva.incumplidas;
             vm.Cliente.canceladas = reserva.canceladas;
