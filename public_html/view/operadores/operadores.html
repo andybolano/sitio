@@ -1,0 +1,82 @@
+<div class="wrapper wrapper-content">
+    <div class="row border-bottom white-bg page-heading" ng-init="vm.getAll();">
+        <div class="row ">
+            <div class="col-xs-6">
+                <div class="espacer" style="height:20px;"></div>
+                Total Operadores: <span class="badge badge-primary">{{vm.Operadores.length}}</span>
+            </div>
+            <div class="col-xs-6">
+
+            </div>
+        </div>
+
+        <hr class="hr-line-dashed">
+        <div class="row">
+            <div class="col-xs-4">
+                <h3>Registrar Operador</h3>
+                <div class="form-group"><label><small>No de indentificación:</small></label> <input type="number" placeholder="Ingresar número" ng-model="vm.operador.identificacion" class="form-control"></div>
+                <div class="form-group"><label><small>Nombres:</small></label> <input type="text" placeholder="Ingresar nombres" ng-model="vm.operador.nombres" class="form-control"></div>
+                <div class="form-group"><label><small>Apellidos:</small></label> <input type="text" placeholder="Ingresar apellidos" ng-model="vm.operador.apellidos" class="form-control"></div>
+                <div class="form-group"><label><small>Teléfono:</small></label> <input type="number" placeholder="Ingresar teléfono" ng-model="vm.operador.telefono" class="form-control"></div>
+                <div class="form-group"><label><small>Dirección:</small></label> <input type="text" placeholder="Ingresar dirección" ng-model="vm.operador.direccion" class="form-control"></div>
+                <hr class="hr-line-dashed">
+                <h4>Información de acceso:</h4>
+                <div class="form-group"><label><small>Usuario:</small></label> <input type="text" placeholder="usuario" ng-model="vm.operador.usuario" class="form-control"></div>
+                <div class="form-group"><label><small>Contraseña:</small></label> <input type="password" placeholder="Contraseña " ng-model="vm.operador.password " class="form-control "></div>
+                <div class="form-group "><label><small>Confirmar contraseña:</small></label> <input type="password" placeholder="confirmar Contraseña " ng-model="vm.operador.passwordConfirmada " class="form-control "></div>
+                <button class="btn btn-primary pull-right m-t-n-xs " id="registro " ng-click="vm.save(); "><i class="fa fa-cloud-upload "></i> Registrar Operador</button>
+            </div>
+            <div class="col-xs-8 ">
+                <h3>Listado de operadores</h3>
+                <table class="table table-striped table-bordered table-hover " id="editableOperadores">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>No de indentificación</th>
+                            <th>Nombres</th>
+                            <th>Telefono</th>
+                            <th>Dirección</th>
+                            <th>Usuario</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="i in vm.Operadores | orderBy: 'nombres' " style="cursor: pointer " ng-click="vm.showOperador(i); ">
+                            <td>{{$index + 1}}</td>
+                            <td>{{i.identificacion}}</td>
+                            <td>{{i.nombres}} {{i.apellidos}}</td>
+                            <td>{{i.telefono}}</td>
+                            <td>{{i.direccion}}</td>
+                            <td>{{i.email}}</td>
+
+                            <td>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked="" class="onoffswitch-checkbox" ng-model="i.estado" id="checkState{{i.id}}" ng-change="vm.updateState(i);">
+                                        <label class="onoffswitch-label" for="checkState{{i.id}}">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>No de indentificación</th>
+                            <th>Nombres</th>
+                            <th>Telefono</th>
+                            <th>Dirección</th>
+                            <th>Usuario</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>

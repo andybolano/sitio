@@ -1,15 +1,15 @@
 <ul class="nav metismenu" id="side-menu" ng-controller="MenuController as menu" ng-init="menu.getSitio(); menu.pusher();">
     <li class="nav-header">
-                        <div class="dropdown profile-element " style='text-align:center;'>
-                          <span>
+        <div class="dropdown profile-element " style='text-align:center;'>
+            <span>
                              
                         <div class='img-wrap'>
                         <img alt="image Sitio" id="profile" class="img-circle" src="{{menu.sitio.ruta}}" style="width:90px; height:90px;" ng-if="menu.sitio.image == 1"/>
                          <img alt="image Sitio" id="profile" class="img-circle" src="images/profile-sitio.png" style="width:90px;height:90px;" ng-if="menu.sitio.image == 0"/>
                         </div>
                         </span>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
-                                <span class="clear"> 
+            <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+                <span class="clear"> 
                                     <span class="block m-t-xs"> 
                                            
                                         <strong class="font-bold">{{menu.sitio.nombre}}</strong><br>   
@@ -17,44 +17,47 @@
                                        
                                           
                                     </span>
-                                </span>
-                                
-                                
-                            </a>
-                        </div>
-                        <div class="logo-element">
-                            B
-                        </div>
-                    </li>
-                    <li ng-class="{active : menu.isActive ('/')}">
-                        <a ui-sref="app.home"><i class="fa fa-home"></i> <span class="nav-label">Inicio</span></a>
-                    </li>
-                    <li class="subtitule">
-                        <label>RESERVAS</label>
-                    </li>
-                    <li ng-class="{active : menu.isActive ('/reserve')}">
-                        <a  ui-sref="app.reserve"><i class="fa fa-soccer-ball-o"></i> <span class="nav-label">Reservar</span></a>
-                    </li>
-                    <li ng-class="{active : menu.isActive ('/gestion')}">
-                        <a ui-sref="app.gestion"><i class="fa fa-calendar"></i> <span class="nav-label">Gesti&oacuten de Reservas</span></a>
-                    </li>
-                     <li ng-class="{active : menu.isActive ('/historial')}">
-                        <a ui-sref="app.historial"><i class="fa fa-history"></i> <span class="nav-label">Historial de Reservas</span></a>
-                    </li>
-                    <li class="subtitule">
-                        <label>UTILIDADES</label>
-                    </li>
-                     <li ng-class="{active : menu.isActive ('/clientes')}">
-                         <a ui-sref="app.clientes"><i class="fa fa-user" ></i><span class="nav-label" >Clientes</span></a>
-                    </li>
-                    <li ng-class="{active : menu.isActive ('/canchas')}">
-                        <a ui-sref="app.canchas"><i class="fa" style="margin-left:-2px;"><img src="fonts/cancha.svg" alt="C" title="C" style="width:18px;" /></i> <span class="nav-label" style="margin-left:-3px">Canchas</span></a>
-                    </li>
-<li ng-class="{active : menu.isActive ('/configuracion')}">
-                        <a ui-sref="app.configuracion"><i class="fa fa-gear"></i> <span class="nav-label">Configuraci&oacuten</span></a>
-                    </li>
-</li>
+                </span>
+
+
+            </a>
+        </div>
+        <div class="logo-element">
+            B
+        </div>
+    </li>
+    <li ng-class="{active : menu.isActive ('/')}">
+        <a ui-sref="app.home"><i class="fa fa-home"></i> <span class="nav-label">Inicio</span></a>
+    </li>
+    <li class="subtitule">
+        <label>RESERVAS</label>
+    </li>
+    <li ng-class="{active : menu.isActive ('/reserve')}">
+        <a ui-sref="app.reserve"><i class="fa fa-soccer-ball-o"></i> <span class="nav-label">Reservar</span></a>
+    </li>
+    <li ng-class="{active : menu.isActive ('/gestion')}">
+        <a ui-sref="app.gestion"><i class="fa fa-calendar"></i> <span class="nav-label">Gesti&oacuten de Reservas</span></a>
+    </li>
+    <li ng-class="{active : menu.isActive ('/historial')}">
+        <a ui-sref="app.historial"><i class="fa fa-history"></i> <span class="nav-label">Historial de Reservas</span></a>
+    </li>
+    <li class="subtitule">
+        <label>UTILIDADES</label>
+    </li>
+    <li ng-class="{active : menu.isActive ('/clientes')}">
+        <a ui-sref="app.clientes"><i class="fa fa-user" ></i><span class="nav-label" >Clientes</span></a>
+    </li>
+    <li ng-class="{active : menu.isActive ('/operadores')}">
+        <a ui-sref="app.operadores"><i class="fa fa-users" ></i><span class="nav-label">Operadores</span></a>
+    </li>
+    <li ng-class="{active : menu.isActive ('/canchas')}">
+        <a ui-sref="app.canchas"><i class="fa" style="margin-left:-2px;"><img src="fonts/cancha.svg" alt="C" title="C" style="width:18px;" /></i> <span class="nav-label" style="margin-left:-3px">Canchas</span></a>
+    </li>
+    <li ng-class="{active : menu.isActive ('/configuracion')}">
+        <a ui-sref="app.configuracion"><i class="fa fa-gear"></i> <span class="nav-label">Configuraci&oacuten</span></a>
+    </li>
+    </li>
 
 
 
-                </ul>
+</ul>

@@ -31,6 +31,7 @@
                                 sessionStorage.setItem('data',JSON.stringify(data[0].sitio));
                                 sessionStorage.setItem('sitioId',data[0].sitio.id);
                                 sessionStorage.setItem('userId',data[0].id);
+                                sessionStorage.setItem('rol',data[0].rol);
                                 sessionStorage.setItem('email',data[0].email);
                                 sessionStorage.setItem('token',data[0].token);
                                 sessionStorage.setItem('userIsLogin',true);

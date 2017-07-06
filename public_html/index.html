@@ -1,77 +1,102 @@
 <!DOCTYPE html>
 <html ng-app=BirriasSitios>
+
 <head>
-<meta charset=utf-8>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-<meta name=viewport content="width=device-width, initial-scale=1.0">
-<title>Birrias | Negocios </title>
-<link rel="shortcut icon" href=favicon.ico type="image/x-icon">
-<link rel=icon href=favicon.ico type="image/x-icon">
-<link href="css/bootstrap.min.css" rel=stylesheet>
-<link href="font-awesome/css/font-awesome.css" rel=stylesheet>
-<link href="css/animate.css" rel=stylesheet>
-<link href="css/plugins/iCheck/custom.css" rel=stylesheet>
-<link href="css/plugins/toastr/toastr.min.css" rel=stylesheet type="text/css"/>
-<link href="css/plugins/sweetalert/sweetalert.css" rel=stylesheet type="text/css"/>
-<link href="css/style.css" rel=stylesheet type="text/css"/>
-<link href="css/plugins/jasny/jasny-bootstrap.min.css" rel=stylesheet>
-
-<link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" type="text/css"/>
-<link href="css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" type="text/css"/>
-
-<link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300" rel=stylesheet>
-<script src="https://js.pusher.com/4.0/pusher.min.js"></script>
-
-
+    <meta charset=utf-8>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <title>Birrias | Negocios </title>
+    <link rel="shortcut icon" href=favicon.ico type="image/x-icon">
+    <link rel=icon href=favicon.ico type="image/x-icon">
+    <link href="css/bootstrap.min.css" rel=stylesheet>
+    <link href="font-awesome/css/font-awesome.css" rel=stylesheet>
+    <link href="css/animate.css" rel=stylesheet>
+    <link href="css/plugins/iCheck/custom.css" rel=stylesheet>
+    <link href="css/plugins/toastr/toastr.min.css" rel=stylesheet type="text/css" />
+    <link href="css/plugins/sweetalert/sweetalert.css" rel=stylesheet type="text/css" />
+    <link href="css/style.css" rel=stylesheet type="text/css" />
+    <link href="css/plugins/jasny/jasny-bootstrap.min.css" rel=stylesheet>
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:300" rel=stylesheet>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
 </head>
+
 <body class="degrade-birrias ">
-<div ui-view="">
-</div>
-<script src="js/angular/angular.js"></script>
-<script src="js/angular/angular-ui-router.min.js"></script>
-<script src="js/angular/ui-utils.min.js"></script>
-<script src="js/jquery-2.1.1.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="js/plugins/pace/pace.min.js"></script>
-<script src="js/plugins/toastr/toastr.min.js"></script>
-<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-<script src="js/plugins/iCheck/icheck.min.js"></script>
+    <div ui-view="">
+    </div>
+    <script src="js/angular/angular.js"></script>
+    <script src="js/angular/angular-ui-router.min.js"></script>
+    <script src="js/angular/ui-utils.min.js"></script>
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
 
-<!--data tables-->
-<script src="js/plugins/jeditable/jquery.jeditable.js" type="text/javascript"></script>
-<script src="js/plugins/dataTables/jquery.dataTables.js" type="text/javascript"></script>
-<script src="js/plugins/dataTables/dataTables.bootstrap.js" type="text/javascript"></script>
-<script src="js/plugins/dataTables/dataTables.tableTools.min.js" type="text/javascript"></script>
+    <!--data tables-->
+    <script src="js/plugins/jeditable/jquery.jeditable.js" type="text/javascript"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script src="js/plugins/dataTables/dataTables.tableTools.min.js" type="text/javascript"></script>
 
-<script src="js/inspinia.js"></script>
-<script src="js/lib/validacion.js"></script>
-<script src="js/lib/calendar.js"></script>
-<script src="js/lib/cuentaAtras.js"></script>
-<script src="script/app.js"></script>
-<script src="view/menu/menuController.js"></script>
-<script src="view/auth/controllers/authController.js"></script>
-<script src="view/auth/controllers/registreController.js"></script>
-<script src="view/canchas/controllers/canchaController.js"></script>
-<script src="view/reservas/controllers/reservasController.js"></script>
-<script src="view/home/controllers/dashController.js"></script>
-<script src="view/gestion/controllers/gestionController.js"></script>
-<script src="view/historial/controllers/historialController.js"></script>
-<script src="view/sitio/controllers/configuracionController.js"></script>
-<script src="view/clientes/controllers/clientesController.js" type="text/javascript"></script>
-<script src="script/service/authService.js"></script>
-<script src="script/service/registreService.js"></script>
-<script src="script/service/sitioService.js"></script>
-<script src="script/service/sessionService.js"></script>
-<script src="script/service/canchaService.js"></script>
-<script src="script/service/reservasService.js"></script>
-<script src="script/service/clienteService.js"></script>
-<script src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
-<script>toastr.options={"closeButton":true,"debug":false,"newestOnTop":false,"progressBar":true,"positionClass":"toast-bottom-right","preventDuplicates":false,"onclick":null,"showDuration":"300","hideDuration":"1000","timeOut":"5000","extendedTimeOut":"1000","showEasing":"swing","hideEasing":"linear","showMethod":"fadeIn","hideMethod":"fadeOut"}
-function menu(){$("body").toggleClass("mini-navbar");SmoothlyMenu();}
-google.charts.load('current',{'packages':['corechart']});</script>
+    <script src="js/inspinia.js"></script>
+    <script src="js/lib/validacion.js"></script>
+    <script src="js/lib/calendar.js"></script>
+    <script src="js/lib/cuentaAtras.js"></script>
+    <script src="script/app.js"></script>
+    <script src="view/menu/menuController.js"></script>
+    <script src="view/auth/controllers/authController.js"></script>
+    <script src="view/auth/controllers/registreController.js"></script>
+    <script src="view/canchas/controllers/canchaController.js"></script>
+    <script src="view/reservas/controllers/reservasController.js"></script>
+    <script src="view/home/controllers/dashController.js"></script>
+    <script src="view/gestion/controllers/gestionController.js"></script>
+    <script src="view/historial/controllers/historialController.js"></script>
+    <script src="view/sitio/controllers/configuracionController.js"></script>
+    <script src="view/clientes/controllers/clientesController.js" type="text/javascript"></script>
+    <script src="view/operadores/controllers/operadoresController.js" type="text/javascript"></script>
+    <script src="script/service/authService.js"></script>
+    <script src="script/service/registreService.js"></script>
+    <script src="script/service/sitioService.js"></script>
+    <script src="script/service/sessionService.js"></script>
+    <script src="script/service/canchaService.js"></script>
+    <script src="script/service/reservasService.js"></script>
+    <script src="script/service/clienteService.js"></script>
+    <script src="script/service/operadorService.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        function menu() {
+            $("body").toggleClass("mini-navbar");
+            SmoothlyMenu();
+        }
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+    </script>
 </body>
+
 </html>

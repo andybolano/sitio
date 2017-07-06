@@ -13,6 +13,7 @@
             getIdUser: getIdUser,
             getIdSitio: getIdSitio,
             getToken : getToken,
+            getRol:getRol
             
         };
         return service;
@@ -27,6 +28,11 @@
               return sessionStorage.getItem('token');
           } 
         };
+         function getRol(){
+           if(sessionStorage.getItem('getRol') !== null){
+                return sessionStorage.getItem('getRol');
+           } 
+        }
         function getIdUser(){
            if(sessionStorage.getItem('userId') !== null){
                 return sessionStorage.getItem('userId');
